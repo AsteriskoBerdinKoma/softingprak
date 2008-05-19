@@ -7,6 +7,7 @@ import praktika.zerbitzaria.ErreserbaSistema;
 
 import java.awt.Container;
 import java.awt.BorderLayout;
+import java.rmi.RemoteException;
 
 public class AplikazioNagusia extends JFrame {
 	/**
@@ -27,7 +28,12 @@ public class AplikazioNagusia extends JFrame {
 		setSize(700, 600);
 		setDefaultCloseOperation(3);
 		// Ereduak sortu
-		LoturaErreserbaSistema = new ErreserbaSistema();
+		try {
+			LoturaErreserbaSistema = new ErreserbaSistema();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Bistak sortu
 		ErreserbaKontroladorea erreserbaKontroladorea = new ErreserbaKontroladorea(
 				LoturaErreserbaSistema);

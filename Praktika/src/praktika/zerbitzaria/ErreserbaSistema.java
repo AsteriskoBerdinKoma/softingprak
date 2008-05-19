@@ -1,23 +1,29 @@
 package praktika.zerbitzaria;
 
+import java.rmi.RemoteException;
 import java.util.Date;
-import java.util.Observable;
 
 import praktika.partekatuak.Erreserba;
+import praktika.partekatuak.remoteObservable.RemoteObservableImpl;
 
 /**
  * Bigarren mailako antolatzeko klasea
  */
 
-public class ErreserbaSistema extends Observable {
-
+public class ErreserbaSistema extends RemoteObservableImpl {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Erreserba LoturaErreserba;
 
-	public ErreserbaSistema() {
+	public ErreserbaSistema() throws RemoteException{
 
 	}
 
-	public void ezeztatu() {
+	public void ezeztatu() throws RemoteException {
 		// Erreserba sortu
 		LoturaErreserba = null;
 		// Bistak ohararazi
@@ -32,9 +38,10 @@ public class ErreserbaSistema extends Observable {
 	 *            java.lang.String
 	 * @param eskeinitakoData
 	 *            java.util.Date
+	 * @throws RemoteException 
 	 */
 	public void sartuIrteera(int baieztapenZenbakia, String irteerarenKodea,
-			Date eskeinitakoData) {
+			Date eskeinitakoData) throws RemoteException {
 		// Irtera bilatu eta erreserba bat eskatu
 
 		System.out.println("Irteeraren kodea  " + irteerarenKodea + " data "
@@ -53,8 +60,9 @@ public class ErreserbaSistema extends Observable {
 	 *            java.lang.String
 	 * @param telefonoa
 	 *            java.lang.String
+	 * @throws RemoteException 
 	 */
-	public void sartuTurista(String izena, String helbidea, String telefonoa) {
+	public void sartuTurista(String izena, String helbidea, String telefonoa) throws RemoteException {
 
 		System.out.println("Turistaren izena " + izena);
 		// Bistak ohararazi
@@ -69,9 +77,10 @@ public class ErreserbaSistema extends Observable {
 	/**
 	 * 
 	 * @return total double
+	 * @throws RemoteException 
 	 */
 	public void erreserbaBerria(int pertsonaKopurua,
-			String erreserbaAgentearenIdentifikatzailea) {
+			String erreserbaAgentearenIdentifikatzailea) throws RemoteException {
 		// Erreserba sortu
 
 		// Erreserba agentea bilatu eta erreserba antolatzeko eskatu
@@ -88,8 +97,9 @@ public class ErreserbaSistema extends Observable {
 
 	/**
 	 * Hemen metodoaren deskribapena sartu
+	 * @throws RemoteException 
 	 */
-	public void submit() {
+	public void submit() throws RemoteException {
 
 		System.out.println("Datubasera bidali da");
 		LoturaErreserba = null;

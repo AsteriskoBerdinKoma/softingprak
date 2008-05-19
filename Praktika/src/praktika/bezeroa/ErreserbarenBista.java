@@ -2,21 +2,21 @@ package praktika.bezeroa;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import praktika.partekatuak.remoteObservable.RemoteObservable;
+import praktika.partekatuak.remoteObservable.RemoteObserver;
 import praktika.zerbitzaria.ErreserbaSistema;
 
 /**
  * Aplikazioaren lehen mailaren(Bista) klasea
  */
 
-public class ErreserbarenBista extends JPanel implements Observer {
+public class ErreserbarenBista extends JPanel implements RemoteObserver {
 	/**
 	 * 
 	 */
@@ -47,7 +47,7 @@ public class ErreserbarenBista extends JPanel implements Observer {
 	 *            java.lang.Object
 	 */
 
-	public void update(Observable observable, Object objektua) {
+	public void update(RemoteObservable observable, Object objektua) {
 		itenak.clear();
 		//
 		NumberFormat numberFormat = NumberFormat.getCurrencyInstance();

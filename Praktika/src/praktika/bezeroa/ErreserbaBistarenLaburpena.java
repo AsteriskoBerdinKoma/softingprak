@@ -5,17 +5,17 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import praktika.partekatuak.remoteObservable.RemoteObservable;
+import praktika.partekatuak.remoteObservable.RemoteObserver;
 import praktika.zerbitzaria.ErreserbaSistema;
 
-public class ErreserbaBistarenLaburpena extends JPanel implements Observer {
+public class ErreserbaBistarenLaburpena extends JPanel implements RemoteObserver {
 	/**
 	 * 
 	 */
@@ -71,7 +71,7 @@ public class ErreserbaBistarenLaburpena extends JPanel implements Observer {
 	 * @param objektua
 	 *            java.lang.Object
 	 */
-	public void update(Observable observable, Object objektua) {
+	public void update(RemoteObservable observable, Object objektua) {
 		NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 		DateFormat dataFormat = DateFormat.getDateInstance();
 		ErreserbaSistema erreserbaSistema = (ErreserbaSistema) observable;

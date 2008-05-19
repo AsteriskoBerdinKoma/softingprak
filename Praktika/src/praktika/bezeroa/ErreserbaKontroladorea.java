@@ -6,6 +6,7 @@ import praktika.zerbitzaria.ErreserbaSistema;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.rmi.RemoteException;
 import java.text.*;
 import java.util.*;
 
@@ -146,8 +147,13 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			String irteeraHandizkariarenIdentifikatzailea = (String) comboErreserbaAgentea
 					.getSelectedItem();
 			// Ereduak sartu
-			LoturaErreserbaSistema.erreserbaBerria(pertsonaKopurua,
-					irteeraHandizkariarenIdentifikatzailea);
+			try {
+				LoturaErreserbaSistema.erreserbaBerria(pertsonaKopurua,
+						irteeraHandizkariarenIdentifikatzailea);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// Botoiak ipini
 			botoiaErreserbaBerria.setEnabled(false);
 			botoiaSartuIrteera.setEnabled(true);
@@ -175,6 +181,9 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 				JOptionPane.showMessageDialog(new JFrame(),
 						"Mesedez zenbaki oso bat sartu",
 						"Sarrera errore mezua", JOptionPane.WARNING_MESSAGE);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			// Botoiak ipini
 			botoiaErreserbaBerria.setEnabled(false);
@@ -189,7 +198,12 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			String helbidea = testuEremuaHelbidea.getText();
 			String telefonoa = testuEremuaTelefonoa.getText();
 			// Ereduak sartu
-			LoturaErreserbaSistema.sartuTurista(izena, helbidea, telefonoa);
+			try {
+				LoturaErreserbaSistema.sartuTurista(izena, helbidea, telefonoa);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// Botoiak ipini
 			botoiaErreserbaBerria.setEnabled(false);
 			botoiaSartuIrteera.setEnabled(false);
@@ -200,7 +214,12 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		}
 		if (event.getSource() == botoiaSartuBidali) {
 			// Ereduak sartu
-			LoturaErreserbaSistema.submit();
+			try {
+				LoturaErreserbaSistema.submit();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// Botoiak ipini
 			botoiaErreserbaBerria.setEnabled(true);
 			botoiaSartuIrteera.setEnabled(false);
@@ -215,7 +234,12 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		}
 		if (event.getSource() == botoiaSartuEzeztatu) {
 			// Ereduak sartu
-			LoturaErreserbaSistema.ezeztatu();
+			try {
+				LoturaErreserbaSistema.ezeztatu();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// Botoiak ipini
 			botoiaErreserbaBerria.setEnabled(true);
 			botoiaSartuIrteera.setEnabled(false);
