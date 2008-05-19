@@ -1,211 +1,180 @@
-/* RISO: an implementation of distributed belief networks.
- * Copyright (C) 1999, Robert Dodier.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA, 02111-1307, USA,
- * or visit the GNU web site, www.gnu.org.
- */
+
 package praktika.partekatuak.remoteObservable;
 
-import java.io.*;
-import java.util.*;
-import java.rmi.*;
-import java.rmi.server.*;
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.Vector;
 
-/** An instance of this class is a remote object which will notify observers about events.
-  */
-public class RemoteObservableImpl extends UnicastRemoteObject implements RemoteObservable, Serializable
-{
-	/**
+/**
+ * This class represents an observable object, or "data"
+ * in the model-view paradigm. It can be subclassed to represent an 
+ * object that the application wants to have observed. 
+ * <p>
+ * An observable object can have one or more observers. An observer 
+ * may be any object that implements interface <tt>Observer</tt>. After an 
+ * observable instance changes, an application calling the 
+ * <code>Observable</code>'s <code>notifyObservers</code> method  
+ * causes all of its observers to be notified of the change by a call 
+ * to their <code>update</code> method. 
+ * <p>
+ * The order in which notifications will be delivered is unspecified.  
+ * The default implementation provided in the Observable class will
+ * notify Observers in the order in which they registered interest, but 
+ * subclasses may change this order, use no guaranteed order, deliver 
+ * notifications on separate threads, or may guarantee that their
+ * subclass follows this order, as they choose.
+ * <p>
+ * Note that this notification mechanism is has nothing to do with threads 
+ * and is completely separate from the <tt>wait</tt> and <tt>notify</tt> 
+ * mechanism of class <tt>Object</tt>.
+ * <p>
+ * When an observable object is newly created, its set of observers is 
+ * empty. Two observers are considered the same if and only if the 
+ * <tt>equals</tt> method returns true for them.
+ *
+ * @author  Chris Warth
+ * @version 1.39, 11/17/05
+ * @see     java.util.Observable#notifyObservers()
+ * @see     java.util.Observable#notifyObservers(java.lang.Object)
+ * @see     java.util.Observer
+ * @see     java.util.Observer#update(java.util.Observable, java.lang.Object)
+ * @since   JDK1.0
+ */
+public class RemoteObservableImpl extends UnicastRemoteObject implements RemoteObservable, Serializable {
+    /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected Vector<RemoteObserverPair> observer_list = new Vector<RemoteObserverPair>();
+	
+	private boolean changed = false;
+    private Vector<RemoteObserver> obs;
+   
+    /** Construct an Observable with zero Observers. */
 
-	public RemoteObservableImpl() throws RemoteException {}
+    public RemoteObservableImpl() throws RemoteException{
+	obs = new Vector<RemoteObserver>();
+    }
 
-	/** Adds an observer to the list of observers watching a particular object, 
-	  * <tt>of_interest</tt> within this observable.
-	  */
-	public synchronized void addObserver( RemoteObserver o, Object of_interest )
-	{
-		RemoteObserverPair p = new RemoteObserverPair( o, of_interest );
-		if ( ! observer_list.contains( p ) )
-			observer_list.addElement( p );
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#addObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
+	 */
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#addObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
+	 */
+    public synchronized void addObserver(RemoteObserver o) {
+        if (o == null)
+            throw new NullPointerException();
+	if (!obs.contains(o)) {
+	    obs.addElement(o);
 	}
+    }
 
-	/** Removes an observer from the list of observers watching a particular 
-	  * item of interest.
-	  */
-	public synchronized void deleteObserver( RemoteObserver o, Object of_interest )
-	{
-		RemoteObserverPair p = new RemoteObserverPair( o, of_interest );
-		if ( ! observer_list.removeElement(p) )
-			System.err.println( "RemoteObservableImpl.delete_observer: not found: "+p );
-	}
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#deleteObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
+	 */
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#deleteObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
+	 */
+    public synchronized void deleteObserver(RemoteObserver o) {
+        obs.removeElement(o);
+    }
 
-	/** Removes an observer from all the lists of observers watching items within
-	  * this observable.
-	  */
-	public synchronized void deleteObserver( RemoteObserver o )
-	{
-		int i, n = observer_list.size();
-		RemoteObserverPair p;
-		for ( i = n-1; i >= 0; i-- )
-		{
-			p = (RemoteObserverPair) observer_list.elementAt(i);
-			if ( p.observer == o )
-			{
-				observer_list.removeElementAt(i);
-			}
-		}
-	}
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#notifyObservers()
+	 */
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#notifyObservers()
+	 */
+    public void notifyObservers() throws RemoteException {
+	notifyObservers(null);
+    }
 
-	/** Removes all observers.
-	  */
-	public synchronized void deleteAllObservers()
-	{
-		System.err.println( "RemoteObservableImpl.delete_all_observers: delete all observers" );
-		observer_list.removeAllElements();
-	}
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#notifyObservers(java.lang.Object)
+	 */
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#notifyObservers(java.lang.Object)
+	 */
+    public void notifyObservers(Object arg) throws RemoteException {
+	/*
+         * a temporary array buffer, used as a snapshot of the state of
+         * current Observers.
+         */
+        Object[] arrLocal;
 
-	/** Notifies any observers watching the object <tt>of_interest</tt> within this
-	  * observable. 
-	  *
-	  * <p> If an <tt>update</tt> call fails with a <tt>RemoteException</tt>,
-	  * the observer is removed from the list of observers for this observable.
-	  *
-	  * @param of_interest An object within this observable. This parameter must not be <tt>null</tt>.
-	  * @param arg The argument sent to the observer in the <tt>update</tt> call.
-	  */
-	public synchronized void notifyObservers( Object of_interest, Object arg )
-	{
-		int i, n = observer_list.size();
+	synchronized (this) {
+	    /* We don't want the Observer doing callbacks into
+	     * arbitrary code while holding its own Monitor.
+	     * The code where we extract each Observable from 
+	     * the Vector and store the state of the Observer
+	     * needs synchronization, but notifying observers
+	     * does not (should not).  The worst result of any 
+	     * potential race-condition here is that:
+	     * 1) a newly-added Observer will miss a
+	     *   notification in progress
+	     * 2) a recently unregistered Observer will be
+	     *   wrongly notified when it doesn't care
+	     */
+	    if (!changed)
+                return;
+            arrLocal = obs.toArray();
+            clearChanged();
+        }
 
-		for ( i = n-1; i >= 0; i-- )
-		{
-			RemoteObserverPair p = (RemoteObserverPair) observer_list.elementAt(i);
-			if ( of_interest.equals( p.of_interest ) )
-			{
-				try 
-				{
-					p.observer.update( this, of_interest, arg );
-				}
-				catch (RemoteException e)
-				{
-					deleteObserver( p.observer, of_interest );
-				}
-			}
-		}
-	}
+        for (int i = arrLocal.length-1; i>=0; i--)
+            ((RemoteObserver)arrLocal[i]).update(this, arg);
+    }
 
-	/** Notifies any observers watching the object <tt>of_interest</tt> within this
-	  * observable. The argument sent to the observer in the <tt>update</tt> call is <tt>null</tt>.
-	  *
-	  * <p> If an <tt>update</tt> call fails with a <tt>RemoteException</tt>,
-	  * the observer is removed from the list of observers for this observable.
-	  *
-	  * @param of_interest An object within this observable. This parameter must not be <tt>null</tt>.
-	  */
-	public synchronized void notifyObservers( Object of_interest ) throws RemoteException
-	{
-		int i, n = observer_list.size();
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#deleteObservers()
+	 */
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#deleteObservers()
+	 */
+    public synchronized void deleteObservers() {
+	obs.removeAllElements();
+    }
 
-		for ( i = n-1; i >= 0; i-- )
-		{
-			RemoteObserverPair p = (RemoteObserverPair) observer_list.elementAt(i);
-			if ( of_interest.equals( p.of_interest ) )
-			{
-				try 
-				{
-					p.observer.update( this, of_interest, null );
-				}
-				catch (RemoteException e)
-				{
-					deleteObserver( p.observer, of_interest );
-				}
-			}
-		}
-	}
+    /**
+     * Marks this <tt>Observable</tt> object as having been changed; the 
+     * <tt>hasChanged</tt> method will now return <tt>true</tt>.
+     */
+    protected synchronized void setChanged() {
+	changed = true;
+    }
 
-	/** Notifies all observers watching this observable.
-	  * <p>If an <tt>update</tt> call fails with a <tt>RemoteException</tt>,
-	  * the observer is removed from the list of observers for this observable.
-	  */
-	public synchronized void notifyAllObservers() throws RemoteException
-	{
-		int i, n = observer_list.size();
+    /**
+     * Indicates that this object has no longer changed, or that it has 
+     * already notified all of its observers of its most recent change, 
+     * so that the <tt>hasChanged</tt> method will now return <tt>false</tt>. 
+     * This method is called automatically by the 
+     * <code>notifyObservers</code> methods. 
+     *
+     * @see     java.util.Observable#notifyObservers()
+     * @see     java.util.Observable#notifyObservers(java.lang.Object)
+     */
+    protected synchronized void clearChanged() {
+	changed = false;
+    }
 
-		for ( i = n-1; i >= 0; i-- )
-		{
-			RemoteObserverPair p = (RemoteObserverPair) observer_list.elementAt(i);
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#hasChanged()
+	 */
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#hasChanged()
+	 */
+    public synchronized boolean hasChanged() {
+	return changed;
+    }
 
-			try 
-			{
-				p.observer.update( this, p.of_interest, null );
-			}
-			catch (RemoteException e)
-			{
-				deleteObserver( p.observer, p.of_interest );
-			}
-		}
-	}
-
-	public synchronized void register( String host, String server ) throws Exception
-	{
-		String url = "rmi://"+host+"/"+server;
-		System.out.print( "RemoteObservableImpl.register: url: "+url+", call Naming.bind... " );
-		long t0 = System.currentTimeMillis();
-		java.rmi.Naming.bind( url, this );
-		long tf = System.currentTimeMillis();
-		System.out.println( server+" bound in registry; time elapsed: "+((tf-t0)/1000.0)+" [s]" );
-	}
-}
-
-
-/** Encapsulates an observer and item of interest pair.
-  */
-class RemoteObserverPair
-{
-	RemoteObserver observer;
-	Object of_interest;
-
-	RemoteObserverPair( RemoteObserver o, Object oi )
-	{
-		observer = o;
-		of_interest = oi;
-	}
-
-	/** Two <tt>RemoteObserverPair</tt>'s are equal if they refer to the same
-	  * <tt>RemoteObserver</tt> and the items of interest are equal, i.e. <tt>equals</tt>
-	  * returns <tt>true</tt>.
-	  */
-	public boolean equals( Object another )
-	{
-		if ( another instanceof RemoteObserverPair )
-		{
-			RemoteObserverPair another_pair = (RemoteObserverPair) another;
-
-			boolean are_eq = (this.observer.equals(another_pair.observer) && this.of_interest.equals(another_pair.of_interest));
-			return are_eq;
-		}
-		else
-			return false;
-	}
-
-	public String toString()
-	{
-		return "[observer: "+observer+", of_interest: "+of_interest+"]";
-	}
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#countObservers()
+	 */
+    /* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#countObservers()
+	 */
+    public synchronized int countObservers() {
+	return obs.size();
+    }
 }

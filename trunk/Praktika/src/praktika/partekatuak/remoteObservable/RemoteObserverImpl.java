@@ -33,9 +33,9 @@ public class RemoteObserverImpl extends UnicastRemoteObject implements RemoteObs
 
 	/** Prints out the observable, item of interest, and the argument, if any.
 	  */
-	public void update( RemoteObservable o, Object of_interest, Object arg ) throws RemoteException
+	public void update( RemoteObservable o, Object arg ) throws RemoteException
 	{
-		System.err.println( "RemoteObserverImpl.update: observable: "+o+" of_interest: "+of_interest+" arg: "+arg );
+		System.err.println( "RemoteObserverImpl.update: observable: "+o+ " arg: "+arg );
 	}
 
 	public RemoteObserverImpl() throws RemoteException {}
