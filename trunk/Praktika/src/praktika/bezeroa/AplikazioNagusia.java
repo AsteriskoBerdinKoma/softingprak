@@ -8,7 +8,7 @@ import praktika.zerbitzaria.ErreserbaSistema;
 import java.awt.Container;
 import java.awt.BorderLayout;
 
-class AplikazioNagusia extends JFrame {
+public class AplikazioNagusia extends JFrame {
 	/**
 	 * 
 	 */
@@ -57,7 +57,7 @@ class AplikazioNagusia extends JFrame {
 		this.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		new AplikazioNagusia("Erreserba Sistema");
-	}
+//	public static void main(String[] args) {
+//		new AplikazioNagusia("Erreserba Sistema");
+//	}
 }
