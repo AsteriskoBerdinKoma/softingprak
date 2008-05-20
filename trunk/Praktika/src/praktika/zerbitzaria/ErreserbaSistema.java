@@ -166,14 +166,8 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 		try {
 			ErreserbaSistema zerbitzariObj = new ErreserbaSistema();
 			System.out.println("objektua jaurtia");
-			try {
-				java.rmi.registry.LocateRegistry.createRegistry(1099); // RMIREGISTRY
-				// jaurtitzearen baliokidea
-			} catch (Exception e) {
-				System.out
-						.println(e.toString()
-								+ "\nSuposatzen dugu errorea dela rmiregistry aurretik jaurti delako ");
-			}
+			java.rmi.registry.LocateRegistry.createRegistry(1099); // RMIREGISTRY jaurtitzearen baliokidea
+
 			// Urruneko zerbitzua erregistratu
 			Naming.rebind(zerbitzuIzena, zerbitzariObj);
 			// "//IPHelbidea:PortuZenb/zerbitzuIzena"
@@ -188,6 +182,10 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			System.out
+					.println(e.toString()
+							+ "\nSuposatzen dugu errorea dela rmiregistry aurretik jaurti delako ");
 		}
 	}
 
