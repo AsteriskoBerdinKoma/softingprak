@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
+import praktika.zerbitzaria.ErreserbaInterface;
 import praktika.zerbitzaria.ErreserbaSistema;
 
 /**
@@ -75,7 +76,7 @@ public class ErreserbaItenarenBista extends JPanel implements RemoteObserver {
 	public void update(RemoteObservable observable, Object objektua) {
 		NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 		// Sarrera
-		ErreserbaSistema erreserbaSistema = (ErreserbaSistema) observable;
+		ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
 		// Prozesua
 		if (erreserbaSistema.getLoturaErreserba() != null) {
 		} else {

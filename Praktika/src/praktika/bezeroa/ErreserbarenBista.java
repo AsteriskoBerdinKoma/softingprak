@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
+import praktika.zerbitzaria.ErreserbaInterface;
 import praktika.zerbitzaria.ErreserbaSistema;
 
 /**
@@ -52,7 +53,7 @@ public class ErreserbarenBista extends JPanel implements RemoteObserver {
 		//
 		NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 		DateFormat dataFormat = DateFormat.getDateInstance();
-		ErreserbaSistema erreserbaSistema = (ErreserbaSistema) observable;
+		ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
 
 	}
 }

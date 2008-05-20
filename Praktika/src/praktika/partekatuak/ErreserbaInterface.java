@@ -1,10 +1,10 @@
 package praktika.partekatuak;
 
-import praktika.partekatuak.remoteObservable.RemoteObserver;
+import praktika.partekatuak.remoteObservable.RemoteObservable;
 
 
-public interface ErreserbaInterface extends RemoteObserver{
+public interface ErreserbaInterface extends RemoteObservable{
 	
-	//ErreserbaSistemako klaseak
+	
 
 }
