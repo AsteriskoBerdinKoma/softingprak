@@ -8,12 +8,12 @@ public interface RemoteObservable extends Remote{
 	/* (non-Javadoc)
 	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#addObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
 	 */
-	public void addObserver(RemoteObserver o);
+	public void addObserver(RemoteObserver o) throws RemoteException;
 
 	/* (non-Javadoc)
 	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#deleteObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
 	 */
-	public void deleteObserver(RemoteObserver o);
+	public void deleteObserver(RemoteObserver o) throws RemoteException;
 
 	/* (non-Javadoc)
 	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#notifyObservers()
@@ -28,16 +28,16 @@ public interface RemoteObservable extends Remote{
 	/* (non-Javadoc)
 	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#deleteObservers()
 	 */
-	public void deleteObservers();
+	public void deleteObservers() throws RemoteException;
 
 	/* (non-Javadoc)
 	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#hasChanged()
 	 */
-	public boolean hasChanged();
+	public boolean hasChanged() throws RemoteException;
 
 	/* (non-Javadoc)
 	 * @see praktika.partekatuak.remoteObservable.RemoteObserver2#countObservers()
 	 */
-	public int countObservers();
+	public int countObservers() throws RemoteException;
 
 }

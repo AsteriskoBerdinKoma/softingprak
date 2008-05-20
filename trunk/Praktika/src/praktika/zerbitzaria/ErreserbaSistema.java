@@ -1,5 +1,6 @@
 package praktika.zerbitzaria;
 
+import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
@@ -23,7 +24,7 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 	private static final long serialVersionUID = 1L;
 
 	public static final String JDBC_DRIVER = "sun.jdbc.odbc.JdbcOdbcDriver";
-	public static final String DATABASE_URL = "jdbc:odbc:Txartelak";
+	public static final String DATABASE_URL = "jdbc:odbc:Bidaiak";
 	public static final String USERNAME = "";
 	public static final String PASSWORD = "";
 
@@ -38,6 +39,7 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 	private Erreserba LoturaErreserba;
 
 	public ErreserbaSistema() throws RemoteException {
+		super();
 		try {
 			Class.forName(JDBC_DRIVER);
 			kon = DriverManager.getConnection(DATABASE_URL);
@@ -177,9 +179,16 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 			Naming.rebind(zerbitzuIzena, zerbitzariObj);
 			// "//IPHelbidea:PortuZenb/zerbitzuIzena"
 			// EZ DABIL rmiregistry izen zerbitzaria localhost-en EZ BADAGO
-		} catch (Exception e) {
-			System.out
-					.println("Errorea zerbitzaria jaurtitzean" + e.toString());
+			// } catch (Exception e) {
+			// System.out
+			// .println("Errorea zerbitzaria jaurtitzean" + e.toString());
+			// }
+		} catch (RemoteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
