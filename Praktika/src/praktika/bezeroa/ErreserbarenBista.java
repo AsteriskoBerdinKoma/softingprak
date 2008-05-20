@@ -8,9 +8,9 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
-import praktika.zerbitzaria.ErreserbaInterface;
 import praktika.zerbitzaria.ErreserbaSistema;
 
 /**
