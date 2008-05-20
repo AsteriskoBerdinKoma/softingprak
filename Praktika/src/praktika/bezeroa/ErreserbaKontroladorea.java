@@ -96,7 +96,6 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 
 		setLayout(new GridLayout(8, 3, 25, 25));
 		setFont(new Font("Arial", Font.PLAIN, 12));
-		setBackground(Color.lightGray);
 		setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 		// errenkada 1
 		add(etiketaErreserbaAgentea);
