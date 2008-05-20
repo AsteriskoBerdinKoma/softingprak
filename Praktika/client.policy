@@ -1,3 +1,5 @@
 grant {
 permission java.net.SocketPermission "*:1024-", "connect, resolve, listen, accept";
+permission java.lang.RuntimePermission "accessClassInPackage.sun.jdbc.odbc";
+permission java.util.PropertyPermission "*", "read";
 };
