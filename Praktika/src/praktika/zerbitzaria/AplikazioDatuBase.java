@@ -9,6 +9,12 @@ import java.util.HashMap;
  */
 
 public class AplikazioDatuBase {
+
+	private static final String URL = "jdbc:odbc:bidaiak";
+	private static final String JDBC_DRIVER = "sun.jdbc.odbc.JdbcOdbcDriver";
+	private static final String USER = "";
+	private static String PASS = "";
+
 	private static AplikazioDatuBase instantzia;
 
 	private Connection konexioa;
@@ -18,9 +24,8 @@ public class AplikazioDatuBase {
 	 */
 	public AplikazioDatuBase() {
 		try {
-			String url = "jdbc:odbc:bidaiak";
-			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-			konexioa = DriverManager.getConnection(url, "", "");
+			Class.forName(JDBC_DRIVER);
+			konexioa = DriverManager.getConnection(URL, USER, PASS);
 		} catch (SQLException anException) {
 			while (anException != null) {
 				System.out.println("SQL Exception:  "
