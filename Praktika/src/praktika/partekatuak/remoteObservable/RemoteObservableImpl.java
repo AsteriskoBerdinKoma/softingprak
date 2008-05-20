@@ -56,7 +56,6 @@ public class RemoteObservableImpl extends UnicastRemoteObject implements
 	 */
 
 	public RemoteObservableImpl() throws RemoteException {
-		super();
 		obs = new Vector<RemoteObserver>();
 	}
 
@@ -65,8 +64,7 @@ public class RemoteObservableImpl extends UnicastRemoteObject implements
 	 * 
 	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#addObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
 	 */
-	public synchronized void addObserver(RemoteObserver o)
-			throws RemoteException {
+	public synchronized void addObserver(RemoteObserver o) {
 		if (o == null)
 			throw new NullPointerException();
 		if (!obs.contains(o)) {
@@ -79,8 +77,7 @@ public class RemoteObservableImpl extends UnicastRemoteObject implements
 	 * 
 	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#deleteObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
 	 */
-	public synchronized void deleteObserver(RemoteObserver o)
-			throws RemoteException {
+	public synchronized void deleteObserver(RemoteObserver o) {
 		obs.removeElement(o);
 	}
 
@@ -131,7 +128,7 @@ public class RemoteObservableImpl extends UnicastRemoteObject implements
 	 * 
 	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#deleteObservers()
 	 */
-	public synchronized void deleteObservers() throws RemoteException {
+	public synchronized void deleteObservers() {
 		obs.removeAllElements();
 	}
 
@@ -162,7 +159,7 @@ public class RemoteObservableImpl extends UnicastRemoteObject implements
 	 * 
 	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#hasChanged()
 	 */
-	public synchronized boolean hasChanged() throws RemoteException {
+	public synchronized boolean hasChanged() {
 		return changed;
 	}
 
@@ -171,7 +168,7 @@ public class RemoteObservableImpl extends UnicastRemoteObject implements
 	 * 
 	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#countObservers()
 	 */
-	public synchronized int countObservers() throws RemoteException {
+	public synchronized int countObservers() {
 		return obs.size();
 	}
 }

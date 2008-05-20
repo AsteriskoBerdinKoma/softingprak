@@ -39,7 +39,6 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 	private Erreserba LoturaErreserba;
 
 	public ErreserbaSistema() throws RemoteException {
-		super();
 		try {
 			Class.forName(JDBC_DRIVER);
 			kon = DriverManager.getConnection(DATABASE_URL);
