@@ -9,8 +9,7 @@ import praktika.bezeroa.AplikazioNagusia;
 public class BidaiakApp {
 
 	public static void main(String[] args) {
-        AplikazioNagusia nagusia = new AplikazioNagusia("Erreserba Sistema");
-        try {
+		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -25,10 +24,11 @@ public class BidaiakApp {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        nagusia.setLocationRelativeTo(null);
-        //nagusia.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        nagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        nagusia.setVisible(true);
-}
+		AplikazioNagusia nagusia = new AplikazioNagusia("Erreserba Sistema");
+		nagusia.setLocationRelativeTo(null);
+		// nagusia.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		nagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		nagusia.setVisible(true);
+	}
 
 }

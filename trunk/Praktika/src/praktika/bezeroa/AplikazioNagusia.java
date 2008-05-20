@@ -43,13 +43,10 @@ public class AplikazioNagusia extends JFrame {
 		addWindowListener(new WindowListener(){
 
 			@Override
-			public void windowActivated(WindowEvent e) {
-
-			}
+			public void windowActivated(WindowEvent e) {}
 
 			@Override
-			public void windowClosed(WindowEvent e) {
-			}
+			public void windowClosed(WindowEvent e) {}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -66,24 +63,16 @@ public class AplikazioNagusia extends JFrame {
 			}
 
 			@Override
-			public void windowDeactivated(WindowEvent e) {
-
-			}
+			public void windowDeactivated(WindowEvent e) {}
 
 			@Override
-			public void windowDeiconified(WindowEvent e) {
-
-			}
+			public void windowDeiconified(WindowEvent e) {}
 
 			@Override
-			public void windowIconified(WindowEvent e) {
-
-			}
+			public void windowIconified(WindowEvent e) {}
 
 			@Override
-			public void windowOpened(WindowEvent e) {
-
-			}});
+			public void windowOpened(WindowEvent e) {}});
 		System.setProperty("java.security.policy", "client.policy");
 		// Ereduak sortu
 			this.setLocationRelativeTo(null);
@@ -111,10 +100,10 @@ public class AplikazioNagusia extends JFrame {
 		//
 		// Eraiki bista
 		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(erreserbarenBistaSummary, BorderLayout.NORTH);
+		//getContentPane().add(erreserbarenBistaSummary, BorderLayout.NORTH);
 		getContentPane().add(erreserbaKontroladorea, BorderLayout.CENTER);
 		getContentPane().add(erreserbarenBista, BorderLayout.EAST);
-		getContentPane().add(erreserbaItenarenBista, BorderLayout.SOUTH);
+		//getContentPane().add(erreserbaItenarenBista, BorderLayout.SOUTH);
 
 		this.setVisible(true);
 	}

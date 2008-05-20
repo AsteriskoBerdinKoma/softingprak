@@ -34,63 +34,67 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 
 	private Erreserba LoturaErreserba;
 	private AplikazioDatuBase aDB;
-	
-	ZerbitzariaFrame frame;
+
+	private ZerbitzariaFrame frame;
+
+	private boolean konektatua;
 
 	public ErreserbaSistema() throws RemoteException {
 		frame = new ZerbitzariaFrame();
-		frame.addWindowListener(new WindowListener(){
+		frame.addWindowListener(new WindowListener() {
 
 			@Override
 			public void windowActivated(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowClosed(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowClosing(WindowEvent e) {
 				aDB.finalize();
-				frame.gehituEkintza(getCurrentTime() + ": Datu baseko konexioa itxita.");
+				frame.gehituEkintza(getCurrentTime()
+						+ ": Datu baseko konexioa itxita.");
 				System.exit(0);
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowIconified(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void windowOpened(WindowEvent e) {
 				// TODO Auto-generated method stub
-				
-			}});
+
+			}
+		});
 		frame.setLocationRelativeTo(null);
-		frame.gehituEkintza(getCurrentTime() + ": Zerbitzaria hasieratua");
 		frame.setVisible(true);
 		aDB = AplikazioDatuBase.instance();
-		if(aDB.isConnectedToDatabase())
+		if (aDB.isConnectedToDatabase())
 			frame.gehituEkintza(getCurrentTime() + ": Datu basera konektatua");
 		else
-			frame.gehituEkintza(getCurrentTime() + ": Ezin izan da datu basera konexioa ezarri");
+			frame.gehituEkintza(getCurrentTime()
+					+ ": Ezin izan da datu basera konexioa ezarri");
 	}
 
 	/*
@@ -187,12 +191,13 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		setChanged();
 		super.notifyObservers();
 	}
-	
-	
+
 	@Override
-	public void notifyConnection() throws ServerNotActiveException, RemoteException{
+	public void notifyConnection() throws ServerNotActiveException,
+			RemoteException {
 		frame.gehituBezeroa(getClientHost());
-		frame.gehituEkintza(getCurrentTime() + ": " + getClientHost() + " bezeroa konektatu da");
+		frame.gehituEkintza(getCurrentTime() + ": " + getClientHost()
+				+ " bezeroa konektatu da");
 		System.out.println(getClientHost() + " konektatu da.");
 	}
 
@@ -200,8 +205,28 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	public void notifyDesconnection() throws RemoteException,
 			ServerNotActiveException {
 		frame.kenduBezeroa(getClientHost());
-		frame.gehituEkintza(getCurrentTime() + ": " + getClientHost() + " bezeroa deskonektatu da");
-		System.out.println(getClientHost() + " deskonektatu da.");		
+		frame.gehituEkintza(getCurrentTime() + ": " + getClientHost()
+				+ " bezeroa deskonektatu da");
+		System.out.println(getClientHost() + " deskonektatu da.");
+	}
+
+	public static String getCurrentTime() {
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
+
+	protected final boolean isKonektatua() {
+		return konektatua;
+	}
+
+	protected final void setKonektatua(boolean konektatua) {
+		this.konektatua = konektatua;
+		if (konektatua)
+			frame.gehituEkintza(getCurrentTime() + ": Zerbitzaria hasieratua");
+		else
+			frame.gehituEkintza(getCurrentTime()
+					+ ": Ezin izan da zerbitzaria hasieratu");
 	}
 
 	/**
@@ -217,36 +242,30 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 			System.setSecurityManager(new RMISecurityManager());
 		try {
 			ErreserbaSistema zerbitzariObj = new ErreserbaSistema();
-			java.rmi.registry.LocateRegistry.createRegistry(1099); // RMIREGISTRY
-																	// jaurtitzearen
-																	// baliokidea
+			try {
+				java.rmi.registry.LocateRegistry.createRegistry(1099); // RMIREGISTRY
+				// jaurtitzearen
+				// baliokidea
 
-			// Urruneko zerbitzua erregistratu
-			Naming.rebind(zerbitzuIzena, zerbitzariObj);
-			// "//IPHelbidea:PortuZenb/zerbitzuIzena"
-			// EZ DABIL rmiregistry izen zerbitzaria localhost-en EZ BADAGO
-			// } catch (Exception e) {
-			// System.out
-			// .println("Errorea zerbitzaria jaurtitzean" + e.toString());
-			// }
-			System.out.println("Zerbitzaria hasieratua");
+				// Urruneko zerbitzua erregistratu
+				Naming.rebind(zerbitzuIzena, zerbitzariObj);
+				// "//IPHelbidea:PortuZenb/zerbitzuIzena"
+				// EZ DABIL rmiregistry izen zerbitzaria localhost-en EZ BADAGO
+				System.out.println("Zerbitzaria hasieratua");
+				zerbitzariObj.setKonektatua(true);
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				zerbitzariObj.setKonektatua(false);
+			} catch (Exception e) {
+				System.out
+						.println(e.toString()
+								+ "\nSuposatzen dugu errorea dela rmiregistry aurretik jaurti delako ");
+				zerbitzariObj.setKonektatua(false);
+			}
 		} catch (RemoteException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			System.out
-					.println(e.toString()
-							+ "\nSuposatzen dugu errorea dela rmiregistry aurretik jaurti delako ");
 		}
 	}
-	
-	public static String getCurrentTime(){
-		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        Date date = new Date();
-        return dateFormat.format(date);
-	}
-
 }
