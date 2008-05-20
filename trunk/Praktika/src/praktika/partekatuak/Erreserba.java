@@ -1,6 +1,8 @@
 package praktika.partekatuak;
 
-public class Erreserba {
+import java.io.Serializable;
+
+public class Erreserba implements Serializable{
 
 	// TODO: EGIN BEHAR DA
 

@@ -1,14 +1,29 @@
 package praktika.bezeroa;
 
-import javax.swing.*;
-
-import praktika.zerbitzaria.ErreserbaInterface;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.rmi.RemoteException;
-import java.text.*;
-import java.util.*;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Iterator;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import praktika.partekatuak.ErreserbaInterface;
 
 /**
  * Erreserbak kontrolatzeko klaseak.
@@ -137,120 +152,106 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	}
 
 	public void actionPerformed(ActionEvent event) {
-		NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-		DateFormat dataFormat = DateFormat.getDateInstance();
-		if (event.getSource() == botoiaErreserbaBerria) {
-			// Sarrera
-			String strNumberInParty = (String) comboPertsonaKopurua
-					.getSelectedItem();
-			int pertsonaKopurua = Integer.parseInt(strNumberInParty);
-			String irteeraHandizkariarenIdentifikatzailea = (String) comboErreserbaAgentea
-					.getSelectedItem();
-			// Ereduak sartu
-			try {
+		try {
+			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+			DateFormat dataFormat = DateFormat.getDateInstance();
+			if (event.getSource() == botoiaErreserbaBerria) {
+				// Sarrera
+				String strNumberInParty = (String) comboPertsonaKopurua
+						.getSelectedItem();
+				int pertsonaKopurua = Integer.parseInt(strNumberInParty);
+				String irteeraHandizkariarenIdentifikatzailea = (String) comboErreserbaAgentea
+						.getSelectedItem();
+				// Ereduak sartu
 				LoturaErreserbaSistema.erreserbaBerria(pertsonaKopurua,
 						irteeraHandizkariarenIdentifikatzailea);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// Botoiak ipini
-			botoiaErreserbaBerria.setEnabled(false);
-			botoiaSartuIrteera.setEnabled(true);
-			botoiaSartuTurista.setEnabled(false);
-			botoiaSartuBidali.setEnabled(false);
-			botoiaSartuEzeztatu.setEnabled(false);
-		}
-		if (event.getSource() == botoiaSartuIrteera) {
-			Date irteeraData = null;
-			// Sarrera
-			String zerbitzuarenKodea = (String) comboIrteerarenEzaugarriak
-					.getSelectedItem();
-			String strIrteeraData = (String) comboIrteeraData.getSelectedItem();
-			try {
-				irteeraData = dataFormat.parse(strIrteeraData);
-			} catch (ParseException e) {
-			}
-			try {
-				int baieztapenZenbakia = Integer
-						.parseInt(testuEremuaBaieztapenZenbakia.getText());
-				// Ereduak sartu
-				LoturaErreserbaSistema.sartuIrteera(baieztapenZenbakia,
-						zerbitzuarenKodea, irteeraData);
-			} catch (NumberFormatException numberFormatException) {
-				JOptionPane.showMessageDialog(new JFrame(),
-						"Mesedez zenbaki oso bat sartu",
-						"Sarrera errore mezua", JOptionPane.WARNING_MESSAGE);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// Botoiak ipini
-			botoiaErreserbaBerria.setEnabled(false);
-			botoiaSartuIrteera.setEnabled(true);
-			botoiaSartuTurista.setEnabled(true);
-			botoiaSartuBidali.setEnabled(false);
-			botoiaSartuEzeztatu.setEnabled(false);
-		}
-		if (event.getSource() == botoiaSartuTurista) {
-			// Sarrera
-			String izena = testuEremuaIzena.getText();
-			String helbidea = testuEremuaHelbidea.getText();
-			String telefonoa = testuEremuaTelefonoa.getText();
-			// Ereduak sartu
-			try {
-				LoturaErreserbaSistema.sartuTurista(izena, helbidea, telefonoa);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// Botoiak ipini
-			botoiaErreserbaBerria.setEnabled(false);
-			botoiaSartuIrteera.setEnabled(false);
-			botoiaSartuTurista.setEnabled(false);
-			botoiaSartuBidali.setEnabled(true);
-			botoiaSartuEzeztatu.setEnabled(true);
 
-		}
-		if (event.getSource() == botoiaSartuBidali) {
-			// Ereduak sartu
-			try {
+				// Botoiak ipini
+				botoiaErreserbaBerria.setEnabled(false);
+				botoiaSartuIrteera.setEnabled(true);
+				botoiaSartuTurista.setEnabled(false);
+				botoiaSartuBidali.setEnabled(false);
+				botoiaSartuEzeztatu.setEnabled(false);
+			}
+			if (event.getSource() == botoiaSartuIrteera) {
+				Date irteeraData = null;
+				// Sarrera
+				String zerbitzuarenKodea = (String) comboIrteerarenEzaugarriak
+						.getSelectedItem();
+				String strIrteeraData = (String) comboIrteeraData
+						.getSelectedItem();
+				try {
+					irteeraData = dataFormat.parse(strIrteeraData);
+				} catch (ParseException e) {
+				}
+				try {
+					int baieztapenZenbakia = Integer
+							.parseInt(testuEremuaBaieztapenZenbakia.getText());
+					// Ereduak sartu
+					LoturaErreserbaSistema.sartuIrteera(baieztapenZenbakia,
+							zerbitzuarenKodea, irteeraData);
+				} catch (NumberFormatException numberFormatException) {
+					JOptionPane
+							.showMessageDialog(new JFrame(),
+									"Mesedez zenbaki oso bat sartu",
+									"Sarrera errore mezua",
+									JOptionPane.WARNING_MESSAGE);
+				}
+				// Botoiak ipini
+				botoiaErreserbaBerria.setEnabled(false);
+				botoiaSartuIrteera.setEnabled(true);
+				botoiaSartuTurista.setEnabled(true);
+				botoiaSartuBidali.setEnabled(false);
+				botoiaSartuEzeztatu.setEnabled(false);
+			}
+			if (event.getSource() == botoiaSartuTurista) {
+				// Sarrera
+				String izena = testuEremuaIzena.getText();
+				String helbidea = testuEremuaHelbidea.getText();
+				String telefonoa = testuEremuaTelefonoa.getText();
+				// Ereduak sartu
+				LoturaErreserbaSistema.sartuTurista(izena, helbidea, telefonoa);
+				// Botoiak ipini
+				botoiaErreserbaBerria.setEnabled(false);
+				botoiaSartuIrteera.setEnabled(false);
+				botoiaSartuTurista.setEnabled(false);
+				botoiaSartuBidali.setEnabled(true);
+				botoiaSartuEzeztatu.setEnabled(true);
+
+			}
+			if (event.getSource() == botoiaSartuBidali) {
+				// Ereduak sartu
 				LoturaErreserbaSistema.submit();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// Botoiak ipini
+				botoiaErreserbaBerria.setEnabled(true);
+				botoiaSartuIrteera.setEnabled(false);
+				botoiaSartuTurista.setEnabled(false);
+				botoiaSartuBidali.setEnabled(false);
+				botoiaSartuEzeztatu.setEnabled(false);
+				// Testu eremuak ezabatu
+				testuEremuaBaieztapenZenbakia.setText("");
+				testuEremuaIzena.setText("");
+				testuEremuaHelbidea.setText("");
+				testuEremuaTelefonoa.setText("");
 			}
-			// Botoiak ipini
-			botoiaErreserbaBerria.setEnabled(true);
-			botoiaSartuIrteera.setEnabled(false);
-			botoiaSartuTurista.setEnabled(false);
-			botoiaSartuBidali.setEnabled(false);
-			botoiaSartuEzeztatu.setEnabled(false);
-			// Testu eremuak ezabatu
-			testuEremuaBaieztapenZenbakia.setText("");
-			testuEremuaIzena.setText("");
-			testuEremuaHelbidea.setText("");
-			testuEremuaTelefonoa.setText("");
-		}
-		if (event.getSource() == botoiaSartuEzeztatu) {
-			// Ereduak sartu
-			try {
+			if (event.getSource() == botoiaSartuEzeztatu) {
+				// Ereduak sartu
 				LoturaErreserbaSistema.ezeztatu();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// Botoiak ipini
+				botoiaErreserbaBerria.setEnabled(true);
+				botoiaSartuIrteera.setEnabled(false);
+				botoiaSartuTurista.setEnabled(false);
+				botoiaSartuBidali.setEnabled(false);
+				botoiaSartuEzeztatu.setEnabled(false);
+				// Testu eremuak ezabatu
+				testuEremuaBaieztapenZenbakia.setText("");
+				testuEremuaIzena.setText("");
+				testuEremuaHelbidea.setText("");
+				testuEremuaTelefonoa.setText("");
 			}
-			// Botoiak ipini
-			botoiaErreserbaBerria.setEnabled(true);
-			botoiaSartuIrteera.setEnabled(false);
-			botoiaSartuTurista.setEnabled(false);
-			botoiaSartuBidali.setEnabled(false);
-			botoiaSartuEzeztatu.setEnabled(false);
-			// Testu eremuak ezabatu
-			testuEremuaBaieztapenZenbakia.setText("");
-			testuEremuaIzena.setText("");
-			testuEremuaHelbidea.setText("");
-			testuEremuaTelefonoa.setText("");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

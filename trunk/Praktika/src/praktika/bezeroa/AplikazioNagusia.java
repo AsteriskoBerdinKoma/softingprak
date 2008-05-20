@@ -35,19 +35,16 @@ public class AplikazioNagusia extends JFrame {
 	public AplikazioNagusia(String izenburuBat) {
 		// Eraikitzaileen edukiontzia
 		super();
+		try {
 		setTitle(izenburuBat);
 		setSize(700, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		System.setProperty("java.security.policy", "client.policy");
 		// Ereduak sortu
-		try {
 			this.setLocationRelativeTo(null);
 			setRemoteServer();
 			LoturaErreserbaSistema = new ErreserbaSistema();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		// Bistak sortu
 		ErreserbaKontroladorea erreserbaKontroladorea = new ErreserbaKontroladorea(
 				LoturaErreserbaSistema);
@@ -75,6 +72,10 @@ public class AplikazioNagusia extends JFrame {
 		getContentPane().add(erreserbaItenarenBista, BorderLayout.SOUTH);
 
 		this.setVisible(true);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void setRemoteServer(){
