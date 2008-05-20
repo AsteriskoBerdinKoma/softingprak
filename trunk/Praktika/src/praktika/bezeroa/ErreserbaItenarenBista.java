@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
-import praktika.zerbitzaria.ErreserbaSistema;
 
 /**
  * Lehen mailarekin(Bista)lan egiten duen klasea.
@@ -44,9 +43,10 @@ public class ErreserbaItenarenBista extends JPanel implements RemoteObserver {
 
 	private JTextField testuEremuaLuzapena = new JTextField();
 
-	public ErreserbaItenarenBista(ErreserbaSistema erreserbaSistema) {
+	public ErreserbaItenarenBista(ErreserbaInterface erreserbaSistema) {
 		//  
-		erreserbaSistema.addObserver(this);
+		try {
+			erreserbaSistema.addObserver(this);
 
 		setLayout(new GridLayout(1, 5, 25, 25));
 		setFont(new Font("Arial", Font.PLAIN, 12));
@@ -63,6 +63,10 @@ public class ErreserbaItenarenBista extends JPanel implements RemoteObserver {
 		textFieldDeskribapena.setEditable(false);
 		testuEremuaPrezioa.setEditable(false);
 		testuEremuaLuzapena.setEditable(false);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

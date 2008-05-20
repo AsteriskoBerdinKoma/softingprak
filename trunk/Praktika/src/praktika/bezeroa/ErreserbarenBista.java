@@ -1,5 +1,6 @@
 package praktika.bezeroa;
 
+import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 
@@ -11,7 +12,6 @@ import javax.swing.JScrollPane;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
-import praktika.zerbitzaria.ErreserbaSistema;
 
 /**
  * Aplikazioaren lehen mailaren(Bista) klasea
@@ -30,13 +30,18 @@ public class ErreserbarenBista extends JPanel implements RemoteObserver {
 
 	// private JTextArea area = new JTextArea();
 
-	public ErreserbarenBista(ErreserbaSistema erreserbaSistema) {
-		erreserbaSistema.addObserver(this);
-		//
-		itenak = new DefaultListModel();
-		lista = new JList(itenak);
-		lista.setVisibleRowCount(24);
-		this.add(new JScrollPane(lista));
+	public ErreserbarenBista(ErreserbaInterface erreserbaSistema) {
+		try {
+			erreserbaSistema.addObserver(this);
+			//
+			itenak = new DefaultListModel();
+			lista = new JList(itenak);
+			lista.setVisibleRowCount(24);
+			this.add(new JScrollPane(lista));
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

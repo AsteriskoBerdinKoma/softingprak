@@ -26,7 +26,7 @@ public class BidaiakApp {
 			e.printStackTrace();
 		}
         nagusia.setLocationRelativeTo(null);
-        nagusia.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //nagusia.setExtendedState(JFrame.MAXIMIZED_BOTH);
         nagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         nagusia.setVisible(true);
 }
