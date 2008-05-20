@@ -10,13 +10,14 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import praktika.partekatuak.Erreserba;
+import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.remoteObservable.RemoteObservableImpl;
 
 /**
  * Bigarren mailako antolatzeko klasea
  */
 
-public class ErreserbaSistema extends RemoteObservableImpl {
+public class ErreserbaSistema extends RemoteObservableImpl implements ErreserbaInterface {
 
 	/**
 	 * 
@@ -51,12 +52,8 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 		}
 	}
 
-	/**
-	 * Datu basearekin konexioa irekita badago itxi egiten du.
-	 * 
-	 * @throws SQLException
-	 * 
-	 * @throws SQLException
+	/* (non-Javadoc)
+	 * @see praktika.zerbitzaria.ErreserbaInterface#disconnect()
 	 */
 	public void disconnect() throws SQLException {
 		if (connectedToDatabase) {
@@ -65,6 +62,9 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see praktika.zerbitzaria.ErreserbaInterface#ezeztatu()
+	 */
 	public void ezeztatu() throws RemoteException {
 		// Erreserba sortu
 		LoturaErreserba = null;
@@ -73,14 +73,8 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 		super.notifyObservers();
 	}
 
-	/**
-	 * Hemen metodoaren deskribapena sartu.
-	 * 
-	 * @param zerbitzuarenKodea
-	 *            java.lang.String
-	 * @param eskeinitakoData
-	 *            java.util.Date
-	 * @throws RemoteException
+	/* (non-Javadoc)
+	 * @see praktika.zerbitzaria.ErreserbaInterface#sartuIrteera(int, java.lang.String, java.util.Date)
 	 */
 	public void sartuIrteera(int baieztapenZenbakia, String irteerarenKodea,
 			Date eskeinitakoData) throws RemoteException {
@@ -93,16 +87,8 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 		super.notifyObservers();
 	}
 
-	/**
-	 * Hemen metodoaren deskribapena sartu.
-	 * 
-	 * @param izena
-	 *            java.lang.String
-	 * @param helbidea
-	 *            java.lang.String
-	 * @param telefonoa
-	 *            java.lang.String
-	 * @throws RemoteException
+	/* (non-Javadoc)
+	 * @see praktika.zerbitzaria.ErreserbaInterface#sartuTurista(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void sartuTurista(String izena, String helbidea, String telefonoa)
 			throws RemoteException {
@@ -113,14 +99,15 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 		super.notifyObservers();
 	}
 
+	/* (non-Javadoc)
+	 * @see praktika.zerbitzaria.ErreserbaInterface#getLoturaErreserba()
+	 */
 	public Erreserba getLoturaErreserba() {
 		return LoturaErreserba;
 	}
 
-	/**
-	 * 
-	 * @return total double
-	 * @throws RemoteException
+	/* (non-Javadoc)
+	 * @see praktika.zerbitzaria.ErreserbaInterface#erreserbaBerria(int, java.lang.String)
 	 */
 	public void erreserbaBerria(int pertsonaKopurua,
 			String erreserbaAgentearenIdentifikatzailea) throws RemoteException {
@@ -134,14 +121,15 @@ public class ErreserbaSistema extends RemoteObservableImpl {
 		super.notifyObservers();
 	}
 
+	/* (non-Javadoc)
+	 * @see praktika.zerbitzaria.ErreserbaInterface#setLoturaErreserba(praktika.partekatuak.Erreserba)
+	 */
 	public void setLoturaErreserba(Erreserba newLoturaErreserba) {
 		LoturaErreserba = newLoturaErreserba;
 	}
 
-	/**
-	 * Hemen metodoaren deskribapena sartu
-	 * 
-	 * @throws RemoteException
+	/* (non-Javadoc)
+	 * @see praktika.zerbitzaria.ErreserbaInterface#submit()
 	 */
 	public void submit() throws RemoteException {
 

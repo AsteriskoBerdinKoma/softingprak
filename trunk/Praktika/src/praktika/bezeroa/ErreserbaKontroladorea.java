@@ -2,7 +2,7 @@ package praktika.bezeroa;
 
 import javax.swing.*;
 
-import praktika.zerbitzaria.ErreserbaSistema;
+import praktika.zerbitzaria.ErreserbaInterface;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -72,9 +72,9 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 
 	private JTextField testuEremuaTelefonoa = new JTextField();
 
-	private ErreserbaSistema LoturaErreserbaSistema;
+	private ErreserbaInterface LoturaErreserbaSistema;
 
-	public ErreserbaKontroladorea(ErreserbaSistema erreserbaSistema) {
+	public ErreserbaKontroladorea(ErreserbaInterface erreserbaSistema) {
 		this.LoturaErreserbaSistema = erreserbaSistema;
 		//
 		Iterator iterator;
