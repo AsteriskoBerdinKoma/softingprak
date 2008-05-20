@@ -11,7 +11,7 @@ public interface ErreserbaInterface extends RemoteObservable{
 	public void erreserbaBerria(int pertsonaKopurua,
 			String irteeraHandizkariarenIdentifikatzailea) throws RemoteException;
 
-	public Erreserba getLoturaErreserba();
+	public Erreserba getLoturaErreserba() throws RemoteException;
 
 	public void sartuIrteera(int baieztapenZenbakia, String zerbitzuarenKodea,
 			Date irteeraData) throws RemoteException;

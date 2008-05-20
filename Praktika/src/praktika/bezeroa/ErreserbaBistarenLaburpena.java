@@ -3,6 +3,7 @@ package praktika.bezeroa;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 
@@ -77,12 +78,17 @@ public class ErreserbaBistarenLaburpena extends JPanel implements RemoteObserver
 		DateFormat dataFormat = DateFormat.getDateInstance();
 		ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
 		//
-		if (erreserbaSistema.getLoturaErreserba() != null) {
-		} else {
-			testuEremuaData.setText("");
-			testuEremuaGuztira.setText("");
-			testuEremuaAgentearenIzena.setText("");
-			testuEremuaErreserbarenZenbakia.setText("");
+		try {
+			if (erreserbaSistema.getLoturaErreserba() != null) {
+			} else {
+				testuEremuaData.setText("");
+				testuEremuaGuztira.setText("");
+				testuEremuaAgentearenIzena.setText("");
+				testuEremuaErreserbarenZenbakia.setText("");
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
