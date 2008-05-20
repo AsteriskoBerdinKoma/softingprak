@@ -1,6 +1,7 @@
 package praktika.partekatuak;
 
 import java.rmi.RemoteException;
+import java.rmi.server.ServerNotActiveException;
 import java.util.Date;
 
 import praktika.partekatuak.remoteObservable.RemoteObservable;
@@ -22,6 +23,7 @@ public interface ErreserbaInterface extends RemoteObservable{
 
 	public void ezeztatu() throws RemoteException;
 	
-	
+	public void notifyConnection() throws RemoteException, ServerNotActiveException;
 
+	public void notifyDesconnection() throws RemoteException, ServerNotActiveException;
 }

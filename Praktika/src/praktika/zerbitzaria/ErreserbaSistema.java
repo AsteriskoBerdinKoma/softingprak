@@ -4,9 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.rmi.server.ServerNotActiveException;
 import java.util.Date;
 
 import praktika.partekatuak.Erreserba;
@@ -17,7 +15,7 @@ import praktika.partekatuak.remoteObservable.RemoteObservableImpl;
  * Bigarren mailako antolatzeko klasea
  */
 
-public class ErreserbaSistema extends RemoteObservableImpl implements
+class ErreserbaSistema extends RemoteObservableImpl implements
 		ErreserbaInterface {
 
 	/**
@@ -30,26 +28,11 @@ public class ErreserbaSistema extends RemoteObservableImpl implements
 	 */
 	public static final String zerbitzuIzena = "ErreserbaSistema";
 
-	private Connection kon;
-	private boolean connectedToDatabase = false;
-
 	private Erreserba LoturaErreserba;
 	private AplikazioDatuBase aDB;
 
 	public ErreserbaSistema() throws RemoteException {
 		aDB = new AplikazioDatuBase();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see praktika.zerbitzaria.ErreserbaInterface#disconnect()
-	 */
-	public void disconnect() throws SQLException {
-		if (connectedToDatabase) {
-			kon.close();
-			connectedToDatabase = false;
-		}
 	}
 
 	/*
@@ -160,7 +143,6 @@ public class ErreserbaSistema extends RemoteObservableImpl implements
 			System.setSecurityManager(new RMISecurityManager());
 		try {
 			ErreserbaSistema zerbitzariObj = new ErreserbaSistema();
-			System.out.println("objektua jaurtia");
 			java.rmi.registry.LocateRegistry.createRegistry(1099); // RMIREGISTRY
 																	// jaurtitzearen
 																	// baliokidea
@@ -173,6 +155,7 @@ public class ErreserbaSistema extends RemoteObservableImpl implements
 			// System.out
 			// .println("Errorea zerbitzaria jaurtitzean" + e.toString());
 			// }
+			System.out.println("Zerbitzaria hasieratua");
 		} catch (RemoteException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -184,6 +167,17 @@ public class ErreserbaSistema extends RemoteObservableImpl implements
 					.println(e.toString()
 							+ "\nSuposatzen dugu errorea dela rmiregistry aurretik jaurti delako ");
 		}
+	}
+	
+	@Override
+	public void notifyConnection() throws ServerNotActiveException, RemoteException{
+		System.out.println(getClientHost() + " konektatu da.");
+	}
+
+	@Override
+	public void notifyDesconnection() throws RemoteException,
+			ServerNotActiveException {
+		System.out.println(getClientHost() + " deskonektatu da.");		
 	}
 
 }

@@ -1,18 +1,20 @@
 package praktika.bezeroa;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.rmi.ConnectException;
 import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.UnknownHostException;
+import java.rmi.server.ServerNotActiveException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import praktika.partekatuak.ErreserbaInterface;
-import praktika.zerbitzaria.ErreserbaSistema;
 
 public class AplikazioNagusia extends JFrame {
 	/**
@@ -30,30 +32,73 @@ public class AplikazioNagusia extends JFrame {
 	 * Aplikazio nagusiaren hasierako klasea
 	 * ======================================
 	 */
-	private ErreserbaSistema LoturaErreserbaSistema;
+	//private ErreserbaSistema LoturaErreserbaSistema;
 
 	public AplikazioNagusia(String izenburuBat) {
 		// Eraikitzaileen edukiontzia
 		super();
-		try {
 		setTitle(izenburuBat);
 		setSize(700, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new WindowListener(){
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					urrunekoErreserba.notifyDesconnection();
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ServerNotActiveException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.exit(0);
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+
+			}
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+
+			}});
 		System.setProperty("java.security.policy", "client.policy");
 		// Ereduak sortu
 			this.setLocationRelativeTo(null);
 			setRemoteServer();
-			LoturaErreserbaSistema = new ErreserbaSistema();
+			//LoturaErreserbaSistema = new ErreserbaSistema();
 
 		// Bistak sortu
 		ErreserbaKontroladorea erreserbaKontroladorea = new ErreserbaKontroladorea(
-				LoturaErreserbaSistema);
+				urrunekoErreserba);
 		ErreserbaBistarenLaburpena erreserbarenBistaSummary = new ErreserbaBistarenLaburpena(
-				LoturaErreserbaSistema);
+				urrunekoErreserba);
 		ErreserbaItenarenBista erreserbaItenarenBista = new ErreserbaItenarenBista(
-				LoturaErreserbaSistema);
+				urrunekoErreserba);
 		ErreserbarenBista erreserbarenBista = new ErreserbarenBista(
-				LoturaErreserbaSistema);
+				urrunekoErreserba);
 		// Border erako osagaiak sortu
 		erreserbaKontroladorea.setBorder(BorderFactory
 				.createTitledBorder("Erreserba Eskaerak"));
@@ -72,10 +117,6 @@ public class AplikazioNagusia extends JFrame {
 		getContentPane().add(erreserbaItenarenBista, BorderLayout.SOUTH);
 
 		this.setVisible(true);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void setRemoteServer(){
@@ -88,6 +129,7 @@ public class AplikazioNagusia extends JFrame {
 			// "rmi://IP_Helbidea:PortuZenb/ZerbitzuarenIzena"
 
 			urrunekoErreserba = (ErreserbaInterface) Naming.lookup(zerbIzena);
+			urrunekoErreserba.notifyConnection();
 			JOptionPane jop = new JOptionPane(
 					"Zerbitzariarekin konexioa ondo ezarri da",
 					JOptionPane.INFORMATION_MESSAGE);

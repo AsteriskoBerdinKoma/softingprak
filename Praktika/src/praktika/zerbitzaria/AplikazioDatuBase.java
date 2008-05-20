@@ -8,7 +8,7 @@ import java.util.HashMap;
  * erabiltzen da instantzia bakarra izateko.
  */
 
-public class AplikazioDatuBase {
+class AplikazioDatuBase {
 
 	private static final String URL = "jdbc:odbc:bidaiak";
 	private static final String JDBC_DRIVER = "sun.jdbc.odbc.JdbcOdbcDriver";
@@ -26,6 +26,7 @@ public class AplikazioDatuBase {
 		try {
 			Class.forName(JDBC_DRIVER);
 			konexioa = DriverManager.getConnection(URL, USER, PASS);
+			System.out.println("Datu basearekin konexia ezarrita.");
 		} catch (SQLException anException) {
 			while (anException != null) {
 				System.out.println("SQL Exception:  "

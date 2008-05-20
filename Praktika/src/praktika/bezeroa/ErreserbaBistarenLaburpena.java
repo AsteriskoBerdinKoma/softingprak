@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
-import praktika.zerbitzaria.ErreserbaSistema;
 
 public class ErreserbaBistarenLaburpena extends JPanel implements RemoteObserver {
 	/**
@@ -41,8 +40,9 @@ public class ErreserbaBistarenLaburpena extends JPanel implements RemoteObserver
 
 	private JTextField testuEremuaGuztira = new JTextField();
 
-	public ErreserbaBistarenLaburpena(ErreserbaSistema erreserbaSistema) {
-		erreserbaSistema.addObserver(this);
+	public ErreserbaBistarenLaburpena(ErreserbaInterface erreserbaSistema) {
+		try {
+			erreserbaSistema.addObserver(this);
 
 		setLayout(new GridLayout(2, 4, 25, 25));
 		setFont(new Font("Arial", Font.PLAIN, 12));
@@ -63,6 +63,10 @@ public class ErreserbaBistarenLaburpena extends JPanel implements RemoteObserver
 		testuEremuaAgentearenIzena.setEditable(false);
 		testuEremuaErreserbarenZenbakia.setEditable(false);
 		testuEremuaGuztira.setEditable(false);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
