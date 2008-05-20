@@ -17,17 +17,13 @@ import praktika.partekatuak.remoteObservable.RemoteObservableImpl;
  * Bigarren mailako antolatzeko klasea
  */
 
-public class ErreserbaSistema extends RemoteObservableImpl implements ErreserbaInterface {
+public class ErreserbaSistema extends RemoteObservableImpl implements
+		ErreserbaInterface {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public static final String JDBC_DRIVER = "sun.jdbc.odbc.JdbcOdbcDriver";
-	public static final String DATABASE_URL = "jdbc:odbc:Bidaiak";
-	public static final String USERNAME = "";
-	public static final String PASSWORD = "";
 
 	/**
 	 * Zerbitzuak izango duen izena.
@@ -38,21 +34,15 @@ public class ErreserbaSistema extends RemoteObservableImpl implements ErreserbaI
 	private boolean connectedToDatabase = false;
 
 	private Erreserba LoturaErreserba;
+	private AplikazioDatuBase aDB;
 
 	public ErreserbaSistema() throws RemoteException {
-		try {
-			Class.forName(JDBC_DRIVER);
-			kon = DriverManager.getConnection(DATABASE_URL);
-			System.out.println("Driverra Kargatuta.");
-			connectedToDatabase = true;
-		} catch (SQLException e) {
-			System.out.println("Ezin izan da datu basearekin konexioa ezarri");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Ez da " + JDBC_DRIVER + " driverra aurkitu");
-		}
+		aDB = new AplikazioDatuBase();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see praktika.zerbitzaria.ErreserbaInterface#disconnect()
 	 */
 	public void disconnect() throws SQLException {
@@ -62,7 +52,9 @@ public class ErreserbaSistema extends RemoteObservableImpl implements ErreserbaI
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see praktika.zerbitzaria.ErreserbaInterface#ezeztatu()
 	 */
 	public void ezeztatu() throws RemoteException {
@@ -73,8 +65,11 @@ public class ErreserbaSistema extends RemoteObservableImpl implements ErreserbaI
 		super.notifyObservers();
 	}
 
-	/* (non-Javadoc)
-	 * @see praktika.zerbitzaria.ErreserbaInterface#sartuIrteera(int, java.lang.String, java.util.Date)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see praktika.zerbitzaria.ErreserbaInterface#sartuIrteera(int,
+	 *      java.lang.String, java.util.Date)
 	 */
 	public void sartuIrteera(int baieztapenZenbakia, String irteerarenKodea,
 			Date eskeinitakoData) throws RemoteException {
@@ -87,8 +82,11 @@ public class ErreserbaSistema extends RemoteObservableImpl implements ErreserbaI
 		super.notifyObservers();
 	}
 
-	/* (non-Javadoc)
-	 * @see praktika.zerbitzaria.ErreserbaInterface#sartuTurista(java.lang.String, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see praktika.zerbitzaria.ErreserbaInterface#sartuTurista(java.lang.String,
+	 *      java.lang.String, java.lang.String)
 	 */
 	public void sartuTurista(String izena, String helbidea, String telefonoa)
 			throws RemoteException {
@@ -99,15 +97,20 @@ public class ErreserbaSistema extends RemoteObservableImpl implements ErreserbaI
 		super.notifyObservers();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see praktika.zerbitzaria.ErreserbaInterface#getLoturaErreserba()
 	 */
 	public Erreserba getLoturaErreserba() {
 		return LoturaErreserba;
 	}
 
-	/* (non-Javadoc)
-	 * @see praktika.zerbitzaria.ErreserbaInterface#erreserbaBerria(int, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see praktika.zerbitzaria.ErreserbaInterface#erreserbaBerria(int,
+	 *      java.lang.String)
 	 */
 	public void erreserbaBerria(int pertsonaKopurua,
 			String erreserbaAgentearenIdentifikatzailea) throws RemoteException {
@@ -121,14 +124,18 @@ public class ErreserbaSistema extends RemoteObservableImpl implements ErreserbaI
 		super.notifyObservers();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see praktika.zerbitzaria.ErreserbaInterface#setLoturaErreserba(praktika.partekatuak.Erreserba)
 	 */
 	public void setLoturaErreserba(Erreserba newLoturaErreserba) {
 		LoturaErreserba = newLoturaErreserba;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see praktika.zerbitzaria.ErreserbaInterface#submit()
 	 */
 	public void submit() throws RemoteException {
@@ -154,7 +161,9 @@ public class ErreserbaSistema extends RemoteObservableImpl implements ErreserbaI
 		try {
 			ErreserbaSistema zerbitzariObj = new ErreserbaSistema();
 			System.out.println("objektua jaurtia");
-			java.rmi.registry.LocateRegistry.createRegistry(1099); // RMIREGISTRY jaurtitzearen baliokidea
+			java.rmi.registry.LocateRegistry.createRegistry(1099); // RMIREGISTRY
+																	// jaurtitzearen
+																	// baliokidea
 
 			// Urruneko zerbitzua erregistratu
 			Naming.rebind(zerbitzuIzena, zerbitzariObj);
