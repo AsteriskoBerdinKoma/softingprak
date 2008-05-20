@@ -18,14 +18,16 @@ class AplikazioDatuBase {
 	private static AplikazioDatuBase instantzia;
 
 	private Connection konexioa;
+	private boolean connectedToDatabase;
 
 	/**
 	 * Datu basea hasieratzen
 	 */
-	public AplikazioDatuBase() {
+	private AplikazioDatuBase() {
 		try {
 			Class.forName(JDBC_DRIVER);
 			konexioa = DriverManager.getConnection(URL, USER, PASS);
+			connectedToDatabase = true;
 			System.out.println("Datu basearekin konexia ezarrita.");
 		} catch (SQLException anException) {
 			while (anException != null) {
@@ -33,8 +35,10 @@ class AplikazioDatuBase {
 						+ anException.getMessage());
 				anException = anException.getNextException();
 			}
+			connectedToDatabase = false;
 		} catch (java.lang.Exception anException) {
 			anException.printStackTrace();
+			connectedToDatabase = false;
 		}
 	}
 
@@ -44,6 +48,7 @@ class AplikazioDatuBase {
 	public void finalize() {
 		try {
 			konexioa.close();
+			connectedToDatabase = false;
 		} catch (SQLException anException) {
 			while (anException != null) {
 				System.out.println("SQL Exception:  "
@@ -250,5 +255,9 @@ class AplikazioDatuBase {
 
 	public HashMap irakurriIrteerak() {
 		return null;
+	}
+
+	public boolean isConnectedToDatabase() {
+		return connectedToDatabase;
 	}
 }

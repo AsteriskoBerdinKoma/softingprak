@@ -1,10 +1,14 @@
 package praktika.zerbitzaria;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import praktika.partekatuak.Erreserba;
@@ -30,9 +34,63 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 
 	private Erreserba LoturaErreserba;
 	private AplikazioDatuBase aDB;
+	
+	ZerbitzariaFrame frame;
 
 	public ErreserbaSistema() throws RemoteException {
-		aDB = new AplikazioDatuBase();
+		frame = new ZerbitzariaFrame();
+		frame.addWindowListener(new WindowListener(){
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				aDB.finalize();
+				frame.gehituEkintza(getCurrentTime() + ": Datu baseko konexioa itxita.");
+				System.exit(0);
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}});
+		frame.setLocationRelativeTo(null);
+		frame.gehituEkintza(getCurrentTime() + ": Zerbitzaria hasieratua");
+		frame.setVisible(true);
+		aDB = AplikazioDatuBase.instance();
+		if(aDB.isConnectedToDatabase())
+			frame.gehituEkintza(getCurrentTime() + ": Datu basera konektatua");
+		else
+			frame.gehituEkintza(getCurrentTime() + ": Ezin izan da datu basera konexioa ezarri");
 	}
 
 	/*
@@ -129,6 +187,22 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		setChanged();
 		super.notifyObservers();
 	}
+	
+	
+	@Override
+	public void notifyConnection() throws ServerNotActiveException, RemoteException{
+		frame.gehituBezeroa(getClientHost());
+		frame.gehituEkintza(getCurrentTime() + ": " + getClientHost() + " bezeroa konektatu da");
+		System.out.println(getClientHost() + " konektatu da.");
+	}
+
+	@Override
+	public void notifyDesconnection() throws RemoteException,
+			ServerNotActiveException {
+		frame.kenduBezeroa(getClientHost());
+		frame.gehituEkintza(getCurrentTime() + ": " + getClientHost() + " bezeroa deskonektatu da");
+		System.out.println(getClientHost() + " deskonektatu da.");		
+	}
 
 	/**
 	 * UrrunekoNegozioLogika-ren zerbitzaria hasieratzen du zerbitzuIzena
@@ -169,15 +243,10 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		}
 	}
 	
-	@Override
-	public void notifyConnection() throws ServerNotActiveException, RemoteException{
-		System.out.println(getClientHost() + " konektatu da.");
-	}
-
-	@Override
-	public void notifyDesconnection() throws RemoteException,
-			ServerNotActiveException {
-		System.out.println(getClientHost() + " deskonektatu da.");		
+	public static String getCurrentTime(){
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
 	}
 
 }
