@@ -3,6 +3,7 @@ package praktika.bezeroa;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.rmi.RemoteException;
 import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
@@ -78,12 +79,17 @@ public class ErreserbaItenarenBista extends JPanel implements RemoteObserver {
 		// Sarrera
 		ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
 		// Prozesua
-		if (erreserbaSistema.getLoturaErreserba() != null) {
-		} else {
-			testuEremuaKopurua.setText("");
-			textFieldDeskribapena.setText("");
-			testuEremuaPrezioa.setText("");
-			testuEremuaLuzapena.setText("");
+		try {
+			if (erreserbaSistema.getLoturaErreserba() != null) {
+			} else {
+				testuEremuaKopurua.setText("");
+				textFieldDeskribapena.setText("");
+				testuEremuaPrezioa.setText("");
+				testuEremuaLuzapena.setText("");
+			}
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
