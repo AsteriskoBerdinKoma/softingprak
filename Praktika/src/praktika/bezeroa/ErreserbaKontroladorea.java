@@ -11,6 +11,9 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
@@ -69,18 +72,17 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 
 	private JButton botoiaSartuEzeztatu = new JButton("Ezeztatu");
 
-	//
-	String[] a = { "Mendizabal Bidaiak", "Izotz Txangoak", "sw" };
+	//String[] a = { "Mendizabal Bidaiak", "Izotz Txangoak", "sw" };
 
-	private JComboBox comboErreserbaAgentea = new JComboBox(a);
+	private JComboBox comboErreserbaAgentea;// = new JComboBox(a);
 
 	private JComboBox comboPertsonaKopurua = new JComboBox();
 
-	String[] b = { "4EgunParis", "10EgunItalia", "7EgunLondon" };
+	//String[] b = { "4EgunParis", "10EgunItalia", "7EgunLondon" };
 
-	private JComboBox comboIrteerarenEzaugarriak = new JComboBox(b);
+	private JComboBox comboIrteerarenEzaugarriak;// = new JComboBox(b);
 
-	private JComboBox comboIrteeraData = new JComboBox();
+	private JComboBox comboIrteeraData;// = new JComboBox();
 
 	//
 	private JTextField testuEremuaBaieztapenZenbakia = new JTextField();
@@ -92,6 +94,8 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	private JTextField testuEremuaTelefonoa = new JTextField();
 	
 	private Vector<Irteera> vIrteerak = new Vector<Irteera>();
+	
+	boolean datuakGehituta = true;
 
 	private ErreserbaInterface LoturaErreserbaSistema;
 
@@ -99,6 +103,27 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		this.LoturaErreserbaSistema = erreserbaSistema;
 		//
 		Iterator iterator;
+		DateFormat dataFormat = DateFormat.getDateInstance();
+		comboIrteerarenEzaugarriak = new JComboBox();
+		comboIrteeraData = new JComboBox();
+		try {
+			Vector<String> vAgenteak = new Vector<String>();
+			vAgenteak = LoturaErreserbaSistema.getErreserbaAgenteak();
+			comboErreserbaAgentea = new JComboBox(vAgenteak);
+			comboErreserbaAgentea.setSelectedIndex(0);
+			vIrteerak = LoturaErreserbaSistema.getIrteerenEzaugarriak(vAgenteak.firstElement());
+			String defaultChoice = vIrteerak.firstElement().getEzaugarriak();
+			for (Irteera i: vIrteerak){
+				comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
+				if (i.getEzaugarriak().equals(defaultChoice)){
+					comboIrteeraData.addItem(dataFormat.format(i.getData().getTime()));
+				}
+			}
+			comboIrteerarenEzaugarriak.setSelectedIndex(0);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		setLayout(new GridLayout(8, 3, 25, 25));
 		setFont(new Font("Arial", Font.PLAIN, 12));
@@ -271,12 +296,14 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		
 		
 		DateFormat dataFormat = DateFormat.getDateInstance();
-		if(itemStateChanged.getSource().equals(comboErreserbaAgentea)){
+		if(itemStateChanged.getSource() == comboErreserbaAgentea){
+			datuakGehituta = false;
 			comboIrteerarenEzaugarriak.removeAllItems();
 			comboIrteeraData.removeAllItems();
 			vIrteerak.removeAllElements();
 			try {
-				vIrteerak = LoturaErreserbaSistema.getIrteerenEzaugarriak(comboErreserbaAgentea.getSelectedItem().toString().trim());
+				vIrteerak = LoturaErreserbaSistema.getIrteerenEzaugarriak(comboErreserbaAgentea.getSelectedItem().toString());
+				System.out.println(comboErreserbaAgentea.getSelectedItem().toString());
 				String defaultChoice = vIrteerak.firstElement().getEzaugarriak();
 				for (Irteera i: vIrteerak){
 					comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
@@ -284,13 +311,13 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 						comboIrteeraData.addItem(dataFormat.format(i.getData().getTime()));
 					}
 				}
-				
+			datuakGehituta = true;	
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.out.println("Urruneko zerbitzariarekin ezin izan da komunikatu");
 			}
-		} else if (itemStateChanged.getSource().equals(comboIrteerarenEzaugarriak)){
+		} else if (itemStateChanged.getSource() == comboIrteerarenEzaugarriak && datuakGehituta){
 			comboIrteeraData.removeAllItems();
 			for (Irteera i: vIrteerak){
 				if (i.getEzaugarriak().equals(comboIrteerarenEzaugarriak.getSelectedItem().toString().trim())){
@@ -298,11 +325,5 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 				}
 			}
 		}
-		// Combo boxa ezabatu
-		comboIrteeraData.removeAllItems();
-
-		comboIrteeraData.addItem("Dec 5, 2006 ");
-		comboIrteeraData.addItem("Dec 12, 2006");
-		comboIrteeraData.addItem("Dec 15, 2006");
 	}
 }
