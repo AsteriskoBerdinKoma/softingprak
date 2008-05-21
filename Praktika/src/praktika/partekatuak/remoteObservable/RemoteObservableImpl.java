@@ -49,20 +49,17 @@ public class RemoteObservableImpl extends UnicastRemoteObject implements
 	private boolean changed = false;
 	private Vector<RemoteObserver> obs;
 
+
 	/**
-	 * Construct an Observable with zero Observers.
-	 * 
 	 * @throws RemoteException
 	 */
-
 	public RemoteObservableImpl() throws RemoteException {
 		obs = new Vector<RemoteObserver>();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#addObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
+
+	/* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable#addObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
 	 */
 	public synchronized void addObserver(RemoteObserver o) {
 		if (o == null)
@@ -72,28 +69,22 @@ public class RemoteObservableImpl extends UnicastRemoteObject implements
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#deleteObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
+	/* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable#deleteObserver(praktika.partekatuak.remoteObservable.RemoteObserver)
 	 */
 	public synchronized void deleteObserver(RemoteObserver o) {
 		obs.removeElement(o);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#notifyObservers()
+	/* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable#notifyObservers()
 	 */
 	public void notifyObservers() throws RemoteException {
 		notifyObservers(null);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#notifyObservers(java.lang.Object)
+	/* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable#notifyObservers(java.lang.Object)
 	 */
 	public void notifyObservers(Object arg) throws RemoteException {
 		/*
@@ -123,10 +114,8 @@ public class RemoteObservableImpl extends UnicastRemoteObject implements
 			((RemoteObserver) arrLocal[i]).update(this, arg);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#deleteObservers()
+	/* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable#deleteObservers()
 	 */
 	public synchronized void deleteObservers() {
 		obs.removeAllElements();
@@ -154,19 +143,15 @@ public class RemoteObservableImpl extends UnicastRemoteObject implements
 		changed = false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#hasChanged()
+	/* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable#hasChanged()
 	 */
 	public synchronized boolean hasChanged() {
 		return changed;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see praktika.partekatuak.remoteObservable.RemoteObservable2#countObservers()
+	/* (non-Javadoc)
+	 * @see praktika.partekatuak.remoteObservable.RemoteObservable#countObservers()
 	 */
 	public synchronized int countObservers() {
 		return obs.size();

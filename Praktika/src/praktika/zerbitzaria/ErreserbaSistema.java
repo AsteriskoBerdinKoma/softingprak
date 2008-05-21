@@ -35,7 +35,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 */
 	public static final String zerbitzuIzena = "ErreserbaSistema";
 
-	private Erreserba LoturaErreserba;
+	// private Erreserba LoturaErreserba;
 	private AplikazioDatuBase aDB;
 
 	private ZerbitzariaFrame frame;
@@ -48,14 +48,10 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 
 			@Override
 			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -68,26 +64,18 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 
 			@Override
 			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		frame.setLocationRelativeTo(null);
@@ -107,7 +95,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 */
 	public void ezeztatu() throws RemoteException {
 		// Erreserba sortu
-		LoturaErreserba = null;
+		// LoturaErreserba = null;
 		// Bistak ohararazi
 		setChanged();
 		super.notifyObservers();
@@ -119,7 +107,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 * @see praktika.zerbitzaria.ErreserbaInterface#sartuIrteera(int,
 	 *      java.lang.String, java.util.Date)
 	 */
-	public Vector<String> getErreserbaAgenteak(){
+	public Vector<String> getErreserbaAgenteak() {
 		Vector<String> vA = new Vector<String>();
 		try {
 			vA = aDB.getAgenteak();
@@ -129,10 +117,10 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		}
 		return vA;
 	}
-	
-	public Vector<Irteera> getIrteerenEzaugarriak(String agIzena){
+
+	public Vector<Irteera> getIrteerenEzaugarriak(String agIzena) {
 		Vector<Irteera> vIrtAgente = new Vector<Irteera>();
-		try{
+		try {
 			vIrtAgente = aDB.irakurriIrteerak(agIzena);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -140,7 +128,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		}
 		return vIrtAgente;
 	}
-	
+
 	public void sartuIrteera(int baieztapenZenbakia, String irteerarenKodea,
 			Date eskeinitakoData) throws RemoteException {
 		// Irtera bilatu eta erreserba bat eskatu
@@ -167,14 +155,9 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		super.notifyObservers();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see praktika.zerbitzaria.ErreserbaInterface#getLoturaErreserba()
-	 */
-	public Erreserba getLoturaErreserba() {
-		return LoturaErreserba;
-	}
+	// public Erreserba getLoturaErreserba() {
+	// return LoturaErreserba;
+	// }
 
 	/*
 	 * (non-Javadoc)
@@ -182,26 +165,31 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 * @see praktika.zerbitzaria.ErreserbaInterface#erreserbaBerria(int,
 	 *      java.lang.String)
 	 */
-	public void erreserbaBerria(int pertsonaKopurua,
-			String erreserbaAgentearenIdentifikatzailea) throws RemoteException {
-		// Erreserba sortu
-		
-		// Erreserba agentea bilatu eta erreserba antolatzeko eskatu
-		System.out.println("Erreserba  " + pertsonaKopurua + " pertsonentzat  "
-				+ erreserbaAgentearenIdentifikatzailea + " agentearekin ");
+	public void erreserbaBerria(Erreserba erreserba) throws RemoteException {
+		try {
+			// Erreserba sortu
+			int pertsonaMax = aDB.getPertsonaMax(erreserba.getIrteeraKodea());
+			int plazaLibreak = pertsonaMax
+					- aDB.getErreserbatutakoPertsonaKop(erreserba
+							.getIrteeraKodea());
+			if (plazaLibreak >= erreserba.getPertsonaKopurua())
+				erreserba
+						.setBaieztapenZenbakia(aDB.getLastBaieztapenZenb() + 1);
+			else
+				erreserba.ukatu("Ez daude plaza librerik");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			erreserba.ukatu("Arazo bat egon da datu basea atzitzean");
+		}
 		// Bistak ohararazi
 		setChanged();
-		super.notifyObservers();
+		super.notifyObservers(erreserba);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see praktika.zerbitzaria.ErreserbaInterface#setLoturaErreserba(praktika.partekatuak.Erreserba)
-	 */
-	public void setLoturaErreserba(Erreserba newLoturaErreserba) {
-		LoturaErreserba = newLoturaErreserba;
-	}
+	// public void setLoturaErreserba(Erreserba newLoturaErreserba) {
+	// LoturaErreserba = newLoturaErreserba;
+	// }
 
 	/*
 	 * (non-Javadoc)
@@ -211,7 +199,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	public void submit() throws RemoteException {
 
 		System.out.println("Datubasera bidali da");
-		LoturaErreserba = null;
+		// LoturaErreserba = null;
 		// Bistak ohararazi
 		setChanged();
 		super.notifyObservers();

@@ -5,16 +5,18 @@ import java.util.Calendar;
 
 public class Erreserba implements Serializable{
 
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	private int erreserbaZenbakia;
 	private Calendar data;
 	private int pertsonaKopurua;
 	private int baieztapenZenbakia;
 	private int irteeraKodea;
+	private String ukapenArrazoiak;
 	
 	public Erreserba() {
 		super();
@@ -59,6 +61,11 @@ public class Erreserba implements Serializable{
 
 	public void setBaieztapenZenbakia(int baieztapenZenbakia) {
 		this.baieztapenZenbakia = baieztapenZenbakia;
+	}
+	
+	public void ukatu(String arrazoiak){
+		this.baieztapenZenbakia = -1;
+		this.ukapenArrazoiak = arrazoiak;
 	}
 
 	public int getIrteeraKodea() {
