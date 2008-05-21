@@ -3,6 +3,7 @@ package praktika.partekatuak;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
 import java.util.Date;
+import java.util.Vector;
 
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 
@@ -19,6 +20,10 @@ public interface ErreserbaInterface extends RemoteObservable{
 
 	public void sartuTurista(String izena, String helbidea, String telefonoa) throws RemoteException;
 
+	public Vector<String> getErreserbaAgenteak() throws RemoteException;
+	
+	public Vector<Irteera> getIrteerenEzaugarriak(String agIzena) throws RemoteException;
+	
 	public void submit() throws RemoteException;
 
 	public void ezeztatu() throws RemoteException;
