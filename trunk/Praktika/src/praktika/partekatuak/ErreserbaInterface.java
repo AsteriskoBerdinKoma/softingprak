@@ -17,7 +17,7 @@ public interface ErreserbaInterface extends RemoteObservable{
 
 	public void sartuTurista(String izena, String helbidea, String telefonoa) throws RemoteException;
 
-	public Vector<String> getErreserbaAgenteak() throws RemoteException;
+	public Vector<Agentea> getErreserbaAgenteak() throws RemoteException;
 	
 	public Vector<Irteera> getIrteerenEzaugarriak(String agIzena) throws RemoteException;
 	
