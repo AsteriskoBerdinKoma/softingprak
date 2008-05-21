@@ -2,8 +2,9 @@ package praktika.partekatuak;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Vector;
 
-public class Irteera implements Serializable, Comparable<Irteera>{
+public class Irteera implements Serializable, Comparable<Vector<Irteera>>{
 
 	/**
 	 * 
@@ -77,8 +78,13 @@ public class Irteera implements Serializable, Comparable<Irteera>{
 	}
 
 	@Override
-	public int compareTo(Irteera i) {
-		return ezaugarriak.compareTo(i.getEzaugarriak());
+	public int compareTo(Vector<Irteera> vIrt) {
+		int emaitza = -1;
+		for (Irteera i: vIrt){
+			if (ezaugarriak.compareTo(i.getEzaugarriak())==0)
+					emaitza = 0;
+		}
+		return emaitza;
 	}
 
 }
