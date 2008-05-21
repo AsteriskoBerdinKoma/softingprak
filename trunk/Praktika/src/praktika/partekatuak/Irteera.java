@@ -3,8 +3,13 @@ package praktika.partekatuak;
 import java.io.Serializable;
 import java.util.Calendar;
 
-public class Irteera implements Serializable{
+public class Irteera implements Serializable, Comparable<Irteera>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int irteerarenKodea;
 	private String ezaugarriak;
 	private int pertsonaKopMax;
@@ -69,6 +74,11 @@ public class Irteera implements Serializable{
 
 	public final void setData(Calendar data) {
 		this.data = data;
+	}
+
+	@Override
+	public int compareTo(Irteera i) {
+		return ezaugarriak.compareTo(i.getEzaugarriak());
 	}
 
 }
