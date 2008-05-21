@@ -7,12 +7,15 @@ import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
 
 import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
+import praktika.partekatuak.Irteera;
 import praktika.partekatuak.remoteObservable.RemoteObservableImpl;
 
 /**
@@ -116,6 +119,28 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 * @see praktika.zerbitzaria.ErreserbaInterface#sartuIrteera(int,
 	 *      java.lang.String, java.util.Date)
 	 */
+	public Vector<String> getErreserbaAgenteak(){
+		Vector<String> vA = new Vector<String>();
+		try {
+			vA = aDB.getAgenteak();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return vA;
+	}
+	
+	public Vector<Irteera> getIrteerenEzaugarriak(String agIzena){
+		Vector<Irteera> vIrtAgente = new Vector<Irteera>();
+		try{
+			vIrtAgente = aDB.irakurriIrteerak(agIzena);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return vIrtAgente;
+	}
+	
 	public void sartuIrteera(int baieztapenZenbakia, String irteerarenKodea,
 			Date eskeinitakoData) throws RemoteException {
 		// Irtera bilatu eta erreserba bat eskatu

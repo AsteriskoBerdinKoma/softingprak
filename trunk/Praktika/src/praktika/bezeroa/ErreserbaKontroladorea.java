@@ -1,6 +1,5 @@
 package praktika.bezeroa;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -11,10 +10,14 @@ import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -24,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import praktika.partekatuak.ErreserbaInterface;
+import praktika.partekatuak.Irteera;
 
 /**
  * Erreserbak kontrolatzeko klaseak.
@@ -86,6 +90,8 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	private JTextField testuEremuaHelbidea = new JTextField();
 
 	private JTextField testuEremuaTelefonoa = new JTextField();
+	
+	private Vector<Irteera> vIrteerak = new Vector<Irteera>();
 
 	private ErreserbaInterface LoturaErreserbaSistema;
 
@@ -133,6 +139,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		botoiaErreserbaBerria.addActionListener(this);
 		botoiaSartuIrteera.addActionListener(this);
 		comboIrteerarenEzaugarriak.addItemListener(this);
+		comboErreserbaAgentea.addItemListener(this);
 		botoiaSartuTurista.addActionListener(this);
 		botoiaSartuBidali.addActionListener(this);
 		botoiaSartuEzeztatu.addActionListener(this);
@@ -261,7 +268,36 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	 *            java.awt.event.ItemEvent
 	 */
 	public void itemStateChanged(ItemEvent itemStateChanged) {
+		
+		
 		DateFormat dataFormat = DateFormat.getDateInstance();
+		if(itemStateChanged.getSource().equals(comboErreserbaAgentea)){
+			comboIrteerarenEzaugarriak.removeAllItems();
+			comboIrteeraData.removeAllItems();
+			vIrteerak.removeAllElements();
+			try {
+				vIrteerak = LoturaErreserbaSistema.getIrteerenEzaugarriak(comboErreserbaAgentea.getSelectedItem().toString().trim());
+				String defaultChoice = vIrteerak.firstElement().getEzaugarriak();
+				for (Irteera i: vIrteerak){
+					comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
+					if (i.getEzaugarriak().equals(defaultChoice)){
+						comboIrteeraData.addItem(dataFormat.format(i.getData().getTime()));
+					}
+				}
+				
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Urruneko zerbitzariarekin ezin izan da komunikatu");
+			}
+		} else if (itemStateChanged.getSource().equals(comboIrteerarenEzaugarriak)){
+			comboIrteeraData.removeAllItems();
+			for (Irteera i: vIrteerak){
+				if (i.getEzaugarriak().equals(comboIrteerarenEzaugarriak.getSelectedItem().toString().trim())){
+					comboIrteeraData.addItem(dataFormat.format(i.getData().getTime()));
+				}
+			}
+		}
 		// Combo boxa ezabatu
 		comboIrteeraData.removeAllItems();
 
