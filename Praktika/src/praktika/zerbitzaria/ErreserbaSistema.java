@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
+import praktika.partekatuak.Agentea;
 import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.Irteera;
@@ -107,8 +108,8 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 * @see praktika.zerbitzaria.ErreserbaInterface#sartuIrteera(int,
 	 *      java.lang.String, java.util.Date)
 	 */
-	public Vector<String> getErreserbaAgenteak() {
-		Vector<String> vA = new Vector<String>();
+	public Vector<Agentea> getErreserbaAgenteak() {
+		Vector<Agentea> vA = new Vector<Agentea>();
 		try {
 			vA = aDB.getAgenteak();
 		} catch (SQLException e) {
@@ -172,9 +173,10 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 			int plazaLibreak = pertsonaMax
 					- aDB.getErreserbatutakoPertsonaKop(erreserba
 							.getIrteeraKodea());
-			if (plazaLibreak >= erreserba.getPertsonaKopurua())
+			if (plazaLibreak >= erreserba.getPertsonaKopurua()){
 				erreserba
 						.setBaieztapenZenbakia(aDB.getLastBaieztapenZenb() + 1);
+			}
 			else
 				erreserba.ukatu("Ez daude plaza librerik");
 		} catch (SQLException e) {
@@ -185,6 +187,14 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		// Bistak ohararazi
 		setChanged();
 		super.notifyObservers(erreserba);
+		String client;
+		try {
+			client = getClientHost();
+		} catch (ServerNotActiveException e) {
+			client = "ezezaguna";
+		}
+		frame.gehituEkintza(getCurrentTime() + ": " + client
+				+ " bezeroak erreserba berria egin du eta " + erreserba.getBaieztapenZenbakia() + " baieztapen zenbakia eman zaio.");
 	}
 
 	// public void setLoturaErreserba(Erreserba newLoturaErreserba) {
@@ -206,21 +216,32 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	}
 
 	@Override
-	public void notifyConnection() throws ServerNotActiveException,
-			RemoteException {
-		frame.gehituBezeroa(getClientHost());
-		frame.gehituEkintza(getCurrentTime() + ": " + getClientHost()
+	public void notifyConnection() throws RemoteException {
+		String client;
+		try {
+			client = getClientHost();
+		} catch (ServerNotActiveException e) {
+			client = "ezezaguna";
+		}
+		frame.gehituBezeroa(client);
+		frame.gehituEkintza(getCurrentTime() + ": " + client
 				+ " bezeroa konektatu da");
-		System.out.println(getClientHost() + " konektatu da.");
+		System.out.println(client + " konektatu da.");
 	}
 
 	@Override
-	public void notifyDesconnection() throws RemoteException,
-			ServerNotActiveException {
-		frame.kenduBezeroa(getClientHost());
-		frame.gehituEkintza(getCurrentTime() + ": " + getClientHost()
-				+ " bezeroa deskonektatu da");
-		System.out.println(getClientHost() + " deskonektatu da.");
+	public void notifyDesconnection() throws RemoteException {
+		String client;
+		try {
+			client = getClientHost();
+		} catch (ServerNotActiveException e) {
+			client = "ezezaguna";
+		}
+		
+		frame.kenduBezeroa(client);
+			frame.gehituEkintza(getCurrentTime() + ": " + client
+					+ " bezeroa deskonektatu da");
+			System.out.println(client + " deskonektatu da.");
 	}
 
 	private static String getCurrentTime() {

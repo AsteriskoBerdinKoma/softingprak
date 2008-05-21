@@ -268,13 +268,13 @@ class AplikazioDatuBase {
 	 * @return Agente guztien izenak bektore baten
 	 * @throws SQLException
 	 */
-	public Vector<String> getAgenteak() throws SQLException {
-		Vector<String> vAgenteak = new Vector<String>();
-		String query = "SELECT Izena FROM Agentea";
+	public Vector<Agentea> getAgenteak() throws SQLException {
+		Vector<Agentea> vAgenteak = new Vector<Agentea>();
+		String query = "SELECT Agente_Kodea, Izena FROM Agentea";
 		PreparedStatement ps = konexioa.prepareStatement(query);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next())
-			vAgenteak.addElement(rs.getString("Izena"));
+			vAgenteak.addElement(new Agentea(rs.getInt("Agente_Kodea"), rs.getString("Izena")));
 		rs.close();
 		ps.close();
 		return vAgenteak;
