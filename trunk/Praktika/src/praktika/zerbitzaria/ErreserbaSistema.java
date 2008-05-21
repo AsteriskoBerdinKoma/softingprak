@@ -210,7 +210,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		System.out.println(getClientHost() + " deskonektatu da.");
 	}
 
-	public static String getCurrentTime() {
+	private static String getCurrentTime() {
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
 		return dateFormat.format(date);

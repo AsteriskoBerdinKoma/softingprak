@@ -2,6 +2,7 @@ package praktika.zerbitzaria;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * Arkitekturaren hirugarren mailaren klase nagusia Singleton diseinu-patroia
@@ -40,6 +41,17 @@ class AplikazioDatuBase {
 			anException.printStackTrace();
 			connectedToDatabase = false;
 		}
+	}
+	
+	/**
+	 * Klasearen instantzia eskuratzeko metodoa
+	 * 
+	 * @return instance AplikazioDatuBase
+	 */
+	public static AplikazioDatuBase instance() {
+		if (instantzia == null)
+			instantzia = new AplikazioDatuBase();
+		return instantzia;
 	}
 
 	/**
@@ -235,26 +247,24 @@ class AplikazioDatuBase {
 	}
 
 	/**
-	 * Klasearen instantzia eskuratzeko metodoa
-	 * 
-	 * @return instance AplikazioDatuBase
-	 */
-	public static AplikazioDatuBase instance() {
-		if (instantzia == null)
-			instantzia = new AplikazioDatuBase();
-		return instantzia;
-	}
-
-	/**
 	 * Datuak eskuratzen datu-basetik
 	 */
-
-	public HashMap irakurriErreserbarenAgentea() {
+	public HashMap irakurriErreserbarenAgentea() {		
 		return null;
 	}
 
 	public HashMap irakurriIrteerak() {
 		return null;
+	}
+	
+	public Vector<String> getAgenteak() throws SQLException{
+		Vector<String> vAgenteak = new Vector<String>();
+		String query = "SELECT Izena FROM Agentea";
+		PreparedStatement ps = konexioa.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next())
+			vAgenteak.addElement(rs.getString("Izena"));
+		return vAgenteak;
 	}
 
 	public boolean isConnectedToDatabase() {
