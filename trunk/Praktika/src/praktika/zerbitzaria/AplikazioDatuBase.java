@@ -48,7 +48,7 @@ class AplikazioDatuBase {
 			connectedToDatabase = false;
 		}
 	}
-	
+
 	/**
 	 * Klasearen instantzia eskuratzeko metodoa
 	 * 
@@ -80,41 +80,31 @@ class AplikazioDatuBase {
 
 	/**
 	 * Eskuratu azken erreserbaren zenbakia eragiketak egiteko.
+	 * 
+	 * @throws SQLException
 	 */
 
-	public int getAzkenErreserbarenZenbakia() {
+	public int getAzkenErreserbarenZenbakia() throws SQLException {
 		// Erazagupenak
 		int erreserbarenZenbakia = 0;
 		PreparedStatement selectSententzia;
 		ResultSet resultSet;
 		// Sarrera
-		try {
-			// Select sententzia sortu
-			selectSententzia = konexioa
-					.prepareStatement("SELECT MAX (Erreserba_Zenbakia) FROM Erreserba");
-			// Select sententzia exekutatu
-			resultSet = selectSententzia.executeQuery();
+		// Select sententzia sortu
+		selectSententzia = konexioa
+				.prepareStatement("SELECT MAX (Erreserba_Zenbakia) FROM Erreserba");
+		// Select sententzia exekutatu
+		resultSet = selectSententzia.executeQuery();
 
-			// ResulSet osagaia aztertzen
-			if (resultSet.next()) {
-				erreserbarenZenbakia = resultSet.getInt(1);
-			}
-			System.out.println("Select Max erreserbarenZenbakia = "
-					+ erreserbarenZenbakia);
-			resultSet.close();
-		} catch (SQLException anException) {
-			while (anException != null) {
-				System.out.println("SQL Exception:  "
-						+ anException.getMessage());
-				anException = anException.getNextException();
-			}
-		} catch (java.lang.Exception anException) {
-			System.out.println("Exception:  " + anException.getMessage());
+		// ResulSet osagaia aztertzen
+		if (resultSet.next()) {
+			erreserbarenZenbakia = resultSet.getInt(1);
 		}
-		// Irteera
-		finally {
-			return erreserbarenZenbakia;
-		}
+		System.out.println("Select Max erreserbarenZenbakia = "
+				+ erreserbarenZenbakia);
+		resultSet.close();
+		selectSententzia.close();
+		return erreserbarenZenbakia;
 	}
 
 	/**
@@ -125,41 +115,30 @@ class AplikazioDatuBase {
 	 *            java.util.Date
 	 * @param amount
 	 *            double
+	 * @throws SQLException
 	 */
 	public int sartuErreserba(int erreserbarenZenbakia, java.util.Date data,
-			int pertsonaKopurua, String agentearenKodea) {
+			int pertsonaKopurua, String agentearenKodea) throws SQLException {
 		// Erazagupena
 		int count = 0;
 		PreparedStatement insertSententzia = null;
 		// Sarrera
-		try {
-			// Insert sententzia sortu
-			insertSententzia = konexioa
-					.prepareStatement("INSERT INTO Erreserba VALUES (?, ?, ?, ?)");
-			// Insert sententzia hasieratu
-			insertSententzia.setInt(1, erreserbarenZenbakia);
-			insertSententzia.setTimestamp(2, new java.sql.Timestamp(data
-					.getTime()));
-			insertSententzia.setInt(3, pertsonaKopurua);
-			insertSententzia.setString(4, agentearenKodea);
-			// Insert sententzia exekutatu
-			count = insertSententzia.executeUpdate();
-			// Insert sententzia bukatu
-			insertSententzia.close();
-			System.out.println("Insert Erreserba count : " + count);
-		} catch (SQLException anException) {
-			while (anException != null) {
-				System.out.println(" SQL Exception : "
-						+ anException.getMessage());
-				anException = anException.getNextException();
-			}
-		} catch (java.lang.Exception anException) {
-			anException.printStackTrace();
-		}
-		// Irteera
-		finally {
-			return count;
-		}
+		// Insert sententzia sortu
+		insertSententzia = konexioa
+				.prepareStatement("INSERT INTO Erreserba VALUES (?, ?, ?, ?)");
+		// Insert sententzia hasieratu
+		insertSententzia.setInt(1, erreserbarenZenbakia);
+		insertSententzia
+				.setTimestamp(2, new java.sql.Timestamp(data.getTime()));
+		insertSententzia.setInt(3, pertsonaKopurua);
+		insertSententzia.setString(4, agentearenKodea);
+		// Insert sententzia exekutatu
+		count = insertSententzia.executeUpdate();
+		// Insert sententzia bukatu
+		insertSententzia.close();
+		System.out.println("Insert Erreserba count : " + count);
+		insertSententzia.close();
+		return count;
 	}
 
 	/**
@@ -170,42 +149,31 @@ class AplikazioDatuBase {
 	 *            java.util.Date
 	 * @param amount
 	 *            double
+	 * @throws SQLException
 	 */
 	public int sartutErreserbaIten(int erreserbarenZenbakia,
 			int baieztapenZenbakia, double prezioa, String irteerarenKodea,
-			java.util.Date data) {
+			java.util.Date data) throws SQLException {
 		// Erazagupenak
 		int count = 0;
 		PreparedStatement insertSententzia = null;
 		// Sarrera
-		try {
-			// Insert sententzia sortu
-			insertSententzia = konexioa
-					.prepareStatement("INSERT INTO Erreserba_Iten VALUES (?, ?, ?, ?, ?)");
-			// Insert sententzia hasieratu
-			insertSententzia.setInt(1, erreserbarenZenbakia);
-			insertSententzia.setInt(2, baieztapenZenbakia);
-			insertSententzia.setDouble(3, prezioa);
-			insertSententzia.setString(4, irteerarenKodea);
-			insertSententzia.setDate(5, new java.sql.Date(data.getTime()));
-			// Insert sententzia exekutatu
-			count = insertSententzia.executeUpdate();
-			// Insert sententzia amaitu
-			insertSententzia.close();
-			System.out.println("Insert Iten count : " + count);
-		} catch (SQLException anException) {
-			while (anException != null) {
-				System.out.println(" SQL Exception : "
-						+ anException.getMessage());
-				anException = anException.getNextException();
-			}
-		} catch (java.lang.Exception anException) {
-			anException.printStackTrace();
-		}
-		// Irteera
-		finally {
-			return count;
-		}
+		// Insert sententzia sortu
+		insertSententzia = konexioa
+				.prepareStatement("INSERT INTO Erreserba_Iten VALUES (?, ?, ?, ?, ?)");
+		// Insert sententzia hasieratu
+		insertSententzia.setInt(1, erreserbarenZenbakia);
+		insertSententzia.setInt(2, baieztapenZenbakia);
+		insertSententzia.setDouble(3, prezioa);
+		insertSententzia.setString(4, irteerarenKodea);
+		insertSententzia.setDate(5, new java.sql.Date(data.getTime()));
+		// Insert sententzia exekutatu
+		count = insertSententzia.executeUpdate();
+		// Insert sententzia amaitu
+		insertSententzia.close();
+		System.out.println("Insert Iten count : " + count);
+		insertSententzia.close();
+		return count;
 	}
 
 	/**
@@ -216,47 +184,38 @@ class AplikazioDatuBase {
 	 *            java.util.Date
 	 * @param amount
 	 *            double
+	 * @throws SQLException
 	 */
 	public int sartuTurista(String izena, String helbidea, String telefonoa,
-			int erreserbarenZenbakia) {
+			int erreserbarenZenbakia) throws SQLException {
 		// Erazagupenak
 		int count = 0;
 		PreparedStatement insertSententzia = null;
 		// Sarrera
-		try {
-			// Insert sententzia sortu
-			insertSententzia = konexioa
-					.prepareStatement("INSERT INTO Turista VALUES (?, ?, ?, ?)");
-			// Hasieratu Insert statement
-			insertSententzia.setString(1, izena);
-			insertSententzia.setString(2, helbidea);
-			insertSententzia.setString(3, telefonoa);
-			insertSententzia.setInt(4, erreserbarenZenbakia);
-			// Insert sententzia exekutatu
-			count = insertSententzia.executeUpdate();
-			// Insert sententzia amaitu
-			insertSententzia.close();
-			System.out.println("Insert Turista count : " + count);
-		} catch (SQLException anException) {
-			while (anException != null) {
-				System.out.println(" SQL Exception : "
-						+ anException.getMessage());
-				anException = anException.getNextException();
-			}
-		} catch (java.lang.Exception anException) {
-			anException.printStackTrace();
-		}
-		// Irteera
-		finally {
-			return count;
-		}
+		// Insert sententzia sortu
+		insertSententzia = konexioa
+				.prepareStatement("INSERT INTO Turista VALUES (?, ?, ?, ?)");
+		// Hasieratu Insert statement
+		insertSententzia.setString(1, izena);
+		insertSententzia.setString(2, helbidea);
+		insertSententzia.setString(3, telefonoa);
+		insertSententzia.setInt(4, erreserbarenZenbakia);
+		// Insert sententzia exekutatu
+		count = insertSententzia.executeUpdate();
+		// Insert sententzia amaitu
+		insertSententzia.close();
+		System.out.println("Insert Turista count : " + count);
+		insertSententzia.close();
+		return count;
 	}
 
 	/**
 	 * Datuak eskuratzen datu-basetik
-	 * @throws SQLException 
+	 * 
+	 * @throws SQLException
 	 */
-	public Agentea irakurriErreserbarenAgentea(int erreserbaZenb) throws SQLException {
+	public Agentea irakurriErreserbarenAgentea(int erreserbaZenb)
+			throws SQLException {
 		String query = "SELECT * FROM (Agentea A INNER JOIN Irteera I ON A.Agente_Kodea = I.Agente_Kodea) INNER JOIN Erreserba E ON I.Irteera_Kodea = E.Irteera_Kodea WHERE E.Erreserba_Zenbakia = ?";
 		PreparedStatement ps = konexioa.prepareStatement(query);
 		ps.setInt(1, erreserbaZenb);
@@ -264,7 +223,7 @@ class AplikazioDatuBase {
 		Agentea a = new Agentea();
 		int aKod;
 		String izena;
-		if(rs.next()){
+		if (rs.next()) {
 			aKod = rs.getInt("A.Agente_Kodea");
 			izena = rs.getString("A.Izena");
 			a = new Agentea(aKod, izena);
@@ -274,7 +233,8 @@ class AplikazioDatuBase {
 		return a;
 	}
 
-	public Vector<Irteera> irakurriIrteerak(String agenteIzena) throws SQLException {
+	public Vector<Irteera> irakurriIrteerak(String agenteIzena)
+			throws SQLException {
 		Vector<Irteera> vIrteerak = new Vector<Irteera>();
 		String query = "SELECT DISTINCT * FROM Irteera I INNER JOIN Agentea A ON I.Agente_Kodea = A.Agente_Kodea WHERE A.Izena = ?";
 		PreparedStatement ps = konexioa.prepareStatement(query);
@@ -286,33 +246,34 @@ class AplikazioDatuBase {
 		int agenteKod;
 		double prezioa;
 		Calendar data;
-		while (rs.next()){
-			irtKod = rs.getInt("Irteeraren_Kodea");
+		while (rs.next()) {
+			irtKod = rs.getInt("Irteera_Kodea");
 			ezaug = rs.getString("Ezaugarriak");
 			pertsonaKopMax = rs.getInt("Pertsona_Kop_Max");
 			agenteKod = rs.getInt("Agente_Kodea");
 			prezioa = rs.getDouble("Prezioa");
 			data = new GregorianCalendar();
 			data.setTime(new Date(rs.getTimestamp("Data").getTime()));
-			vIrteerak.addElement(new Irteera(irtKod, ezaug, pertsonaKopMax, agenteKod, prezioa, data));
+			vIrteerak.addElement(new Irteera(irtKod, ezaug, pertsonaKopMax,
+					agenteKod, prezioa, data));
 		}
 		rs.close();
 		ps.close();
 		return vIrteerak;
 	}
-	
+
 	/**
 	 * Datu basean dauden agente guztien izenak itzultzen ditu.
 	 * 
 	 * @return Agente guztien izenak bektore baten
 	 * @throws SQLException
 	 */
-	public Vector<String> getAgenteak() throws SQLException{
+	public Vector<String> getAgenteak() throws SQLException {
 		Vector<String> vAgenteak = new Vector<String>();
 		String query = "SELECT Izena FROM Agentea";
 		PreparedStatement ps = konexioa.prepareStatement(query);
 		ResultSet rs = ps.executeQuery();
-		while(rs.next())
+		while (rs.next())
 			vAgenteak.addElement(rs.getString("Izena"));
 		rs.close();
 		ps.close();
@@ -321,5 +282,44 @@ class AplikazioDatuBase {
 
 	public boolean isConnectedToDatabase() {
 		return connectedToDatabase;
+	}
+
+	public int getPertsonaMax(int irteeraKodea) throws SQLException {
+		String query = "SELECT Pertsona_Kop_Max FROM Irteera WHERE Irteera_Kodea = ?";
+		PreparedStatement ps = konexioa.prepareStatement(query);
+		ps.setInt(1, irteeraKodea);
+		ResultSet rs = ps.executeQuery();
+		int kopMax = -1;
+		if (rs.next())
+			kopMax = rs.getInt("Pertsona_Kop_Max");
+		rs.close();
+		ps.close();
+		return kopMax;
+	}
+
+	public int getErreserbatutakoPertsonaKop(int irteeraKodea)
+			throws SQLException {
+		String query = "SELECT SUM(Pertsona_Kopurua) FROM Erreserba WHERE Irteera_Kodea = ?";
+		PreparedStatement ps = konexioa.prepareStatement(query);
+		ps.setInt(1, irteeraKodea);
+		ResultSet rs = ps.executeQuery();
+		int kop = 0;
+		if (rs.next())
+			kop = rs.getInt("Pertsona_Kopurua");
+		rs.close();
+		ps.close();
+		return kop;
+	}
+
+	public int getLastBaieztapenZenb() throws SQLException {
+		String query = "SELECT MAX(Baieztapen_Zenbakia) AS AzkenZenb FROM Erreserba";
+		PreparedStatement ps = konexioa.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		int baiZenb = 0;
+		if (rs.next())
+			baiZenb = rs.getInt("AzkenZenb");
+		rs.close();
+		ps.close();
+		return baiZenb;
 	}
 }
