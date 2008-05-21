@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Vector;
 
+import praktika.partekatuak.Agentea;
 import praktika.partekatuak.Irteera;
 
 /**
@@ -253,15 +254,31 @@ class AplikazioDatuBase {
 
 	/**
 	 * Datuak eskuratzen datu-basetik
+	 * @throws SQLException 
 	 */
-	public HashMap irakurriErreserbarenAgentea() {		
-		return null;
+	public Agentea irakurriErreserbarenAgentea(int erreserbaZenb) throws SQLException {
+		String query = "SELECT * FROM (Agentea A INNER JOIN Irteera I ON A.Agente_Kodea = I.Agente_Kodea) INNER JOIN Erreserba E ON I.Irteera_Kodea = E.Irteera_Kodea WHERE E.Erreserba_Zenbakia = ?";
+		PreparedStatement ps = konexioa.prepareStatement(query);
+		ps.setInt(1, erreserbaZenb);
+		ResultSet rs = ps.executeQuery();
+		Agentea a = new Agentea();
+		int aKod;
+		String izena;
+		if(rs.next()){
+			aKod = rs.getInt("A.Agente_Kodea");
+			izena = rs.getString("A.Izena");
+			a = new Agentea(aKod, izena);
+		}
+		rs.close();
+		ps.close();
+		return a;
 	}
 
 	public Vector<Irteera> irakurriIrteerak(String agenteIzena) throws SQLException {
 		Vector<Irteera> vIrteerak = new Vector<Irteera>();
-		String query = "SELECT * FROM Irteera I INNER JOIN Agentea A ON I.Agente_Kodea = A.Agente_Kodea WHERE A.Izena = ?";
+		String query = "SELECT DISTINCT * FROM Irteera I INNER JOIN Agentea A ON I.Agente_Kodea = A.Agente_Kodea WHERE A.Izena = ?";
 		PreparedStatement ps = konexioa.prepareStatement(query);
+		ps.setString(1, agenteIzena);
 		ResultSet rs = ps.executeQuery();
 		int irtKod;
 		String ezaug;
