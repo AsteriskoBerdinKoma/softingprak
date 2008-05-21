@@ -1,6 +1,8 @@
 package praktika.partekatuak;
 
-public class Agentea {
+import java.io.Serializable;
+
+public class Agentea implements Serializable{
 
 	private int agenteKodea;
 	private String izena;

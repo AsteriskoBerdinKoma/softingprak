@@ -1,8 +1,9 @@
 package praktika.partekatuak;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Irteera {
+public class Irteera implements Serializable{
 
 	private int irteerarenKodea;
 	private String ezaugarriak;
