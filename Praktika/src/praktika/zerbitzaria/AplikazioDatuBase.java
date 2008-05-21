@@ -254,6 +254,7 @@ class AplikazioDatuBase {
 	}
 
 	public HashMap irakurriIrteerak() {
+		HashMap<K, V>
 		return null;
 	}
 	
@@ -272,8 +273,6 @@ class AplikazioDatuBase {
 			vAgenteak.addElement(rs.getString("Izena"));
 		return vAgenteak;
 	}
-	
-	public Vector<String> get
 
 	public boolean isConnectedToDatabase() {
 		return connectedToDatabase;
