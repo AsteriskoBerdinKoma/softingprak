@@ -185,7 +185,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	public void erreserbaBerria(int pertsonaKopurua,
 			String erreserbaAgentearenIdentifikatzailea) throws RemoteException {
 		// Erreserba sortu
-
+		
 		// Erreserba agentea bilatu eta erreserba antolatzeko eskatu
 		System.out.println("Erreserba  " + pertsonaKopurua + " pertsonentzat  "
 				+ erreserbaAgentearenIdentifikatzailea + " agentearekin ");
