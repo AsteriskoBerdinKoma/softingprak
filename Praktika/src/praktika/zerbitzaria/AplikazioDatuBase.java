@@ -257,6 +257,12 @@ class AplikazioDatuBase {
 		return null;
 	}
 	
+	/**
+	 * Datu basean dauden agente guztien izenak itzultzen ditu.
+	 * 
+	 * @return Agente guztien izenak bektore baten
+	 * @throws SQLException
+	 */
 	public Vector<String> getAgenteak() throws SQLException{
 		Vector<String> vAgenteak = new Vector<String>();
 		String query = "SELECT Izena FROM Agentea";
@@ -266,6 +272,8 @@ class AplikazioDatuBase {
 			vAgenteak.addElement(rs.getString("Izena"));
 		return vAgenteak;
 	}
+	
+	public Vector<String> get
 
 	public boolean isConnectedToDatabase() {
 		return connectedToDatabase;
