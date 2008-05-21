@@ -10,17 +10,13 @@ import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -29,6 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import praktika.partekatuak.Agentea;
+import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.Irteera;
 
@@ -72,13 +70,13 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 
 	private JButton botoiaSartuEzeztatu = new JButton("Ezeztatu");
 
-	//String[] a = { "Mendizabal Bidaiak", "Izotz Txangoak", "sw" };
+	// String[] a = { "Mendizabal Bidaiak", "Izotz Txangoak", "sw" };
 
 	private JComboBox comboErreserbaAgentea;// = new JComboBox(a);
 
 	private JComboBox comboPertsonaKopurua = new JComboBox();
 
-	//String[] b = { "4EgunParis", "10EgunItalia", "7EgunLondon" };
+	// String[] b = { "4EgunParis", "10EgunItalia", "7EgunLondon" };
 
 	private JComboBox comboIrteerarenEzaugarriak;// = new JComboBox(b);
 
@@ -92,9 +90,10 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	private JTextField testuEremuaHelbidea = new JTextField();
 
 	private JTextField testuEremuaTelefonoa = new JTextField();
-	
+
 	private Vector<Irteera> vIrteerak = new Vector<Irteera>();
-	
+	private Vector<Agentea> vAgenteak = new Vector<Agentea>();
+
 	boolean datuakGehituta = true;
 
 	private ErreserbaInterface LoturaErreserbaSistema;
@@ -106,17 +105,22 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		DateFormat dataFormat = DateFormat.getDateInstance();
 		comboIrteerarenEzaugarriak = new JComboBox();
 		comboIrteeraData = new JComboBox();
+		comboErreserbaAgentea = new JComboBox();
 		try {
-			Vector<String> vAgenteak = new Vector<String>();
 			vAgenteak = LoturaErreserbaSistema.getErreserbaAgenteak();
-			comboErreserbaAgentea = new JComboBox(vAgenteak);
+			for (Agentea a : vAgenteak) {
+				comboErreserbaAgentea.addItem(a.getIzena());
+			}
 			comboErreserbaAgentea.setSelectedIndex(0);
-			vIrteerak = LoturaErreserbaSistema.getIrteerenEzaugarriak(vAgenteak.firstElement());
+			vIrteerak = LoturaErreserbaSistema.getIrteerenEzaugarriak(vAgenteak
+					.firstElement().getIzena());
 			String defaultChoice = vIrteerak.firstElement().getEzaugarriak();
-			for (Irteera i: vIrteerak){
+			for (Irteera i : vIrteerak) {
+				//Ez gehitu sarrera errepikatuak
 				comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
-				if (i.getEzaugarriak().equals(defaultChoice)){
-					comboIrteeraData.addItem(dataFormat.format(i.getData().getTime()));
+				if (i.getEzaugarriak().equals(defaultChoice)) {
+					comboIrteeraData.addItem(dataFormat.format(i.getData()
+							.getTime()));
 				}
 			}
 			comboIrteerarenEzaugarriak.setSelectedIndex(0);
@@ -188,14 +192,42 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			DateFormat dataFormat = DateFormat.getDateInstance();
 			if (event.getSource() == botoiaErreserbaBerria) {
 				// Sarrera
+				Erreserba erreserba = new Erreserba();
 				String strNumberInParty = (String) comboPertsonaKopurua
 						.getSelectedItem();
 				int pertsonaKopurua = Integer.parseInt(strNumberInParty);
 				String irteeraHandizkariarenIdentifikatzailea = (String) comboErreserbaAgentea
 						.getSelectedItem();
+				String selectIrteera = comboIrteerarenEzaugarriak
+						.getSelectedItem().toString();
+				Date data = dataFormat.parse(comboIrteeraData.getSelectedItem()
+						.toString());
+				Calendar cal = new GregorianCalendar();
+				cal.setTime(data);
+				int kodea = -1;
+				for (Agentea a : vAgenteak) {
+					if (a.getIzena().equals(
+							irteeraHandizkariarenIdentifikatzailea)) {
+						kodea = a.getAgenteKodea();
+					}
+				}
+				for (Irteera i : vIrteerak) {
+					if (i.getEzaugarriak().equals(selectIrteera)
+							&& i.getData().get(Calendar.YEAR) == cal
+									.get(Calendar.YEAR)
+							&& i.getData().get(Calendar.MONTH) == cal
+									.get(Calendar.MONTH)
+							&& i.getData().get(Calendar.DAY_OF_MONTH) == cal
+									.get(Calendar.DAY_OF_MONTH)
+							&& i.getAgenteKodea() == kodea) {
+						erreserba = new Erreserba(-1, i.getData(),
+								pertsonaKopurua, -1, i.getIrteerarenKodea());
+					}
+
+				}
+
 				// Ereduak sartu
-				LoturaErreserbaSistema.erreserbaBerria(pertsonaKopurua,
-						irteeraHandizkariarenIdentifikatzailea);
+				LoturaErreserbaSistema.erreserbaBerria(erreserba);
 
 				// Botoiak ipini
 				botoiaErreserbaBerria.setEnabled(false);
@@ -283,6 +315,9 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -293,35 +328,44 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	 *            java.awt.event.ItemEvent
 	 */
 	public void itemStateChanged(ItemEvent itemStateChanged) {
-		
-		
+
 		DateFormat dataFormat = DateFormat.getDateInstance();
-		if(itemStateChanged.getSource() == comboErreserbaAgentea){
+		if (itemStateChanged.getSource() == comboErreserbaAgentea) {
 			datuakGehituta = false;
 			comboIrteerarenEzaugarriak.removeAllItems();
 			comboIrteeraData.removeAllItems();
 			vIrteerak.removeAllElements();
 			try {
-				vIrteerak = LoturaErreserbaSistema.getIrteerenEzaugarriak(comboErreserbaAgentea.getSelectedItem().toString());
-				System.out.println(comboErreserbaAgentea.getSelectedItem().toString());
-				String defaultChoice = vIrteerak.firstElement().getEzaugarriak();
-				for (Irteera i: vIrteerak){
+				vIrteerak = LoturaErreserbaSistema
+						.getIrteerenEzaugarriak(comboErreserbaAgentea
+								.getSelectedItem().toString());
+				System.out.println(comboErreserbaAgentea.getSelectedItem()
+						.toString());
+				String defaultChoice = vIrteerak.firstElement()
+						.getEzaugarriak();
+				for (Irteera i : vIrteerak) {
 					comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
-					if (i.getEzaugarriak().equals(defaultChoice)){
-						comboIrteeraData.addItem(dataFormat.format(i.getData().getTime()));
+					if (i.getEzaugarriak().equals(defaultChoice)) {
+						comboIrteeraData.addItem(dataFormat.format(i.getData()
+								.getTime()));
 					}
 				}
-			datuakGehituta = true;	
+				datuakGehituta = true;
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("Urruneko zerbitzariarekin ezin izan da komunikatu");
+				System.out
+						.println("Urruneko zerbitzariarekin ezin izan da komunikatu");
 			}
-		} else if (itemStateChanged.getSource() == comboIrteerarenEzaugarriak && datuakGehituta){
+		} else if (itemStateChanged.getSource() == comboIrteerarenEzaugarriak
+				&& datuakGehituta) {
 			comboIrteeraData.removeAllItems();
-			for (Irteera i: vIrteerak){
-				if (i.getEzaugarriak().equals(comboIrteerarenEzaugarriak.getSelectedItem().toString().trim())){
-					comboIrteeraData.addItem(dataFormat.format(i.getData().getTime()));
+			for (Irteera i : vIrteerak) {
+				if (i.getEzaugarriak().equals(
+						comboIrteerarenEzaugarriak.getSelectedItem().toString()
+								.trim())) {
+					comboIrteeraData.addItem(dataFormat.format(i.getData()
+							.getTime()));
 				}
 			}
 		}
