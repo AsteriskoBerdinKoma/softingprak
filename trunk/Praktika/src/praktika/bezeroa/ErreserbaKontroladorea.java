@@ -92,6 +92,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	private JTextField testuEremuaTelefonoa = new JTextField();
 
 	private Vector<Irteera> vIrteerak = new Vector<Irteera>();
+	private Vector<Irteera> vIrteeraDistinct = new Vector<Irteera>();
 	private Vector<Agentea> vAgenteak = new Vector<Agentea>();
 
 	boolean datuakGehituta = true;
@@ -116,8 +117,10 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 					.firstElement().getIzena());
 			String defaultChoice = vIrteerak.firstElement().getEzaugarriak();
 			for (Irteera i : vIrteerak) {
-				//Ez gehitu sarrera errepikatuak
-				comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
+				if(i.compareTo(vIrteeraDistinct)!=0){
+					comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
+					vIrteeraDistinct.add(i);
+				}
 				if (i.getEzaugarriak().equals(defaultChoice)) {
 					comboIrteeraData.addItem(dataFormat.format(i.getData()
 							.getTime()));
@@ -335,6 +338,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			comboIrteerarenEzaugarriak.removeAllItems();
 			comboIrteeraData.removeAllItems();
 			vIrteerak.removeAllElements();
+			vIrteeraDistinct.removeAllElements();
 			try {
 				vIrteerak = LoturaErreserbaSistema
 						.getIrteerenEzaugarriak(comboErreserbaAgentea
@@ -343,8 +347,12 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 						.toString());
 				String defaultChoice = vIrteerak.firstElement()
 						.getEzaugarriak();
+				
 				for (Irteera i : vIrteerak) {
-					comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
+					if(i.compareTo(vIrteeraDistinct)!=0){
+						comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
+						vIrteeraDistinct.add(i);
+					}
 					if (i.getEzaugarriak().equals(defaultChoice)) {
 						comboIrteeraData.addItem(dataFormat.format(i.getData()
 								.getTime()));
