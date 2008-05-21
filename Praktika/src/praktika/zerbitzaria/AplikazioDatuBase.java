@@ -1,8 +1,13 @@
 package praktika.zerbitzaria;
 
 import java.sql.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Vector;
+
+import praktika.partekatuak.Irteera;
 
 /**
  * Arkitekturaren hirugarren mailaren klase nagusia Singleton diseinu-patroia
@@ -253,9 +258,30 @@ class AplikazioDatuBase {
 		return null;
 	}
 
-	public HashMap irakurriIrteerak() {
-		HashMap<K, V>
-		return null;
+	public Vector<Irteera> irakurriIrteerak(String agenteIzena) throws SQLException {
+		Vector<Irteera> vIrteerak = new Vector<Irteera>();
+		String query = "SELECT * FROM Irteera I INNER JOIN Agentea A ON I.Agente_Kodea = A.Agente_Kodea WHERE A.Izena = ?";
+		PreparedStatement ps = konexioa.prepareStatement(query);
+		ResultSet rs = ps.executeQuery();
+		int irtKod;
+		String ezaug;
+		int pertsonaKopMax;
+		int agenteKod;
+		double prezioa;
+		Calendar data;
+		while (rs.next()){
+			irtKod = rs.getInt("Irteeraren_Kodea");
+			ezaug = rs.getString("Ezaugarriak");
+			pertsonaKopMax = rs.getInt("Pertsona_Kop_Max");
+			agenteKod = rs.getInt("Agente_Kodea");
+			prezioa = rs.getDouble("Prezioa");
+			data = new GregorianCalendar();
+			data.setTime(new Date(rs.getTimestamp("Data").getTime()));
+			vIrteerak.addElement(new Irteera(irtKod, ezaug, pertsonaKopMax, agenteKod, prezioa, data));
+		}
+		rs.close();
+		ps.close();
+		return vIrteerak;
 	}
 	
 	/**
@@ -271,6 +297,8 @@ class AplikazioDatuBase {
 		ResultSet rs = ps.executeQuery();
 		while(rs.next())
 			vAgenteak.addElement(rs.getString("Izena"));
+		rs.close();
+		ps.close();
 		return vAgenteak;
 	}
 
