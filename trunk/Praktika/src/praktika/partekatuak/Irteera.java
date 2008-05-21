@@ -22,51 +22,51 @@ public class Irteera {
 		this.data = data;
 	}
 
-	protected final int getIrteerarenKodea() {
+	public final int getIrteerarenKodea() {
 		return irteerarenKodea;
 	}
 
-	protected final void setIrteerarenKodea(int irteerarenKodea) {
+	public final void setIrteerarenKodea(int irteerarenKodea) {
 		this.irteerarenKodea = irteerarenKodea;
 	}
 
-	protected final String getEzaugarriak() {
+	public final String getEzaugarriak() {
 		return ezaugarriak;
 	}
 
-	protected final void setEzaugarriak(String ezaugarriak) {
+	public final void setEzaugarriak(String ezaugarriak) {
 		this.ezaugarriak = ezaugarriak;
 	}
 
-	protected final int getPertsonaKopMax() {
+	public final int getPertsonaKopMax() {
 		return pertsonaKopMax;
 	}
 
-	protected final void setPertsonaKopMax(int pertsonaKopMax) {
+	public final void setPertsonaKopMax(int pertsonaKopMax) {
 		this.pertsonaKopMax = pertsonaKopMax;
 	}
 
-	protected final int getAgenteKodea() {
+	public final int getAgenteKodea() {
 		return agenteKodea;
 	}
 
-	protected final void setAgenteKodea(int agenteKodea) {
+	public final void setAgenteKodea(int agenteKodea) {
 		this.agenteKodea = agenteKodea;
 	}
 
-	protected final double getPrezioa() {
+	public final double getPrezioa() {
 		return prezioa;
 	}
 
-	protected final void setPrezioa(double prezioa) {
+	public final void setPrezioa(double prezioa) {
 		this.prezioa = prezioa;
 	}
 
-	protected final Calendar getData() {
+	public final Calendar getData() {
 		return data;
 	}
 
-	protected final void setData(Calendar data) {
+	public final void setData(Calendar data) {
 		this.data = data;
 	}
 
