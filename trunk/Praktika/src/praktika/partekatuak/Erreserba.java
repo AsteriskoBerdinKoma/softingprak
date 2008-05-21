@@ -13,7 +13,6 @@ public class Erreserba implements Serializable{
 	private int erreserbaZenbakia;
 	private Calendar data;
 	private int pertsonaKopurua;
-	private boolean behinBehineko;
 	private int baieztapenZenbakia;
 	private int irteeraKodea;
 	
@@ -21,13 +20,11 @@ public class Erreserba implements Serializable{
 		super();
 	}
 
-	public Erreserba(int erreserbaZenbakia, Calendar data, int pertsonaKopurua,
-			boolean behinBehineko, int baieztapenZenbakia, int irteeraKodea) {
+	public Erreserba(int erreserbaZenbakia, Calendar data, int pertsonaKopurua, int baieztapenZenbakia, int irteeraKodea) {
 		super();
 		this.erreserbaZenbakia = erreserbaZenbakia;
 		this.data = data;
 		this.pertsonaKopurua = pertsonaKopurua;
-		this.behinBehineko = behinBehineko;
 		this.baieztapenZenbakia = baieztapenZenbakia;
 		this.irteeraKodea = irteeraKodea;
 	}
@@ -54,14 +51,6 @@ public class Erreserba implements Serializable{
 
 	public void setPertsonaKopurua(int pertsonaKopurua) {
 		this.pertsonaKopurua = pertsonaKopurua;
-	}
-
-	public boolean isBehinBehineko() {
-		return behinBehineko;
-	}
-
-	public void setBehinBehineko(boolean behinBehineko) {
-		this.behinBehineko = behinBehineko;
 	}
 
 	public int getBaieztapenZenbakia() {
