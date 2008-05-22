@@ -104,7 +104,7 @@ public class ErreserbarenBista extends JPanel {
 						itenak.clear();
 						int baiZenb = e.getBaieztapenZenbakia();
 						itenak.addElement("Erreserbari esleitutako zenbakia "
-								+ e.getErreserbaZenbakia() + " .");
+								+ e.getErreserbaZenbakia() + ".");
 						if (e.isBaieztatua())
 							itenak.addElement("Erreserba baieztatua " + baiZenb
 									+ " baieztapen zenbakiarekin.");
