@@ -10,12 +10,10 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -30,7 +28,6 @@ import javax.swing.JTextField;
 import praktika.partekatuak.Agentea;
 import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
-import praktika.partekatuak.ErreserbaKontroladoreaObserver;
 import praktika.partekatuak.Irteera;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
@@ -115,8 +112,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		}
 		
 		this.LoturaErreserbaSistema = erreserbaSistema;
-		//
-		Iterator iterator;
+		//Iterator iterator;
 		DateFormat dataFormat = DateFormat.getDateInstance();
 		comboIrteerarenEzaugarriak = new JComboBox();
 		comboIrteeraData = new JComboBox();
@@ -205,7 +201,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 
 	public void actionPerformed(ActionEvent event) {
 		try {
-			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+			//NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 			DateFormat dataFormat = DateFormat.getDateInstance();
 			if (event.getSource() == botoiaErreserbaBerria) {
 				// Sarrera

@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import praktika.partekatuak.ErreserbaInterface;
-import praktika.partekatuak.ErreserbaItenarenBistaObserver;
-import praktika.partekatuak.ErreserbaKontroladoreaObserver;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
 
