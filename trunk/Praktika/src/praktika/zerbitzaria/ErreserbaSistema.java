@@ -107,11 +107,16 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 * @see praktika.zerbitzaria.ErreserbaInterface#ezeztatu()
 	 */
 	public void ezeztatu(Erreserba erreserba) throws RemoteException {
-		// Erreserba sortu
-		// LoturaErreserba = null;
-		// Bistak ohararazi
-		setChanged();
-		super.notifyObservers();
+		try {
+			aDB.deleteErreserba(erreserba.getErreserbaZenbakia());
+			erreserba.ezeztatu();
+			// Bistak ohararazi
+			setChanged();
+			super.notifyObservers(erreserba);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/*

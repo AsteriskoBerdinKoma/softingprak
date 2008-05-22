@@ -104,21 +104,34 @@ public class ErreserbarenBista extends JPanel {
 				Erreserba e = (Erreserba) objektua;
 				if (AplikazioNagusia.getUnekoErreserbaZenbakia() == e
 						.getErreserbaZenbakia()) {
-					if (!e.isSartuta()) {
-						itenak.clear();
-						int baiZenb = e.getBaieztapenZenbakia();
+					switch (e.getEgoera()) {
+					case Erreserba.BERRIA:
 						itenak.addElement("Erreserbari esleitutako zenbakia "
 								+ e.getErreserbaZenbakia() + ".");
-						if (e.isBaieztatua())
-							itenak.addElement("Erreserba baieztatua " + baiZenb
-									+ " baieztapen zenbakiarekin.");
-						else {
-							itenak.addElement("Erreserba ezeztatua izan da:");
-							itenak.addElement(((Erreserba) objektua)
-									.getUkapenArrazoiak());
-						}
-					} else
+						break;
+					case Erreserba.BAIEZTATUA:
+						int baiZenb = e.getBaieztapenZenbakia();
+						itenak.addElement("Erreserba baieztatua " + baiZenb
+								+ " baieztapen zenbakiarekin.");
+						break;
+					case Erreserba.UKATUA:
+						itenak.addElement("Erreserba ukatua izan da:");
+						itenak.addElement(((Erreserba) objektua)
+								.getUkapenArrazoiak());
+						break;
+					case Erreserba.SARTUTA:
 						itenak.addElement("Erreserba satua izan da.");
+						break;
+					case Erreserba.EZEZTATUA:
+						itenak.addElement(e.getErreserbaZenbakia()
+								+ " zenbakidun erreserba ezeztatua izan da.");
+						break;
+					case Erreserba.BUKATUA:
+						itenak.clear();
+						break;
+					default:
+						break;
+					}
 				}
 			} else if (objektua instanceof TuristaNotifikazioa) {
 				TuristaNotifikazioa tn = (TuristaNotifikazioa) objektua;
