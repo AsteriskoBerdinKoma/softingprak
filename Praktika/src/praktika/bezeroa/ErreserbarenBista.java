@@ -97,14 +97,16 @@ public class ErreserbarenBista extends JPanel {
 		public void update(RemoteObservable observable, Object objektua)
 				throws RemoteException {
 			itenak.clear();
-			if(objektua.getClass() == Erreserba.class){
-				Erreserba e = (Erreserba) objektua
+			if (objektua.getClass() == Erreserba.class) {
+				Erreserba e = (Erreserba) objektua;
 				int baiZenb = e.getBaieztapenZenbakia();
-				if(e.)
-					itenak.addElement("Erreserba baieztatua " + baiZenb + " baieztapen zenbakiarekin.");
-				else{
+				if (e.isBaieztatua())
+					itenak.addElement("Erreserba baieztatua " + baiZenb
+							+ " baieztapen zenbakiarekin.");
+				else {
 					itenak.addElement("Erreserba ezeztatua izan da:");
-					itenak.addElement(((Erreserba) objektua).getUkapenArrazoiak());
+					itenak.addElement(((Erreserba) objektua)
+							.getUkapenArrazoiak());
 				}
 			}
 			//
