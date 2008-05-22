@@ -113,7 +113,8 @@ public class ErreserbarenBista extends JPanel {
 							itenak.addElement(((Erreserba) objektua)
 									.getUkapenArrazoiak());
 						}
-					}
+					} else
+						itenak.addElement("Erreserba satua izan da.");
 				}
 			}
 			//
