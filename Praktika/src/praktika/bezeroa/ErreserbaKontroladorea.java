@@ -1,7 +1,6 @@
 package praktika.bezeroa;
 
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -16,14 +15,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle;
+import javax.swing.border.TitledBorder;
 
 import praktika.partekatuak.Agentea;
 import praktika.partekatuak.Erreserba;
@@ -40,6 +41,7 @@ import praktika.partekatuak.remoteObservable.RemoteObserver;
 
 public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		ItemListener {
+	private JTextField testuEremuaBaieztapenZenbakia;
 	/**
 	 * 
 	 */
@@ -87,7 +89,6 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	private JComboBox comboIrteeraData;// = new JComboBox();
 
 	//
-	private JTextField testuEremuaBaieztapenZenbakia = new JTextField();
 
 	private JTextField testuEremuaIzena = new JTextField();
 
@@ -116,8 +117,14 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		this.LoturaErreserbaSistema = erreserbaSistema;
 		// Iterator iterator;
 		DateFormat dataFormat = DateFormat.getDateInstance();
+
+		etiketaIrteerarenEzaugarriak.hashCode();
 		comboIrteerarenEzaugarriak = new JComboBox();
+
+		etiketaIrteeraData.hashCode();
 		comboIrteeraData = new JComboBox();
+
+		etiketaErreserbaAgentea.hashCode();
 		comboErreserbaAgentea = new JComboBox();
 		try {
 			vAgenteak = LoturaErreserbaSistema.getErreserbaAgenteak();
@@ -143,49 +150,43 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		setLayout(new GridLayout(8, 3, 25, 25));
 		setFont(new Font("Arial", Font.PLAIN, 12));
-		setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
+		setBorder(new TitledBorder(null, "Erreserba Eskaerak",
+				TitledBorder.DEFAULT_JUSTIFICATION,
+				TitledBorder.DEFAULT_POSITION, null, null));
 		// errenkada 1
-		add(etiketaErreserbaAgentea);
-		add(comboErreserbaAgentea);
-		add(new JLabel("            "));
 		// errenkada 2
-		add(etiketaPertsonaKopurua);
-		add(comboPertsonaKopurua);
-		add(botoiaErreserbaBerria);
 		// errenkada 3
-		add(etiketaIrteerarenEzaugarriak);
-		add(comboIrteerarenEzaugarriak);
-		add(new JLabel("            "));
 		// errenkada 4
-		add(etiketaIrteeraData);
-		add(comboIrteeraData);
-		add(new JLabel("            "));
 		// errenkada 5
-		add(etiketaBaieztapenZenbakia);
-		add(testuEremuaBaieztapenZenbakia);
-		add(botoiaSartuIrteera);
+
+		etiketaPertsonaKopurua.hashCode();
+
+		comboPertsonaKopurua.hashCode();
 		// errenkada 6
-		add(etiketaIzena);
-		add(testuEremuaIzena);
-		add(botoiaSartuTurista);
 		// errenkada 7
-		add(etiketaHelbidea);
-		add(testuEremuaHelbidea);
-		add(botoiaSartuBidali);
 		// errenkada 8
-		add(etiketaTelefonoa);
-		add(testuEremuaTelefonoa);
-		add(botoiaSartuEzeztatu);
 		// Gehitu event listener-ak
 		botoiaErreserbaBerria.addActionListener(this);
+
+		etiketaBaieztapenZenbakia.hashCode();
 		botoiaSartuIrteera.addActionListener(this);
 		comboIrteerarenEzaugarriak.addItemListener(this);
 		comboErreserbaAgentea.addItemListener(this);
+
+		etiketaIzena.hashCode();
+
+		testuEremuaIzena.hashCode();
 		botoiaSartuTurista.addActionListener(this);
+
+		etiketaHelbidea.hashCode();
+
+		testuEremuaHelbidea.hashCode();
 		botoiaSartuBidali.addActionListener(this);
+
+		etiketaTelefonoa.hashCode();
+
+		testuEremuaTelefonoa.hashCode();
 		botoiaSartuEzeztatu.addActionListener(this);
 		// Botoiak ipini
 		botoiaErreserbaBerria.setEnabled(true);
@@ -193,6 +194,240 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		botoiaSartuTurista.setEnabled(false);
 		botoiaSartuBidali.setEnabled(false);
 		botoiaSartuEzeztatu.setEnabled(false);
+
+		testuEremuaBaieztapenZenbakia = new JTextField();
+		final GroupLayout groupLayout = new GroupLayout((JComponent) this);
+		groupLayout
+				.setHorizontalGroup(groupLayout
+						.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																etiketaTelefonoa)
+														.addComponent(
+																etiketaHelbidea)
+														.addComponent(
+																etiketaIzena)
+														.addComponent(
+																etiketaErreserbaAgentea)
+														.addComponent(
+																etiketaPertsonaKopurua)
+														.addComponent(
+																etiketaIrteerarenEzaugarriak)
+														.addComponent(
+																etiketaIrteeraData)
+														.addComponent(
+																etiketaBaieztapenZenbakia))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.LEADING)
+														.addComponent(
+																testuEremuaTelefonoa,
+																GroupLayout.DEFAULT_SIZE,
+																157,
+																Short.MAX_VALUE)
+														.addComponent(
+																testuEremuaHelbidea,
+																GroupLayout.DEFAULT_SIZE,
+																157,
+																Short.MAX_VALUE)
+														.addComponent(
+																testuEremuaIzena,
+																GroupLayout.DEFAULT_SIZE,
+																157,
+																Short.MAX_VALUE)
+														.addComponent(
+																testuEremuaBaieztapenZenbakia,
+																GroupLayout.DEFAULT_SIZE,
+																157,
+																Short.MAX_VALUE)
+														.addComponent(
+																comboErreserbaAgentea,
+																0, 157,
+																Short.MAX_VALUE)
+														.addComponent(
+																comboPertsonaKopurua,
+																0, 157,
+																Short.MAX_VALUE)
+														.addComponent(
+																comboIrteerarenEzaugarriak,
+																0, 157,
+																Short.MAX_VALUE)
+														.addComponent(
+																comboIrteeraData,
+																0, 157,
+																Short.MAX_VALUE))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.LEADING)
+														.addComponent(
+																botoiaSartuBidali,
+																GroupLayout.PREFERRED_SIZE,
+																129,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																botoiaSartuEzeztatu,
+																GroupLayout.PREFERRED_SIZE,
+																129,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																botoiaSartuIrteera,
+																GroupLayout.PREFERRED_SIZE,
+																129,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																botoiaErreserbaBerria)
+														.addComponent(
+																botoiaSartuTurista,
+																GroupLayout.PREFERRED_SIZE,
+																129,
+																GroupLayout.PREFERRED_SIZE))
+										.addGap(19, 19, 19)));
+		groupLayout
+				.setVerticalGroup(groupLayout
+						.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																etiketaErreserbaAgentea)
+														.addComponent(
+																comboErreserbaAgentea,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																etiketaPertsonaKopurua)
+														.addComponent(
+																comboPertsonaKopurua,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																botoiaErreserbaBerria))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																etiketaIrteerarenEzaugarriak)
+														.addComponent(
+																comboIrteerarenEzaugarriak,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																etiketaIrteeraData)
+														.addComponent(
+																comboIrteeraData,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																etiketaBaieztapenZenbakia)
+														.addComponent(
+																testuEremuaBaieztapenZenbakia,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																botoiaSartuIrteera))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																testuEremuaIzena,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																etiketaIzena)
+														.addComponent(
+																botoiaSartuTurista,
+																GroupLayout.PREFERRED_SIZE,
+																26,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																testuEremuaHelbidea,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																etiketaHelbidea)
+														.addComponent(
+																botoiaSartuBidali,
+																GroupLayout.PREFERRED_SIZE,
+																26,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																testuEremuaTelefonoa,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																etiketaTelefonoa)
+														.addComponent(
+																botoiaSartuEzeztatu,
+																GroupLayout.PREFERRED_SIZE,
+																26,
+																GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(26, Short.MAX_VALUE)));
+		groupLayout.linkSize(javax.swing.SwingConstants.VERTICAL,
+				new java.awt.Component[] { botoiaErreserbaBerria,
+						botoiaSartuBidali, botoiaSartuEzeztatu,
+						botoiaSartuIrteera, botoiaSartuTurista });
+		setLayout(groupLayout);
 		//
 		// Pertsona Kopurua aukera laukia
 		for (int i = 1; i <= 10; i++) {
@@ -418,7 +653,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 						testuEremuaIzena.setEditable(true);
 						testuEremuaTelefonoa.setEditable(true);
 
-					} else if (!erreserba.getUkapenArrazoiak().isEmpty()){
+					} else if (!erreserba.getUkapenArrazoiak().isEmpty()) {
 						botoiaErreserbaBerria.setEnabled(true);
 						botoiaSartuBidali.setEnabled(false);
 					} else {
@@ -440,7 +675,8 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 						botoiaSartuTurista.setEnabled(false);
 						System.out
 								.println("Erreserbako turista guztien informazioa sartu da\n");
-					} else if(tn.getLibreKop()==-1 || tn.getZenbatgarrena()==-1){
+					} else if (tn.getLibreKop() == -1
+							|| tn.getZenbatgarrena() == -1) {
 						System.out.println("Errorea turista sartzean\n");
 						botoiaSartuBidali.setEnabled(false);
 					}
