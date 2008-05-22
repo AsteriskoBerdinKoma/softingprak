@@ -235,11 +235,11 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 							&& i.getAgenteKodea() == kodea) {
 						erreserba = new Erreserba(-1, i.getData(),
 								pertsonaKopurua, -1, i.getIrteerarenKodea());
-						AplikazioNagusia.setUnekoErreserba(erreserba);
+						
 					}
 
 				}
-
+				AplikazioNagusia.setUnekoErreserba(erreserba);
 				// Ereduak sartu
 				LoturaErreserbaSistema.erreserbaBerria(erreserba);
 
@@ -402,7 +402,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		
 		@Override
 		public void update(RemoteObservable o, Object arg) throws RemoteException {
-			if ((Erreserba) arg!= null){
+			if ((Erreserba) arg!= null && (Erreserba)arg == AplikazioNagusia.getUnekoErreserba()){
 				erreserba = (Erreserba) arg;
 				if(erreserba.getBaieztapenZenbakia()!=-1 && erreserba.isBaieztatua()){
 					testuEremuaBaieztapenZenbakia.setText(String.valueOf(erreserba.getBaieztapenZenbakia()));
