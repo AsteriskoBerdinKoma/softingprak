@@ -260,29 +260,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 				
 			}
 			if (event.getSource() == botoiaSartuIrteera) {
-				Date irteeraData = null;
-				// Sarrera
-				String zerbitzuarenKodea = (String) comboIrteerarenEzaugarriak
-						.getSelectedItem();
-				String strIrteeraData = (String) comboIrteeraData
-						.getSelectedItem();
-				try {
-					irteeraData = dataFormat.parse(strIrteeraData);
-				} catch (ParseException e) {
-				}
-				try {
-					int baieztapenZenbakia = Integer
-							.parseInt(testuEremuaBaieztapenZenbakia.getText());
-					// Ereduak sartu
-					LoturaErreserbaSistema.sartuIrteera(baieztapenZenbakia,
-							zerbitzuarenKodea, irteeraData);
-				} catch (NumberFormatException numberFormatException) {
-					JOptionPane
-							.showMessageDialog(new JFrame(),
-									"Mesedez zenbaki oso bat sartu",
-									"Sarrera errore mezua",
-									JOptionPane.WARNING_MESSAGE);
-				}
+				LoturaErreserbaSistema.sartuIrteera(erreserba);
 				// Botoiak ipini
 				botoiaErreserbaBerria.setEnabled(false);
 				botoiaSartuIrteera.setEnabled(true);
@@ -422,6 +400,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 							&& erreserba.isBaieztatua()) {
 						testuEremuaBaieztapenZenbakia.setText(String
 								.valueOf(erreserba.getBaieztapenZenbakia()));
+						testuEremuaBaieztapenZenbakia.setEditable(false);
 					} else {
 						botoiaSartuIrteera.setEnabled(false);
 					}
