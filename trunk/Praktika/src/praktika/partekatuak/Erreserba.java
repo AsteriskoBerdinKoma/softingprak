@@ -85,7 +85,7 @@ public class Erreserba implements Serializable {
 		return ukapenArrazoiak;
 	}
 
-	protected final boolean isBaieztatua() {
+	public final boolean isBaieztatua() {
 		return baieztatua;
 	}
 }

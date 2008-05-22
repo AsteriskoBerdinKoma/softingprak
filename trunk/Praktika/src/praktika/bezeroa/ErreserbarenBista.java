@@ -49,20 +49,17 @@ public class ErreserbarenBista extends JPanel {
 		JScrollPane scrollPane;
 		scrollPane = new JScrollPane(lista);
 		final GroupLayout groupLayout = new GroupLayout((JComponent) this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(GroupLayout.Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				GroupLayout.Alignment.LEADING).addGroup(
+				GroupLayout.Alignment.TRAILING,
+				groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE,
+								156, Short.MAX_VALUE).addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				GroupLayout.Alignment.LEADING).addGroup(
+				groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE,
+								358, Short.MAX_VALUE).addContainerGap()));
 		setLayout(groupLayout);
 	}
 
@@ -75,22 +72,22 @@ public class ErreserbarenBista extends JPanel {
 	 *            java.lang.Object
 	 */
 
-//	public void update(RemoteObservable observable, Object objektua) {
-//		itenak.clear();
-//		//
-//		NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-//		DateFormat dataFormat = DateFormat.getDateInstance();
-//		ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
-//
-//	}
-	
-	private class UrrunekoBegiralea extends UnicastRemoteObject implements RemoteObserver, Serializable {
+	// public void update(RemoteObservable observable, Object objektua) {
+	// itenak.clear();
+	// //
+	// NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+	// DateFormat dataFormat = DateFormat.getDateInstance();
+	// ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
+	//
+	// }
+	private class UrrunekoBegiralea extends UnicastRemoteObject implements
+			RemoteObserver, Serializable {
 
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		
+
 		protected UrrunekoBegiralea() throws RemoteException {
 			super();
 			// TODO Auto-generated constructor stub
@@ -101,8 +98,9 @@ public class ErreserbarenBista extends JPanel {
 				throws RemoteException {
 			itenak.clear();
 			if(objektua.getClass() == Erreserba.class){
-				int baiZenb = ((Erreserba) objektua).getBaieztapenZenbakia();
-				if(baiZenb != -1)
+				Erreserba e = (Erreserba) objektua
+				int baiZenb = e.getBaieztapenZenbakia();
+				if(e.)
 					itenak.addElement("Erreserba baieztatua " + baiZenb + " baieztapen zenbakiarekin.");
 				else{
 					itenak.addElement("Erreserba ezeztatua izan da:");
@@ -114,6 +112,5 @@ public class ErreserbarenBista extends JPanel {
 			DateFormat dataFormat = DateFormat.getDateInstance();
 			ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
 		}
-		
 	}
 }
