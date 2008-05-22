@@ -43,6 +43,8 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 
 	private boolean konektatua;
 
+	private int unekoErreserbaZenbakia;
+
 	public ErreserbaSistema() throws RemoteException {
 		frame = new ZerbitzariaFrame();
 		frame.addWindowListener(new WindowListener() {
@@ -167,6 +169,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 *      java.lang.String)
 	 */
 	public void erreserbaBerria(Erreserba erreserba) throws RemoteException {
+		System.out.println(erreserba);
 		try {
 			// Erreserba sortu
 			int pertsonaMax = aDB.getPertsonaMax(erreserba.getIrteeraKodea());
@@ -195,6 +198,11 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 				+ " bezeroak erreserba berria egin du eta "
 				+ erreserba.getBaieztapenZenbakia()
 				+ " baieztapen zenbakia eman zaio.");
+	}
+
+	public int getHurrengoErreserbaZenb() throws RemoteException {
+		unekoErreserbaZenbakia++;
+		return unekoErreserbaZenbakia;
 	}
 
 	// public void setLoturaErreserba(Erreserba newLoturaErreserba) {
