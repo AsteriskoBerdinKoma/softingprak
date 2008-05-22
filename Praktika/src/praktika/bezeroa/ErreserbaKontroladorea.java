@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import praktika.partekatuak.Agentea;
 import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
+import praktika.partekatuak.ErreserbaKontroladoreaObserver;
 import praktika.partekatuak.Irteera;
 
 /**
@@ -94,12 +95,21 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	private Vector<Irteera> vIrteerak = new Vector<Irteera>();
 	private Vector<Irteera> vIrteeraDistinct = new Vector<Irteera>();
 	private Vector<Agentea> vAgenteak = new Vector<Agentea>();
+	private Erreserba erreserba;
 
 	boolean datuakGehituta = true;
 
 	private ErreserbaInterface LoturaErreserbaSistema;
 
 	public ErreserbaKontroladorea(ErreserbaInterface erreserbaSistema) {
+		try {
+			ErreserbaKontroladoreaObserver remErrKontr = new ErreserbaKontroladoreaObserver(this);
+			erreserbaSistema.addObserver(remErrKontr);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.LoturaErreserbaSistema = erreserbaSistema;
 		//
 		Iterator iterator;
@@ -195,7 +205,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			DateFormat dataFormat = DateFormat.getDateInstance();
 			if (event.getSource() == botoiaErreserbaBerria) {
 				// Sarrera
-				Erreserba erreserba = new Erreserba();
+				erreserba = new Erreserba();
 				String strNumberInParty = (String) comboPertsonaKopurua
 						.getSelectedItem();
 				int pertsonaKopurua = Integer.parseInt(strNumberInParty);
