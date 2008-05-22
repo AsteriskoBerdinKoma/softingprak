@@ -33,15 +33,14 @@ public class ErreserbarenBista extends JPanel implements RemoteObserver {
 	public ErreserbarenBista(ErreserbaInterface erreserbaSistema) {
 		try {
 			erreserbaSistema.addObserver(this);
-			//
-			itenak = new DefaultListModel();
-			lista = new JList(itenak);
-			lista.setVisibleRowCount(24);
-			this.add(new JScrollPane(lista));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		itenak = new DefaultListModel();
+		lista = new JList(itenak);
+		lista.setVisibleRowCount(24);
+		this.add(new JScrollPane(lista));
 	}
 
 	/**
