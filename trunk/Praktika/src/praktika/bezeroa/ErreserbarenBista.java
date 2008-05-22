@@ -1,15 +1,19 @@
 package praktika.bezeroa;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.LayoutStyle;
 import javax.swing.border.TitledBorder;
 
 import praktika.partekatuak.Erreserba;
@@ -51,19 +55,45 @@ public class ErreserbarenBista extends JPanel {
 		setBorder(new TitledBorder(null, "Erreserba",
 				TitledBorder.DEFAULT_JUSTIFICATION,
 				TitledBorder.DEFAULT_POSITION, null, null));
+
+		JButton garbituButton;
+		garbituButton = new JButton();
+		garbituButton.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent e) {
+				itenak.clear();
+			}
+		});
+		garbituButton.setText("Garbitu");
 		final GroupLayout groupLayout = new GroupLayout((JComponent) this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				GroupLayout.Alignment.TRAILING).addGroup(
-				GroupLayout.Alignment.LEADING,
-				groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE,
-								466, Short.MAX_VALUE).addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				GroupLayout.Alignment.LEADING).addGroup(
-				GroupLayout.Alignment.TRAILING,
-				groupLayout.createSequentialGroup().addComponent(scrollPane,
-						GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-						.addContainerGap()));
+		groupLayout
+				.setHorizontalGroup(groupLayout
+						.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(
+								GroupLayout.Alignment.TRAILING,
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																scrollPane,
+																GroupLayout.Alignment.LEADING,
+																GroupLayout.DEFAULT_SIZE,
+																466,
+																Short.MAX_VALUE)
+														.addComponent(
+																garbituButton))
+										.addContainerGap()));
+		groupLayout
+				.setVerticalGroup(groupLayout.createParallelGroup(
+						GroupLayout.Alignment.TRAILING).addGroup(
+						groupLayout.createSequentialGroup().addComponent(
+								scrollPane, GroupLayout.DEFAULT_SIZE, 305,
+								Short.MAX_VALUE).addPreferredGap(
+								LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(garbituButton).addContainerGap()));
 		setLayout(groupLayout);
 	}
 
@@ -106,28 +136,32 @@ public class ErreserbarenBista extends JPanel {
 						.getErreserbaZenbakia()) {
 					switch (e.getEgoera()) {
 					case Erreserba.BERRIA:
-						itenak.addElement("Erreserbari esleitutako zenbakia "
-								+ e.getErreserbaZenbakia() + ".");
+						itenak.addElement("Erreserba berria sortu da "
+								+ e.getErreserbaZenbakia() + " zenbakiarekin.");
 						break;
 					case Erreserba.BAIEZTATUA:
 						int baiZenb = e.getBaieztapenZenbakia();
-						itenak.addElement("Erreserba baieztatua " + baiZenb
+						itenak.addElement(e.getErreserbaZenbakia()
+								+ " zenbakidun erreserba baieztatua " + baiZenb
 								+ " baieztapen zenbakiarekin.");
 						break;
 					case Erreserba.UKATUA:
-						itenak.addElement("Erreserba ukatua izan da:");
+						itenak.addElement(e.getErreserbaZenbakia()
+								+ " zenbakidun erreserba ukatua izan da:");
 						itenak.addElement(((Erreserba) objektua)
 								.getUkapenArrazoiak());
 						break;
 					case Erreserba.SARTUTA:
-						itenak.addElement("Erreserba satua izan da.");
+						itenak.addElement(e.getErreserbaZenbakia()
+								+ " zenbakidun erreserba satua izan da.");
 						break;
 					case Erreserba.EZEZTATUA:
 						itenak.addElement(e.getErreserbaZenbakia()
 								+ " zenbakidun erreserba ezeztatua izan da.");
 						break;
 					case Erreserba.BUKATUA:
-						itenak.clear();
+						itenak.addElement(e.getErreserbaZenbakia()
+								+ " zenbakidun erreserba bukatua izan da.");
 						break;
 					default:
 						break;

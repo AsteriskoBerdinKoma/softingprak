@@ -113,6 +113,16 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 			// Bistak ohararazi
 			setChanged();
 			super.notifyObservers(erreserba);
+
+			String client;
+			try {
+				client = getClientHost();
+			} catch (ServerNotActiveException e) {
+				client = "ezezaguna";
+			}
+			frame.gehituEkintza(getCurrentTime() + ": " + client
+					+ " - Ezeztatu - Erreserba zenbakia: "
+					+ erreserba.getErreserbaZenbakia());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -166,6 +176,17 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		// Bistak ohararazi
 		setChanged();
 		super.notifyObservers(erreserba);
+
+		String client;
+		try {
+			client = getClientHost();
+		} catch (ServerNotActiveException e) {
+			client = "ezezaguna";
+		}
+		frame.gehituEkintza(getCurrentTime() + ": " + client
+				+ " - Sartu irteera - Erreserba zenbakia: "
+				+ erreserba.getErreserbaZenbakia());
+
 	}
 
 	/*
@@ -196,6 +217,16 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 				errPertsonaKop - turistaKop, mezua);
 		setChanged();
 		super.notifyObservers(tn);
+
+		String client;
+		try {
+			client = getClientHost();
+		} catch (ServerNotActiveException e) {
+			client = "ezezaguna";
+		}
+		frame.gehituEkintza(getCurrentTime() + ": " + client
+				+ " - Sartu turista - Erreserba zenbakia: "
+				+ turista.getErreserbaZenb());
 	}
 
 	// public Erreserba getLoturaErreserba() {
@@ -209,6 +240,8 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 *      java.lang.String)
 	 */
 	public void erreserbaBerria(Erreserba erreserba) throws RemoteException {
+		setChanged();
+		super.notifyObservers(erreserba);
 		try {
 			// Erreserba sortu
 			int pertsonaMax = aDB.getPertsonaMax(erreserba.getIrteeraKodea());
@@ -229,6 +262,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		// Bistak ohararazi
 		setChanged();
 		super.notifyObservers(erreserba);
+
 		String client;
 		try {
 			client = getClientHost();
@@ -236,9 +270,9 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 			client = "ezezaguna";
 		}
 		frame.gehituEkintza(getCurrentTime() + ": " + client
-				+ " bezeroak erreserba berria egin du eta "
-				+ erreserba.getBaieztapenZenbakia()
-				+ " baieztapen zenbakia eman zaio.");
+				+ " - Erreserba berria - Erreserba zenbakia: "
+				+ erreserba.getErreserbaZenbakia() + ", Baieztapen zenbakia: "
+				+ erreserba.getBaieztapenZenbakia());
 	}
 
 	public int getHurrengoErreserbaZenb() throws RemoteException {
@@ -256,12 +290,20 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 * @see praktika.zerbitzaria.ErreserbaInterface#submit()
 	 */
 	public void submit(Erreserba erreserba) throws RemoteException {
-
-		System.out.println("Datubasera bidali da");
-		// LoturaErreserba = null;
+		erreserba.bukatu();
 		// Bistak ohararazi
 		setChanged();
-		super.notifyObservers();
+		super.notifyObservers(erreserba);
+
+		String client;
+		try {
+			client = getClientHost();
+		} catch (ServerNotActiveException e) {
+			client = "ezezaguna";
+		}
+		frame.gehituEkintza(getCurrentTime() + ": " + client
+				+ " - Submit - Erreserba zenbakia: "
+				+ erreserba.getErreserbaZenbakia());
 	}
 
 	@Override
