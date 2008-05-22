@@ -186,7 +186,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 							.getIrteeraKodea());
 			if (plazaLibreak >= erreserba.getPertsonaKopurua()) {
 				unekoBaieztapenZenbakia++;
-				erreserba.baieztatu(unekoBaieztapenZenbakia + 1);
+				erreserba.baieztatu(unekoBaieztapenZenbakia);
 			} else
 				erreserba.ukatu("Ez daude plaza librerik");
 		} catch (SQLException e) {
