@@ -49,6 +49,7 @@ public class ZerbitzariaFrame extends JFrame {
 		ekintzakLabel.setText("Ekintzak:");
 
 		textArea = new JTextArea();
+		textArea.setLineWrap(true);
 		textArea.setBorder(new LineBorder(Color.black, 1, false));
 		final GroupLayout groupLayout = new GroupLayout(
 				(JComponent) getContentPane());
