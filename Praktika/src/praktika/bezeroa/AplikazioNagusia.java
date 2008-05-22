@@ -14,7 +14,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
 
 public class AplikazioNagusia extends JFrame {
@@ -29,7 +28,7 @@ public class AplikazioNagusia extends JFrame {
 
 	private ErreserbaInterface urrunekoErreserba;
 
-	private static Erreserba unekoErreserba;
+	private static int unekoErreserbaZenbakia;
 
 	/**
 	 * Aplikazio nagusiaren hasierako klasea
@@ -149,11 +148,11 @@ public class AplikazioNagusia extends JFrame {
 		}
 	}
 
-	protected static Erreserba getUnekoErreserba() {
-		return unekoErreserba;
+	protected static int getUnekoErreserbaZenbakia() {
+		return unekoErreserbaZenbakia;
 	}
 
-	protected static void setUnekoErreserba(Erreserba unekoErreserba) {
-		AplikazioNagusia.unekoErreserba = unekoErreserba;
+	protected static void setUnekoErreserbaZenbakia(int unekoErreserbaZenbakia) {
+		AplikazioNagusia.unekoErreserbaZenbakia = unekoErreserbaZenbakia;
 	}
 }

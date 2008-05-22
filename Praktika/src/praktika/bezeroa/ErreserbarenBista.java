@@ -99,7 +99,8 @@ public class ErreserbarenBista extends JPanel {
 			itenak.clear();
 			if (objektua.getClass() == Erreserba.class) {
 				Erreserba e = (Erreserba) objektua;
-				if (AplikazioNagusia.getUnekoErreserba() == e)
+				if (AplikazioNagusia.getUnekoErreserbaZenbakia() == e
+						.getErreserbaZenbakia())
 					if (!e.isSartuta()) {
 						int baiZenb = e.getBaieztapenZenbakia();
 						if (e.isBaieztatua())
