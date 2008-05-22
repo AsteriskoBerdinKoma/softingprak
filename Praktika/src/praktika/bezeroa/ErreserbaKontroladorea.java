@@ -96,7 +96,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	private Vector<Irteera> vIrteerak = new Vector<Irteera>();
 	private Vector<Irteera> vIrteeraDistinct = new Vector<Irteera>();
 	private Vector<Agentea> vAgenteak = new Vector<Agentea>();
-	
+
 	private Erreserba erreserba;
 
 	boolean datuakGehituta = true;
@@ -112,7 +112,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			e.printStackTrace();
 		}
 		this.LoturaErreserbaSistema = erreserbaSistema;
-		//Iterator iterator;
+		// Iterator iterator;
 		DateFormat dataFormat = DateFormat.getDateInstance();
 		comboIrteerarenEzaugarriak = new JComboBox();
 		comboIrteeraData = new JComboBox();
@@ -127,7 +127,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 					.firstElement().getIzena());
 			String defaultChoice = vIrteerak.firstElement().getEzaugarriak();
 			for (Irteera i : vIrteerak) {
-				if(i.compareTo(vIrteeraDistinct)!=0){
+				if (i.compareTo(vIrteeraDistinct) != 0) {
 					comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
 					vIrteeraDistinct.add(i);
 				}
@@ -201,7 +201,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 
 	public void actionPerformed(ActionEvent event) {
 		try {
-			//NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+			// NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 			DateFormat dataFormat = DateFormat.getDateInstance();
 			if (event.getSource() == botoiaErreserbaBerria) {
 				// Sarrera
@@ -224,6 +224,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 						kodea = a.getAgenteKodea();
 					}
 				}
+				boolean bidaiaDago = false;
 				for (Irteera i : vIrteerak) {
 					if (i.getEzaugarriak().equals(selectIrteera)
 							&& i.getData().get(Calendar.YEAR) == cal
@@ -233,24 +234,30 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 							&& i.getData().get(Calendar.DAY_OF_MONTH) == cal
 									.get(Calendar.DAY_OF_MONTH)
 							&& i.getAgenteKodea() == kodea) {
-						erreserba = new Erreserba(-1, i.getData(),
+						int erZ = LoturaErreserbaSistema
+								.getHurrengoErreserbaZenb();
+						erreserba = new Erreserba(erZ, i.getData(),
 								pertsonaKopurua, -1, i.getIrteerarenKodea());
-						AplikazioNagusia.setUnekoErreserba(erreserba);
+						AplikazioNagusia.setUnekoErreserbaZenbakia(erZ);
 						// Ereduak sartu
 						LoturaErreserbaSistema.erreserbaBerria(erreserba);
+						// Botoiak ipini
+						botoiaErreserbaBerria.setEnabled(false);
+						botoiaSartuIrteera.setEnabled(true);
+						botoiaSartuTurista.setEnabled(false);
+						botoiaSartuBidali.setEnabled(false);
+						botoiaSartuEzeztatu.setEnabled(false);
+						bidaiaDago = true;
 						break;
 					}
-
+				}
+				if (!bidaiaDago){
+					JOptionPane jop = new JOptionPane(
+							"Emandako datuekin ez dago bidairik.\nSaiatu berrio.",
+							JOptionPane.INFORMATION_MESSAGE);
+					jop.createDialog("Oharra").setVisible(true);
 				}
 				
-				
-
-				// Botoiak ipini
-				botoiaErreserbaBerria.setEnabled(false);
-				botoiaSartuIrteera.setEnabled(true);
-				botoiaSartuTurista.setEnabled(false);
-				botoiaSartuBidali.setEnabled(false);
-				botoiaSartuEzeztatu.setEnabled(false);
 			}
 			if (event.getSource() == botoiaSartuIrteera) {
 				Date irteeraData = null;
@@ -360,9 +367,9 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 						.toString());
 				String defaultChoice = vIrteerak.firstElement()
 						.getEzaugarriak();
-				
+
 				for (Irteera i : vIrteerak) {
-					if(i.compareTo(vIrteeraDistinct)!=0){
+					if (i.compareTo(vIrteeraDistinct) != 0) {
 						comboIrteerarenEzaugarriak.addItem(i.getEzaugarriak());
 						vIrteeraDistinct.add(i);
 					}
@@ -391,29 +398,39 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			}
 		}
 	}
-	private class UrrunekoBegiralea extends UnicastRemoteObject implements RemoteObserver, Serializable{
+
+	private class UrrunekoBegiralea extends UnicastRemoteObject implements
+			RemoteObserver, Serializable {
 
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
 
-		public UrrunekoBegiralea() throws RemoteException{
+		public UrrunekoBegiralea() throws RemoteException {
 			super();
 		}
-		
+
 		@Override
-		public void update(RemoteObservable o, Object arg) throws RemoteException {
-			if ((Erreserba) arg!= null && (Erreserba)arg == AplikazioNagusia.getUnekoErreserba()){
+		public void update(RemoteObservable o, Object arg)
+				throws RemoteException {
+			if (arg instanceof Erreserba) {
 				erreserba = (Erreserba) arg;
-				if(erreserba.getBaieztapenZenbakia()!=-1 && erreserba.isBaieztatua()){
-					testuEremuaBaieztapenZenbakia.setText(String.valueOf(erreserba.getBaieztapenZenbakia()));
-				} else{
-					botoiaSartuIrteera.setEnabled(false);
+				if (erreserba.getErreserbaZenbakia() == AplikazioNagusia
+						.getUnekoErreserbaZenbakia()) {
+					if (erreserba.getBaieztapenZenbakia() != -1
+							&& erreserba.isBaieztatua()) {
+						testuEremuaBaieztapenZenbakia.setText(String
+								.valueOf(erreserba.getBaieztapenZenbakia()));
+					} else {
+						botoiaSartuIrteera.setEnabled(false);
+					}
+				} else {
+					System.out
+							.println("Notifikazioa beste bezero batentzat zen.");
 				}
 			}
 		}
-		
 
 	}
 }
