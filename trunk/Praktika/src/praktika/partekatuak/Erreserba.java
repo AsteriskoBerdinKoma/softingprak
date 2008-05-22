@@ -3,26 +3,27 @@ package praktika.partekatuak;
 import java.io.Serializable;
 import java.util.Calendar;
 
-public class Erreserba implements Serializable{
-
+public class Erreserba implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private int erreserbaZenbakia;
 	private Calendar data;
 	private int pertsonaKopurua;
 	private int baieztapenZenbakia;
 	private int irteeraKodea;
 	private String ukapenArrazoiak;
-	
+	private boolean baieztatua;
+
 	public Erreserba() {
 		super();
 	}
 
-	public Erreserba(int erreserbaZenbakia, Calendar data, int pertsonaKopurua, int baieztapenZenbakia, int irteeraKodea) {
+	public Erreserba(int erreserbaZenbakia, Calendar data, int pertsonaKopurua,
+			int baieztapenZenbakia, int irteeraKodea) {
 		super();
 		this.erreserbaZenbakia = erreserbaZenbakia;
 		this.data = data;
@@ -31,7 +32,7 @@ public class Erreserba implements Serializable{
 		this.irteeraKodea = irteeraKodea;
 		this.ukapenArrazoiak = "";
 	}
-	
+
 	public int getErreserbaZenbakia() {
 		return erreserbaZenbakia;
 	}
@@ -60,13 +61,16 @@ public class Erreserba implements Serializable{
 		return baieztapenZenbakia;
 	}
 
-	public void setBaieztapenZenbakia(int baieztapenZenbakia) {
+	public void baieztatu(int baieztapenZenbakia) {
 		this.baieztapenZenbakia = baieztapenZenbakia;
+		this.ukapenArrazoiak = "";
+		this.baieztatua = true;
 	}
-	
-	public void ukatu(String arrazoiak){
+
+	public void ukatu(String arrazoiak) {
 		this.baieztapenZenbakia = -1;
 		this.ukapenArrazoiak = arrazoiak;
+		this.baieztatua = false;
 	}
 
 	public int getIrteeraKodea() {
@@ -79,5 +83,9 @@ public class Erreserba implements Serializable{
 
 	public String getUkapenArrazoiak() {
 		return ukapenArrazoiak;
+	}
+
+	protected final boolean isBaieztatua() {
+		return baieztatua;
 	}
 }
