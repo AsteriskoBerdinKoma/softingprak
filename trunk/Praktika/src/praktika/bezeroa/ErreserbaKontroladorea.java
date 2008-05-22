@@ -235,7 +235,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 							&& i.getAgenteKodea() == kodea) {
 						erreserba = new Erreserba(-1, i.getData(),
 								pertsonaKopurua, -1, i.getIrteerarenKodea());
-						
+						break;
 					}
 
 				}
