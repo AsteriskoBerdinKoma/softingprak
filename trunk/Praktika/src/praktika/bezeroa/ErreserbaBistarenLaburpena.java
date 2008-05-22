@@ -3,7 +3,11 @@ package praktika.bezeroa;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.text.DateFormat;
+import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -12,6 +16,8 @@ import javax.swing.JTextField;
 
 import praktika.partekatuak.ErreserbaBistarenLaburpenaObserver;
 import praktika.partekatuak.ErreserbaInterface;
+import praktika.partekatuak.remoteObservable.RemoteObservable;
+import praktika.partekatuak.remoteObservable.RemoteObserver;
 
 public class ErreserbaBistarenLaburpena extends JPanel {
 	/**
@@ -39,7 +45,7 @@ public class ErreserbaBistarenLaburpena extends JPanel {
 
 	public ErreserbaBistarenLaburpena(ErreserbaInterface erreserbaSistema) {
 		try {
-			ErreserbaBistarenLaburpenaObserver remErrBisLab = new ErreserbaBistarenLaburpenaObserver(this);
+			UrrunekoBegiralea remErrBisLab = new UrrunekoBegiralea();
 			erreserbaSistema.addObserver(remErrBisLab);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -64,5 +70,30 @@ public class ErreserbaBistarenLaburpena extends JPanel {
 		testuEremuaAgentearenIzena.setEditable(false);
 		testuEremuaErreserbarenZenbakia.setEditable(false);
 		testuEremuaGuztira.setEditable(false);
+	}
+	
+	private class UrrunekoBegiralea extends UnicastRemoteObject implements RemoteObserver, Serializable{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		public UrrunekoBegiralea() throws RemoteException{
+			super();
+		}
+		@Override
+		public void update(RemoteObservable o, Object arg) throws RemoteException {
+			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+			DateFormat dataFormat = DateFormat.getDateInstance();
+			//ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
+			//
+			//	if (erreserbaSistema.getLoturaErreserba() != null) {
+			//	} else {
+					testuEremuaData.setText("");
+					testuEremuaGuztira.setText("");
+					testuEremuaAgentearenIzena.setText("");
+					testuEremuaErreserbarenZenbakia.setText("");
+			//	}
+		}
 	}
 }

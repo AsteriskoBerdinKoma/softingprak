@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -30,6 +32,8 @@ import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.ErreserbaKontroladoreaObserver;
 import praktika.partekatuak.Irteera;
+import praktika.partekatuak.remoteObservable.RemoteObservable;
+import praktika.partekatuak.remoteObservable.RemoteObserver;
 
 /**
  * Erreserbak kontrolatzeko klaseak.
@@ -103,7 +107,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 
 	public ErreserbaKontroladorea(ErreserbaInterface erreserbaSistema) {
 		try {
-			ErreserbaKontroladoreaObserver remErrKontr = new ErreserbaKontroladoreaObserver(this);
+			UrrunekoBegiralea remErrKontr = new UrrunekoBegiralea();
 			erreserbaSistema.addObserver(remErrKontr);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -387,5 +391,24 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 				}
 			}
 		}
+	}
+	private class UrrunekoBegiralea extends UnicastRemoteObject implements RemoteObserver, Serializable{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public UrrunekoBegiralea() throws RemoteException{
+			super();
+		}
+		
+		@Override
+		public void update(RemoteObservable o, Object arg) throws RemoteException {
+			System.err.println( "RemoteObserverImpl.update: observable: "+o+ " arg: "+arg );
+			
+		}
+		
+
 	}
 }
