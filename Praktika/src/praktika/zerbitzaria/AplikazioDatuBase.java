@@ -103,8 +103,6 @@ class AplikazioDatuBase {
 		if (resultSet.next()) {
 			erreserbarenZenbakia = resultSet.getInt(1);
 		}
-		System.out.println("Select Max erreserbarenZenbakia = "
-				+ erreserbarenZenbakia);
 		resultSet.close();
 		selectSententzia.close();
 		return erreserbarenZenbakia;
