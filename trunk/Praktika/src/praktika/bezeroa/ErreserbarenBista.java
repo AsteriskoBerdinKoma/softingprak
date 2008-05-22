@@ -96,13 +96,15 @@ public class ErreserbarenBista extends JPanel {
 		@Override
 		public void update(RemoteObservable observable, Object objektua)
 				throws RemoteException {
-			itenak.clear();
-			if (objektua.getClass() == Erreserba.class) {
+			if (objektua instanceof Erreserba) {
 				Erreserba e = (Erreserba) objektua;
 				if (AplikazioNagusia.getUnekoErreserbaZenbakia() == e
-						.getErreserbaZenbakia())
+						.getErreserbaZenbakia()) {
 					if (!e.isSartuta()) {
+						itenak.clear();
 						int baiZenb = e.getBaieztapenZenbakia();
+						itenak.addElement("Erreserbari esleitutako zenbakia "
+								+ e.getErreserbaZenbakia() + " .");
 						if (e.isBaieztatua())
 							itenak.addElement("Erreserba baieztatua " + baiZenb
 									+ " baieztapen zenbakiarekin.");
@@ -112,6 +114,7 @@ public class ErreserbarenBista extends JPanel {
 									.getUkapenArrazoiak());
 						}
 					}
+				}
 			}
 			//
 			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
