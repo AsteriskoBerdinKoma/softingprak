@@ -140,7 +140,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		return vIrtAgente;
 	}
 
-	public void sartuIrteera(int baieztapenZenbakia, String irteerarenKodea,
+	public void sartuIrteera(int baieztapenZenbakia, int irteerarenKodea,
 			Date eskeinitakoData) throws RemoteException {
 		// Irtera bilatu eta erreserba bat eskatu
 
@@ -177,7 +177,6 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 *      java.lang.String)
 	 */
 	public void erreserbaBerria(Erreserba erreserba) throws RemoteException {
-		System.out.println(erreserba);
 		try {
 			// Erreserba sortu
 			int pertsonaMax = aDB.getPertsonaMax(erreserba.getIrteeraKodea());
