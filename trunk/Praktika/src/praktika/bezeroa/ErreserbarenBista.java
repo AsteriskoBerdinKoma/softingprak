@@ -116,7 +116,8 @@ public class ErreserbarenBista extends JPanel {
 					} else
 						itenak.addElement("Erreserba satua izan da.");
 				}
-			}
+			} else if (objektua instanceof String)
+				itenak.addElement(objektua.toString());
 			//
 			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 			DateFormat dataFormat = DateFormat.getDateInstance();
