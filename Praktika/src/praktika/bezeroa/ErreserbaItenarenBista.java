@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import praktika.partekatuak.ErreserbaInterface;
+import praktika.partekatuak.ErreserbaItenarenBistaObserver;
+import praktika.partekatuak.ErreserbaKontroladoreaObserver;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
 
@@ -19,7 +21,7 @@ import praktika.partekatuak.remoteObservable.RemoteObserver;
  * Lehen mailarekin(Bista)lan egiten duen klasea.
  */
 
-public class ErreserbaItenarenBista extends JPanel implements RemoteObserver {
+public class ErreserbaItenarenBista extends JPanel {
 	/**
 	 * 
 	 */
@@ -44,9 +46,13 @@ public class ErreserbaItenarenBista extends JPanel implements RemoteObserver {
 	private JTextField testuEremuaLuzapena = new JTextField();
 
 	public ErreserbaItenarenBista(ErreserbaInterface erreserbaSistema) {
-		//  
 		try {
-			erreserbaSistema.addObserver(this);
+			ErreserbaItenarenBistaObserver remErrItBista = new ErreserbaItenarenBistaObserver(this);
+			erreserbaSistema.addObserver(remErrItBista);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		setLayout(new GridLayout(1, 5, 25, 25));
 		setFont(new Font("Arial", Font.PLAIN, 12));
@@ -63,37 +69,6 @@ public class ErreserbaItenarenBista extends JPanel implements RemoteObserver {
 		textFieldDeskribapena.setEditable(false);
 		testuEremuaPrezioa.setEditable(false);
 		testuEremuaLuzapena.setEditable(false);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
-	/**
-	 * Bista eguneratzen
-	 * 
-	 * @param observable
-	 *            java.util.Observable
-	 * @param objektua
-	 *            java.lang.Object
-	 */
-
-	public void update(RemoteObservable observable, Object objektua) {
-		NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-		// Sarrera
-		ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
-		// Prozesua
-		try {
-			if (erreserbaSistema.getLoturaErreserba() != null) {
-			} else {
-				testuEremuaKopurua.setText("");
-				textFieldDeskribapena.setText("");
-				testuEremuaPrezioa.setText("");
-				testuEremuaLuzapena.setText("");
-			}
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }
