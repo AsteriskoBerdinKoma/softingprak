@@ -18,6 +18,7 @@ import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.Irteera;
 import praktika.partekatuak.Turista;
+import praktika.partekatuak.TuristaNotifikazioa;
 import praktika.partekatuak.remoteObservable.RemoteObservableImpl;
 
 /**
@@ -170,19 +171,26 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 */
 	public void sartuTurista(Turista turista) throws RemoteException {
 		String mezua = "";
+		int errPertsonaKop = -2;
+		int turistaKop = -1;
 		try {
-			if (aDB.sartuTurista(turista) > 0) {
-				// Bistak ohararazi
-				mezua = "Turista sartua izan da.";
-			} else
-				mezua = "Ezin izan da turista sartu.";
+			errPertsonaKop = aDB.getPertsonaKop(turista.getErreserbaZenb());
+			turistaKop = aDB.getTuristaKop(turista.getErreserbaZenb());
+			if (errPertsonaKop > turistaKop) {
+				if (aDB.sartuTurista(turista) > 0) {
+					turistaKop++;
+					mezua = "Turista sartua izan da.";
+				} else
+					mezua = "Ezin izan da turista sartu.";
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			mezua = "Ezin izan da turista sartu. Errore bat egon da datu basea atzitzerakoan.";
 		}
+		TuristaNotifikazioa tn = new TuristaNotifikazioa(turista, turistaKop,
+				errPertsonaKop - turistaKop, mezua);
 		setChanged();
-		super.notifyObservers(mezua);
+		super.notifyObservers(tn);
 	}
 
 	// public Erreserba getLoturaErreserba() {

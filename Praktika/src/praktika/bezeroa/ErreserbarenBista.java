@@ -3,8 +3,6 @@ package praktika.bezeroa;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.text.DateFormat;
-import java.text.NumberFormat;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -15,6 +13,7 @@ import javax.swing.JScrollPane;
 
 import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
+import praktika.partekatuak.TuristaNotifikazioa;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
 
@@ -116,12 +115,21 @@ public class ErreserbarenBista extends JPanel {
 					} else
 						itenak.addElement("Erreserba satua izan da.");
 				}
-			} else if (objektua instanceof String)
-				itenak.addElement(objektua.toString());
+			} else if (objektua instanceof TuristaNotifikazioa) {
+				TuristaNotifikazioa tn = (TuristaNotifikazioa) objektua;
+				if (AplikazioNagusia.getUnekoErreserbaZenbakia() == tn
+						.getErreserbaZenbakia()) {
+					itenak.addElement(tn.getMezua());
+					if (tn.getLibreKop() == 0)
+						itenak
+								.addElement("Ezin dira turista gehiago sartu. Egin click bukatu botoian erreserba honekin bukatzeko.");
+				}
+			}
 			//
-			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-			DateFormat dataFormat = DateFormat.getDateInstance();
-			ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
+			// NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+			// DateFormat dataFormat = DateFormat.getDateInstance();
+			// ErreserbaInterface erreserbaSistema = (ErreserbaInterface)
+			// observable;
 		}
 	}
 }

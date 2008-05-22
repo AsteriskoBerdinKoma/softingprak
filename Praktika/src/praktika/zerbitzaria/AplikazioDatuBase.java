@@ -300,11 +300,37 @@ class AplikazioDatuBase {
 		return kopMax;
 	}
 
+	public int getPertsonaKop(int erreserbaZenb) throws SQLException {
+		String query = "SELECT Pertsona_Kopurua FROM Erreserba WHERE Erreserba_Zenbakia = ?";
+		PreparedStatement ps = konexioa.prepareStatement(query);
+		ps.setInt(1, erreserbaZenb);
+		ResultSet rs = ps.executeQuery();
+		int kop = 0;
+		if (rs.next())
+			kop = rs.getInt("Pertsona_Kopurua");
+		rs.close();
+		ps.close();
+		return kop;
+	}
+
 	public int getErreserbatutakoPertsonaKop(int irteeraKodea)
 			throws SQLException {
 		String query = "SELECT SUM(Pertsona_Kopurua) AS KopGuztira FROM Erreserba WHERE Irteera_Kodea = ?";
 		PreparedStatement ps = konexioa.prepareStatement(query);
 		ps.setInt(1, irteeraKodea);
+		ResultSet rs = ps.executeQuery();
+		int kop = 0;
+		if (rs.next())
+			kop = rs.getInt("KopGuztira");
+		rs.close();
+		ps.close();
+		return kop;
+	}
+
+	public int getTuristaKop(int erreserbaZenb) throws SQLException {
+		String query = "SELECT COUNT(*) AS TuristaKop FROM Turista WHERE Erreserba_Zenbakia = ?";
+		PreparedStatement ps = konexioa.prepareStatement(query);
+		ps.setInt(1, erreserbaZenb);
 		ResultSet rs = ps.executeQuery();
 		int kop = 0;
 		if (rs.next())
