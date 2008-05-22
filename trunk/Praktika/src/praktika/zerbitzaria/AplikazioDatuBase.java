@@ -11,6 +11,7 @@ import java.util.GregorianCalendar;
 import java.util.Vector;
 
 import praktika.partekatuak.Agentea;
+import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.Irteera;
 
 /**
@@ -118,21 +119,21 @@ class AplikazioDatuBase {
 	 *            double
 	 * @throws SQLException
 	 */
-	public int sartuErreserba(int erreserbarenZenbakia, java.util.Date data,
-			int pertsonaKopurua, String agentearenKodea) throws SQLException {
+	public int sartuErreserba(Erreserba erreserba) throws SQLException {
 		// Erazagupena
 		int count = 0;
 		PreparedStatement insertSententzia = null;
 		// Sarrera
 		// Insert sententzia sortu
 		insertSententzia = konexioa
-				.prepareStatement("INSERT INTO Erreserba VALUES (?, ?, ?, ?)");
+				.prepareStatement("INSERT INTO Erreserba VALUES (?, ?, ?, ?, ?)");
 		// Insert sententzia hasieratu
-		insertSententzia.setInt(1, erreserbarenZenbakia);
-		insertSententzia
-				.setTimestamp(2, new java.sql.Timestamp(data.getTime()));
-		insertSententzia.setInt(3, pertsonaKopurua);
-		insertSententzia.setString(4, agentearenKodea);
+		insertSententzia.setInt(1, erreserba.getErreserbaZenbakia());
+		insertSententzia.setTimestamp(2, new java.sql.Timestamp(erreserba
+				.getData().getTime().getTime()));
+		insertSententzia.setInt(3, erreserba.getPertsonaKopurua());
+		insertSententzia.setInt(4, erreserba.getBaieztapenZenbakia());
+		insertSententzia.setInt(5, erreserba.getIrteeraKodea());
 		// Insert sententzia exekutatu
 		count = insertSententzia.executeUpdate();
 		// Insert sententzia bukatu

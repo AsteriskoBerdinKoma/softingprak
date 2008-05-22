@@ -141,13 +141,23 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	}
 
 	public void sartuIrteera(Erreserba erreserba) throws RemoteException {
-		// Irtera bilatu eta erreserba bat eskatu
-
-		// System.out.println("Irteeraren kodea " + irteerarenKodea + " data "
-		// + eskeinitakoData);
+		int pertsonaMax;
+		try {
+			pertsonaMax = aDB.getPertsonaMax(erreserba.getIrteeraKodea());
+			int plazaLibreak = pertsonaMax
+					- aDB.getErreserbatutakoPertsonaKop(erreserba
+							.getIrteeraKodea());
+			if (plazaLibreak < erreserba.getPertsonaKopurua())
+				erreserba.ukatu("Ez daude plaza librerik");
+			else if (aDB.sartuErreserba(erreserba) > 0)
+				erreserba.sartu();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			erreserba.ukatu("Arazo bat egon da datu basea atzitzean");
+		}
 		// Bistak ohararazi
 		setChanged();
-		super.notifyObservers();
+		super.notifyObservers(erreserba);
 	}
 
 	/*
