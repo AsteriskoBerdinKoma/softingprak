@@ -235,13 +235,15 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 							&& i.getAgenteKodea() == kodea) {
 						erreserba = new Erreserba(-1, i.getData(),
 								pertsonaKopurua, -1, i.getIrteerarenKodea());
+						AplikazioNagusia.setUnekoErreserba(erreserba);
+						// Ereduak sartu
+						LoturaErreserbaSistema.erreserbaBerria(erreserba);
 						break;
 					}
 
 				}
-				AplikazioNagusia.setUnekoErreserba(erreserba);
-				// Ereduak sartu
-				LoturaErreserbaSistema.erreserbaBerria(erreserba);
+				
+				
 
 				// Botoiak ipini
 				botoiaErreserbaBerria.setEnabled(false);
