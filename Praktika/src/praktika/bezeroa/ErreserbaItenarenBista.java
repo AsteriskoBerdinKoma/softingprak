@@ -3,7 +3,9 @@ package praktika.bezeroa;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
@@ -47,7 +49,7 @@ public class ErreserbaItenarenBista extends JPanel {
 
 	public ErreserbaItenarenBista(ErreserbaInterface erreserbaSistema) {
 		try {
-			ErreserbaItenarenBistaObserver remErrItBista = new ErreserbaItenarenBistaObserver(this);
+			UrrunekoBegiralea remErrItBista = new UrrunekoBegiralea();
 			erreserbaSistema.addObserver(remErrItBista);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -69,6 +71,33 @@ public class ErreserbaItenarenBista extends JPanel {
 		textFieldDeskribapena.setEditable(false);
 		testuEremuaPrezioa.setEditable(false);
 		testuEremuaLuzapena.setEditable(false);
+	}
+	
+	private class UrrunekoBegiralea extends UnicastRemoteObject implements RemoteObserver, Serializable{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public UrrunekoBegiralea() throws RemoteException{
+			super();
+		}
+		
+		@Override
+		public void update(RemoteObservable o, Object arg) throws RemoteException {
+			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+//				if (erreserbaSistema.getLoturaErreserba() != null) {
+//				} else {
+					testuEremuaKopurua.setText("");
+					textFieldDeskribapena.setText("");
+					testuEremuaPrezioa.setText("");
+					testuEremuaLuzapena.setText("");
+//				}
+			
+		}
+		
+
 	}
 
 }
