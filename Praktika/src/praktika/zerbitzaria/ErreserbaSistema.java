@@ -173,11 +173,9 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 			int plazaLibreak = pertsonaMax
 					- aDB.getErreserbatutakoPertsonaKop(erreserba
 							.getIrteeraKodea());
-			if (plazaLibreak >= erreserba.getPertsonaKopurua()){
-				erreserba
-						.setBaieztapenZenbakia(aDB.getLastBaieztapenZenb() + 1);
-			}
-			else
+			if (plazaLibreak >= erreserba.getPertsonaKopurua()) {
+				erreserba.baieztatu(aDB.getLastBaieztapenZenb() + 1);
+			} else
 				erreserba.ukatu("Ez daude plaza librerik");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -194,7 +192,9 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 			client = "ezezaguna";
 		}
 		frame.gehituEkintza(getCurrentTime() + ": " + client
-				+ " bezeroak erreserba berria egin du eta " + erreserba.getBaieztapenZenbakia() + " baieztapen zenbakia eman zaio.");
+				+ " bezeroak erreserba berria egin du eta "
+				+ erreserba.getBaieztapenZenbakia()
+				+ " baieztapen zenbakia eman zaio.");
 	}
 
 	// public void setLoturaErreserba(Erreserba newLoturaErreserba) {
@@ -237,11 +237,11 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		} catch (ServerNotActiveException e) {
 			client = "ezezaguna";
 		}
-		
+
 		frame.kenduBezeroa(client);
-			frame.gehituEkintza(getCurrentTime() + ": " + client
-					+ " bezeroa deskonektatu da");
-			System.out.println(client + " deskonektatu da.");
+		frame.gehituEkintza(getCurrentTime() + ": " + client
+				+ " bezeroa deskonektatu da");
+		System.out.println(client + " deskonektatu da.");
 	}
 
 	private static String getCurrentTime() {
