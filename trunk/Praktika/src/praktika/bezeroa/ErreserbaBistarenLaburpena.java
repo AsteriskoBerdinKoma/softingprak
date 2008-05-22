@@ -4,19 +4,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.rmi.RemoteException;
-import java.text.DateFormat;
-import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import praktika.partekatuak.ErreserbaBistarenLaburpenaObserver;
 import praktika.partekatuak.ErreserbaInterface;
-import praktika.partekatuak.remoteObservable.RemoteObservable;
-import praktika.partekatuak.remoteObservable.RemoteObserver;
 
-public class ErreserbaBistarenLaburpena extends JPanel implements RemoteObserver {
+public class ErreserbaBistarenLaburpena extends JPanel {
 	/**
 	 * 
 	 */
@@ -42,8 +39,12 @@ public class ErreserbaBistarenLaburpena extends JPanel implements RemoteObserver
 
 	public ErreserbaBistarenLaburpena(ErreserbaInterface erreserbaSistema) {
 		try {
-			erreserbaSistema.addObserver(this);
-
+			ErreserbaBistarenLaburpenaObserver remErrBisLab = new ErreserbaBistarenLaburpenaObserver(this);
+			erreserbaSistema.addObserver(remErrBisLab);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setLayout(new GridLayout(2, 4, 25, 25));
 		setFont(new Font("Arial", Font.PLAIN, 12));
 		setBackground(Color.lightGray);
@@ -63,36 +64,5 @@ public class ErreserbaBistarenLaburpena extends JPanel implements RemoteObserver
 		testuEremuaAgentearenIzena.setEditable(false);
 		testuEremuaErreserbarenZenbakia.setEditable(false);
 		testuEremuaGuztira.setEditable(false);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Eguneratu Bista
-	 * 
-	 * @param observable
-	 *            java.util.Observable
-	 * @param objektua
-	 *            java.lang.Object
-	 */
-	public void update(RemoteObservable observable, Object objektua) {
-		NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-		DateFormat dataFormat = DateFormat.getDateInstance();
-		ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
-		//
-		try {
-			if (erreserbaSistema.getLoturaErreserba() != null) {
-			} else {
-				testuEremuaData.setText("");
-				testuEremuaGuztira.setText("");
-				testuEremuaAgentearenIzena.setText("");
-				testuEremuaErreserbarenZenbakia.setText("");
-			}
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
