@@ -24,7 +24,6 @@ public class ZerbitzariaFrame extends JFrame {
 
 	private DefaultListModel model;
 
-
 	/**
 	 * Create the frame
 	 */
@@ -67,7 +66,7 @@ public class ZerbitzariaFrame extends JFrame {
 										GroupLayout.Alignment.LEADING)
 										.addComponent(ekintzakLabel)
 										.addComponent(textArea,
-												GroupLayout.DEFAULT_SIZE, 278,
+												GroupLayout.DEFAULT_SIZE, 272,
 												Short.MAX_VALUE))
 						.addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
