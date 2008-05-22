@@ -138,7 +138,6 @@ class AplikazioDatuBase {
 		// Insert sententzia exekutatu
 		count = insertSententzia.executeUpdate();
 		// Insert sententzia bukatu
-		insertSententzia.close();
 		System.out.println("Insert Erreserba count : " + count);
 		insertSententzia.close();
 		return count;
@@ -173,7 +172,6 @@ class AplikazioDatuBase {
 		// Insert sententzia exekutatu
 		count = insertSententzia.executeUpdate();
 		// Insert sententzia amaitu
-		insertSententzia.close();
 		System.out.println("Insert Iten count : " + count);
 		insertSententzia.close();
 		return count;
@@ -205,7 +203,6 @@ class AplikazioDatuBase {
 		// Insert sententzia exekutatu
 		count = insertSententzia.executeUpdate();
 		// Insert sententzia amaitu
-		insertSententzia.close();
 		System.out.println("Insert Turista count : " + count);
 		insertSententzia.close();
 		return count;
@@ -350,5 +347,14 @@ class AplikazioDatuBase {
 		rs.close();
 		ps.close();
 		return baiZenb;
+	}
+
+	public int deleteErreserba(int erreserbaZenbakia) throws SQLException {
+		String update = "DELETE FROM Erreserba WHERE Erreserba_Zenbakia=?";
+		PreparedStatement ps = konexioa.prepareStatement(update);
+		ps.setInt(1, erreserbaZenbakia);
+		int kont = ps.executeUpdate();
+		ps.close();
+		return kont;
 	}
 }

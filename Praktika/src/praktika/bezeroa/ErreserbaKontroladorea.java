@@ -531,7 +531,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			}
 			if (event.getSource() == botoiaSartuBidali) {
 				// Ereduak sartu
-				LoturaErreserbaSistema.submit();
+				LoturaErreserbaSistema.submit(erreserba);
 				// Botoiak ipini
 				botoiaErreserbaBerria.setEnabled(true);
 				botoiaSartuIrteera.setEnabled(false);
@@ -546,7 +546,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			}
 			if (event.getSource() == botoiaSartuEzeztatu) {
 				// Ereduak sartu
-				LoturaErreserbaSistema.ezeztatu();
+				LoturaErreserbaSistema.ezeztatu(erreserba);
 				// Botoiak ipini
 				botoiaErreserbaBerria.setEnabled(true);
 				botoiaSartuIrteera.setEnabled(false);
