@@ -328,13 +328,13 @@ class AplikazioDatuBase {
 	}
 
 	public int getTuristaKop(int erreserbaZenb) throws SQLException {
-		String query = "SELECT COUNT(*) AS TuristaKop FROM Turista WHERE Erreserba_Zenbakia = ?";
+		String query = "SELECT COUNT(Izena) AS TuristaKop FROM Turista WHERE Erreserba_Zenb=?";
 		PreparedStatement ps = konexioa.prepareStatement(query);
 		ps.setInt(1, erreserbaZenb);
 		ResultSet rs = ps.executeQuery();
 		int kop = 0;
 		if (rs.next())
-			kop = rs.getInt("KopGuztira");
+			kop = rs.getInt("TuristaKop");
 		rs.close();
 		ps.close();
 		return kop;
