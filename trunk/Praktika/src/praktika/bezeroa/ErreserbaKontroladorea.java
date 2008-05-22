@@ -29,6 +29,8 @@ import praktika.partekatuak.Agentea;
 import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.Irteera;
+import praktika.partekatuak.Turista;
+import praktika.partekatuak.TuristaNotifikazioa;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
 
@@ -251,13 +253,13 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 						break;
 					}
 				}
-				if (!bidaiaDago){
+				if (!bidaiaDago) {
 					JOptionPane jop = new JOptionPane(
 							"Emandako datuekin ez dago bidairik.\nSaiatu berrio.",
 							JOptionPane.INFORMATION_MESSAGE);
 					jop.createDialog("Oharra").setVisible(true);
 				}
-				
+
 			}
 			if (event.getSource() == botoiaSartuIrteera) {
 				LoturaErreserbaSistema.sartuIrteera(erreserba);
@@ -274,13 +276,22 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 				String helbidea = testuEremuaHelbidea.getText();
 				String telefonoa = testuEremuaTelefonoa.getText();
 				// Ereduak sartu
-				LoturaErreserbaSistema.sartuTurista(izena, helbidea, telefonoa);
-				// Botoiak ipini
-				botoiaErreserbaBerria.setEnabled(false);
-				botoiaSartuIrteera.setEnabled(false);
-				botoiaSartuTurista.setEnabled(false);
-				botoiaSartuBidali.setEnabled(true);
-				botoiaSartuEzeztatu.setEnabled(true);
+				if (!izena.isEmpty() && !helbidea.isEmpty()
+						&& !telefonoa.isEmpty()) {
+					Turista turista = new Turista(izena, helbidea, telefonoa,
+							erreserba.getErreserbaZenbakia());
+					LoturaErreserbaSistema.sartuTurista(turista);
+					// Botoiak ipini
+					botoiaErreserbaBerria.setEnabled(false);
+					botoiaSartuIrteera.setEnabled(false);
+					botoiaSartuEzeztatu.setEnabled(true);
+				} else {
+					JOptionPane jop = new JOptionPane(
+							"Turistaren datu guztiak sartu behar dira.\nSaiatu berrio.",
+							JOptionPane.ERROR_MESSAGE);
+					jop.createDialog("Turistaren datuak faltan").setVisible(
+							true);
+				}
 
 			}
 			if (event.getSource() == botoiaSartuBidali) {
@@ -401,15 +412,40 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 						testuEremuaBaieztapenZenbakia.setText(String
 								.valueOf(erreserba.getBaieztapenZenbakia()));
 						testuEremuaBaieztapenZenbakia.setEditable(false);
+					} else if (erreserba.isSartuta()) {
+						botoiaSartuIrteera.setEnabled(false);
+						testuEremuaHelbidea.setEnabled(true);
+						testuEremuaIzena.setEditable(true);
+						testuEremuaTelefonoa.setEditable(true);
+
 					} else {
 						botoiaSartuIrteera.setEnabled(false);
+						testuEremuaHelbidea.setEnabled(false);
+						testuEremuaIzena.setEditable(false);
+						testuEremuaTelefonoa.setEditable(false);
 					}
 				} else {
 					System.out
 							.println("Notifikazioa beste bezero batentzat zen.");
 				}
+			} else if (arg instanceof TuristaNotifikazioa) {
+				TuristaNotifikazioa tn = (TuristaNotifikazioa) arg;
+				if (tn.getErreserbaZenbakia() == AplikazioNagusia
+						.getUnekoErreserbaZenbakia()) {
+					botoiaSartuBidali.setEnabled(true);
+					if (tn.getLibreKop() == 0) {
+						botoiaSartuTurista.setEnabled(false);
+						System.out
+								.println("Erreserbako turista guztien informazioa sartu da\n");
+					} else if(tn.getLibreKop()==-1 || tn.getZenbatgarrena()==-1){
+						System.out.println("Errorea turista sartzean\n");
+						botoiaSartuBidali.setEnabled(false);
+					}
+				}
+			} else {
+				System.out.println("Notifikazioa beste bezero batentzat zen.");
 			}
 		}
-
 	}
+
 }
