@@ -17,6 +17,7 @@ import praktika.partekatuak.Agentea;
 import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.Irteera;
+import praktika.partekatuak.Turista;
 import praktika.partekatuak.remoteObservable.RemoteObservableImpl;
 
 /**
@@ -148,7 +149,8 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 					- aDB.getErreserbatutakoPertsonaKop(erreserba
 							.getIrteeraKodea());
 			if (plazaLibreak < erreserba.getPertsonaKopurua())
-				erreserba.ukatu("Ez daude plaza librerik");
+				erreserba.ukatu("Ez daude plaza librerik, bakarrik "
+						+ plazaLibreak + " plaza daude libre.");
 			else if (aDB.sartuErreserba(erreserba) > 0)
 				erreserba.sartu();
 		} catch (SQLException e) {
@@ -166,13 +168,21 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 * @see praktika.zerbitzaria.ErreserbaInterface#sartuTurista(java.lang.String,
 	 *      java.lang.String, java.lang.String)
 	 */
-	public void sartuTurista(String izena, String helbidea, String telefonoa)
-			throws RemoteException {
-
-		System.out.println("Turistaren izena " + izena);
-		// Bistak ohararazi
+	public void sartuTurista(Turista turista) throws RemoteException {
+		String mezua = "";
+		try {
+			if (aDB.sartuTurista(turista) > 0) {
+				// Bistak ohararazi
+				mezua = "Turista sartua izan da.";
+			} else
+				mezua = "Ezin izan da turista sartu.";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			mezua = "Ezin izan da turista sartu. Errore bat egon da datu basea atzitzerakoan.";
+		}
 		setChanged();
-		super.notifyObservers();
+		super.notifyObservers(mezua);
 	}
 
 	// public Erreserba getLoturaErreserba() {
@@ -196,7 +206,8 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 				unekoBaieztapenZenbakia++;
 				erreserba.baieztatu(unekoBaieztapenZenbakia);
 			} else
-				erreserba.ukatu("Ez daude plaza librerik");
+				erreserba.ukatu("Ez daude plaza librerik, bakarrik "
+						+ plazaLibreak + " plaza daude libre.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

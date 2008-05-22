@@ -13,6 +13,7 @@ import java.util.Vector;
 import praktika.partekatuak.Agentea;
 import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.Irteera;
+import praktika.partekatuak.Turista;
 
 /**
  * Arkitekturaren hirugarren mailaren klase nagusia Singleton diseinu-patroia
@@ -188,8 +189,7 @@ class AplikazioDatuBase {
 	 *            double
 	 * @throws SQLException
 	 */
-	public int sartuTurista(String izena, String helbidea, String telefonoa,
-			int erreserbarenZenbakia) throws SQLException {
+	public int sartuTurista(Turista t) throws SQLException {
 		// Erazagupenak
 		int count = 0;
 		PreparedStatement insertSententzia = null;
@@ -198,10 +198,10 @@ class AplikazioDatuBase {
 		insertSententzia = konexioa
 				.prepareStatement("INSERT INTO Turista VALUES (?, ?, ?, ?)");
 		// Hasieratu Insert statement
-		insertSententzia.setString(1, izena);
-		insertSententzia.setString(2, helbidea);
-		insertSententzia.setString(3, telefonoa);
-		insertSententzia.setInt(4, erreserbarenZenbakia);
+		insertSententzia.setString(1, t.getIzena());
+		insertSententzia.setString(2, t.getHelbidea());
+		insertSententzia.setString(3, t.getTelefonoa());
+		insertSententzia.setInt(4, t.getErreserbaZenb());
 		// Insert sententzia exekutatu
 		count = insertSententzia.executeUpdate();
 		// Insert sententzia amaitu
