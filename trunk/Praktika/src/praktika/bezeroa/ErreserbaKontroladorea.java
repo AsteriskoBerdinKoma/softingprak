@@ -418,6 +418,9 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 						testuEremuaIzena.setEditable(true);
 						testuEremuaTelefonoa.setEditable(true);
 
+					} else if (!erreserba.getUkapenArrazoiak().isEmpty()){
+						botoiaErreserbaBerria.setEnabled(true);
+						botoiaSartuBidali.setEnabled(false);
 					} else {
 						botoiaSartuIrteera.setEnabled(false);
 						testuEremuaHelbidea.setEnabled(false);
