@@ -140,12 +140,11 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		return vIrtAgente;
 	}
 
-	public void sartuIrteera(int baieztapenZenbakia, int irteerarenKodea,
-			Date eskeinitakoData) throws RemoteException {
+	public void sartuIrteera(Erreserba erreserba) throws RemoteException {
 		// Irtera bilatu eta erreserba bat eskatu
 
-		System.out.println("Irteeraren kodea  " + irteerarenKodea + " data "
-				+ eskeinitakoData);
+		// System.out.println("Irteeraren kodea " + irteerarenKodea + " data "
+		// + eskeinitakoData);
 		// Bistak ohararazi
 		setChanged();
 		super.notifyObservers();
