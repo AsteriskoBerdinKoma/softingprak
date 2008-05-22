@@ -1,7 +1,5 @@
 package praktika.zerbitzaria;
 
-import java.awt.Color;
-
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JComponent;
@@ -11,7 +9,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle;
-import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 public class ZerbitzariaFrame extends JFrame {
 
@@ -49,8 +47,10 @@ public class ZerbitzariaFrame extends JFrame {
 		ekintzakLabel.setText("Ekintzak:");
 
 		textArea = new JTextArea();
+		textArea.setBorder(new TitledBorder(null, "",
+				TitledBorder.DEFAULT_JUSTIFICATION,
+				TitledBorder.DEFAULT_POSITION, null, null));
 		textArea.setLineWrap(true);
-		textArea.setBorder(new LineBorder(Color.black, 1, false));
 		final GroupLayout groupLayout = new GroupLayout(
 				(JComponent) getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
