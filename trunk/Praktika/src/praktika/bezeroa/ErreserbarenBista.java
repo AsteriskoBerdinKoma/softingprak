@@ -1,6 +1,10 @@
 package praktika.bezeroa;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.text.DateFormat;
+import java.text.NumberFormat;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -10,13 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import praktika.partekatuak.ErreserbaInterface;
-import praktika.partekatuak.ErreserbarenBistaObserver;
+import praktika.partekatuak.remoteObservable.RemoteObservable;
+import praktika.partekatuak.remoteObservable.RemoteObserver;
 
 /**
  * Aplikazioaren lehen mailaren(Bista) klasea
  */
 
-public class ErreserbarenBista extends JPanel{
+public class ErreserbarenBista extends JPanel {
 	/**
 	 * 
 	 */
@@ -31,7 +36,7 @@ public class ErreserbarenBista extends JPanel{
 
 	public ErreserbarenBista(ErreserbaInterface erreserbaSistema) {
 		try {
-			ErreserbarenBistaObserver remErrBis = new ErreserbarenBistaObserver(this);
+			UrrunekoBegiralea remErrBis = new UrrunekoBegiralea();
 			erreserbaSistema.addObserver(remErrBis);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
@@ -60,11 +65,47 @@ public class ErreserbarenBista extends JPanel{
 		setLayout(groupLayout);
 	}
 
-	public DefaultListModel getItenak(){
-		return itenak;
-	}
+	/**
+	 * Eguneratu bista.
+	 * 
+	 * @param observable
+	 *            java.util.Observable
+	 * @param objektua
+	 *            java.lang.Object
+	 */
 
-	public void setItenak(DefaultListModel items) {
-		this.itenak = items;	
+//	public void update(RemoteObservable observable, Object objektua) {
+//		itenak.clear();
+//		//
+//		NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+//		DateFormat dataFormat = DateFormat.getDateInstance();
+//		ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
+//
+//	}
+	
+	private class UrrunekoBegiralea extends UnicastRemoteObject implements RemoteObserver, Serializable {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		protected UrrunekoBegiralea() throws RemoteException {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+		public void update(RemoteObservable observable, Object objektua)
+				throws RemoteException {
+			itenak.clear();
+			itenak.add(0, "Bai!!!");
+			System.out.println("eginda");
+			//
+			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+			DateFormat dataFormat = DateFormat.getDateInstance();
+			ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
+		}
+		
 	}
 }
