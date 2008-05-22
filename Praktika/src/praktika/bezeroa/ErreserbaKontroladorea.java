@@ -96,6 +96,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 	private Vector<Irteera> vIrteerak = new Vector<Irteera>();
 	private Vector<Irteera> vIrteeraDistinct = new Vector<Irteera>();
 	private Vector<Agentea> vAgenteak = new Vector<Agentea>();
+	
 	private Erreserba erreserba;
 
 	boolean datuakGehituta = true;
@@ -110,7 +111,6 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		this.LoturaErreserbaSistema = erreserbaSistema;
 		//Iterator iterator;
 		DateFormat dataFormat = DateFormat.getDateInstance();
@@ -235,6 +235,7 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 							&& i.getAgenteKodea() == kodea) {
 						erreserba = new Erreserba(-1, i.getData(),
 								pertsonaKopurua, -1, i.getIrteerarenKodea());
+						AplikazioNagusia.setUnekoErreserba(erreserba);
 					}
 
 				}
