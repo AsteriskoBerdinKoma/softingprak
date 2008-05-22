@@ -401,8 +401,14 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 		
 		@Override
 		public void update(RemoteObservable o, Object arg) throws RemoteException {
-			System.err.println( "RemoteObserverImpl.update: observable: "+o+ " arg: "+arg );
-			
+			if ((Erreserba) arg!= null){
+				erreserba = (Erreserba) arg;
+				if(erreserba.getBaieztapenZenbakia()!=-1 && erreserba.isBaieztatua()){
+					testuEremuaBaieztapenZenbakia.setText(String.valueOf(erreserba.getBaieztapenZenbakia()));
+				} else{
+					botoiaSartuIrteera.setEnabled(false);
+				}
+			}
 		}
 		
 
