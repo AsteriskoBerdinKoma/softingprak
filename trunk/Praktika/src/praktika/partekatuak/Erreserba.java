@@ -76,7 +76,7 @@ public class Erreserba implements Serializable{
 		this.irteeraKodea = irteeraKodea;
 	}
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
+	public String getUkapenArrazoiak() {
+		return ukapenArrazoiak;
 	}
 }

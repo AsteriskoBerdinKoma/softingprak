@@ -13,6 +13,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
@@ -99,8 +100,15 @@ public class ErreserbarenBista extends JPanel {
 		public void update(RemoteObservable observable, Object objektua)
 				throws RemoteException {
 			itenak.clear();
-			itenak.add(0, "Bai!!!");
-			System.out.println("eginda");
+			if(objektua.getClass() == Erreserba.class){
+				int baiZenb = ((Erreserba) objektua).getBaieztapenZenbakia();
+				if(baiZenb != -1)
+					itenak.addElement("Erreserba baieztatua " + baiZenb + " baieztapen zenbakiarekin.");
+				else{
+					itenak.addElement("Erreserba ezeztatua izan da:");
+					itenak.addElement(((Erreserba) objektua).getUkapenArrazoiak());
+				}
+			}
 			//
 			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 			DateFormat dataFormat = DateFormat.getDateInstance();
