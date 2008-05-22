@@ -29,6 +29,7 @@ public class Erreserba implements Serializable{
 		this.pertsonaKopurua = pertsonaKopurua;
 		this.baieztapenZenbakia = baieztapenZenbakia;
 		this.irteeraKodea = irteeraKodea;
+		this.ukapenArrazoiak = "";
 	}
 	
 	public int getErreserbaZenbakia() {
