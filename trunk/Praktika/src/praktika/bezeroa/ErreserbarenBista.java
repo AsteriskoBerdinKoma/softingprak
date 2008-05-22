@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
 
 import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
@@ -47,18 +48,22 @@ public class ErreserbarenBista extends JPanel {
 		lista.setVisibleRowCount(24);
 		JScrollPane scrollPane;
 		scrollPane = new JScrollPane(lista);
+		setBorder(new TitledBorder(null, "Erreserba",
+				TitledBorder.DEFAULT_JUSTIFICATION,
+				TitledBorder.DEFAULT_POSITION, null, null));
 		final GroupLayout groupLayout = new GroupLayout((JComponent) this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				GroupLayout.Alignment.LEADING).addGroup(
-				GroupLayout.Alignment.TRAILING,
+				GroupLayout.Alignment.TRAILING).addGroup(
+				GroupLayout.Alignment.LEADING,
 				groupLayout.createSequentialGroup().addContainerGap()
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE,
-								156, Short.MAX_VALUE).addContainerGap()));
+								466, Short.MAX_VALUE).addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
 				GroupLayout.Alignment.LEADING).addGroup(
-				groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE,
-								358, Short.MAX_VALUE).addContainerGap()));
+				GroupLayout.Alignment.TRAILING,
+				groupLayout.createSequentialGroup().addComponent(scrollPane,
+						GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+						.addContainerGap()));
 		setLayout(groupLayout);
 	}
 

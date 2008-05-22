@@ -1,6 +1,5 @@
 package praktika.bezeroa;
 
-import java.awt.BorderLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.rmi.ConnectException;
@@ -11,8 +10,11 @@ import java.rmi.UnknownHostException;
 import java.rmi.server.ServerNotActiveException;
 
 import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.LayoutStyle;
 
 import praktika.partekatuak.ErreserbaInterface;
 
@@ -39,7 +41,6 @@ public class AplikazioNagusia extends JFrame {
 		// Eraikitzaileen edukiontzia
 		super();
 		setTitle(izenburuBat);
-		setSize(700, 600);
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowListener() {
 
@@ -88,32 +89,55 @@ public class AplikazioNagusia extends JFrame {
 		// LoturaErreserbaSistema = new ErreserbaSistema();
 
 		// Bistak sortu
-		ErreserbaKontroladorea erreserbaKontroladorea = new ErreserbaKontroladorea(
-				urrunekoErreserba);
+		ErreserbaKontroladorea erreserbaKontroladorea;
+		erreserbaKontroladorea = new ErreserbaKontroladorea(urrunekoErreserba);
 		ErreserbaBistarenLaburpena erreserbarenBistaSummary = new ErreserbaBistarenLaburpena(
 				urrunekoErreserba);
 		ErreserbaItenarenBista erreserbaItenarenBista = new ErreserbaItenarenBista(
 				urrunekoErreserba);
-		ErreserbarenBista erreserbarenBista = new ErreserbarenBista(
-				urrunekoErreserba);
+		ErreserbarenBista erreserbarenBista;
+		erreserbarenBista = new ErreserbarenBista(urrunekoErreserba);
 		// Border erako osagaiak sortu
-		erreserbaKontroladorea.setBorder(BorderFactory
-				.createTitledBorder("Erreserba Eskaerak"));
+		// erreserbaKontroladorea.setBorder(BorderFactory
+		// .createTitledBorder("Erreserba Eskaerak"));
 		erreserbarenBistaSummary.setBorder(BorderFactory
 				.createTitledBorder("Erreserbaren Laburpena"));
 		erreserbaItenarenBista.setBorder(BorderFactory
 				.createTitledBorder("Azken irteeraren laburpena"));
 		erreserbarenBista.setBorder(BorderFactory
 				.createTitledBorder("Erreserba"));
+		final GroupLayout groupLayout = new GroupLayout(
+				(JComponent) getContentPane());
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+				GroupLayout.Alignment.TRAILING).addGroup(
+				groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(erreserbaKontroladorea,
+								GroupLayout.PREFERRED_SIZE, 468,
+								GroupLayout.PREFERRED_SIZE).addPreferredGap(
+								LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(erreserbarenBista,
+								GroupLayout.PREFERRED_SIZE, 251,
+								Short.MAX_VALUE).addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				GroupLayout.Alignment.LEADING).addGroup(
+				groupLayout.createSequentialGroup().addContainerGap().addGroup(
+						groupLayout.createParallelGroup(
+								GroupLayout.Alignment.LEADING).addComponent(
+								erreserbaKontroladorea,
+								GroupLayout.Alignment.TRAILING,
+								GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+								.addComponent(erreserbarenBista,
+										GroupLayout.Alignment.TRAILING,
+										GroupLayout.DEFAULT_SIZE, 353,
+										Short.MAX_VALUE)).addContainerGap()));
+		getContentPane().setLayout(groupLayout);
 		//
 		// Eraiki bista
-		getContentPane().setLayout(new BorderLayout());
 		// getContentPane().add(erreserbarenBistaSummary, BorderLayout.NORTH);
-		getContentPane().add(erreserbaKontroladorea, BorderLayout.CENTER);
-		getContentPane().add(erreserbarenBista, BorderLayout.EAST);
 		// getContentPane().add(erreserbaItenarenBista, BorderLayout.SOUTH);
 
 		this.setVisible(true);
+		pack();
 	}
 
 	public void setRemoteServer() {

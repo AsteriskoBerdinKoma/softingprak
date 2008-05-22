@@ -19,9 +19,9 @@ public interface ErreserbaInterface extends RemoteObservable {
 	public Vector<Irteera> getIrteerenEzaugarriak(String agIzena)
 			throws RemoteException;
 
-	public void submit() throws RemoteException;
+	public void submit(Erreserba erreserba) throws RemoteException;
 
-	public void ezeztatu() throws RemoteException;
+	public void ezeztatu(Erreserba erreserba) throws RemoteException;
 
 	public void notifyConnection() throws RemoteException,
 			ServerNotActiveException;

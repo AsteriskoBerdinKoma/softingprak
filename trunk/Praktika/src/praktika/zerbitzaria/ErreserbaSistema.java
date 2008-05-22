@@ -106,7 +106,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 * 
 	 * @see praktika.zerbitzaria.ErreserbaInterface#ezeztatu()
 	 */
-	public void ezeztatu() throws RemoteException {
+	public void ezeztatu(Erreserba erreserba) throws RemoteException {
 		// Erreserba sortu
 		// LoturaErreserba = null;
 		// Bistak ohararazi
@@ -250,7 +250,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	 * 
 	 * @see praktika.zerbitzaria.ErreserbaInterface#submit()
 	 */
-	public void submit() throws RemoteException {
+	public void submit(Erreserba erreserba) throws RemoteException {
 
 		System.out.println("Datubasera bidali da");
 		// LoturaErreserba = null;
