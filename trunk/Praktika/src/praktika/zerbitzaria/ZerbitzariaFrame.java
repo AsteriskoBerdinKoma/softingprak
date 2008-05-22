@@ -1,6 +1,7 @@
 package praktika.zerbitzaria;
 
 import java.awt.Color;
+
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JComponent;
@@ -10,7 +11,6 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
 public class ZerbitzariaFrame extends JFrame {
