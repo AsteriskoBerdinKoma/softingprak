@@ -1,10 +1,13 @@
 package praktika.zerbitzaria;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Vector;
 
 import praktika.partekatuak.Agentea;
@@ -274,7 +277,8 @@ class AplikazioDatuBase {
 		PreparedStatement ps = konexioa.prepareStatement(query);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next())
-			vAgenteak.addElement(new Agentea(rs.getInt("Agente_Kodea"), rs.getString("Izena")));
+			vAgenteak.addElement(new Agentea(rs.getInt("Agente_Kodea"), rs
+					.getString("Izena")));
 		rs.close();
 		ps.close();
 		return vAgenteak;

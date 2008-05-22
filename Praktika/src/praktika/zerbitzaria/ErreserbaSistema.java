@@ -44,6 +44,7 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 	private boolean konektatua;
 
 	private int unekoErreserbaZenbakia;
+	private int unekoBaieztapenZenbakia;
 
 	public ErreserbaSistema() throws RemoteException {
 		frame = new ZerbitzariaFrame();
@@ -89,6 +90,13 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 		else
 			frame.gehituEkintza(getCurrentTime()
 					+ ": Ezin izan da datu basera konexioa ezarri");
+		try {
+			unekoErreserbaZenbakia = aDB.getAzkenErreserbarenZenbakia();
+			unekoBaieztapenZenbakia = aDB.getLastBaieztapenZenb();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	/*
@@ -177,7 +185,8 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 					- aDB.getErreserbatutakoPertsonaKop(erreserba
 							.getIrteeraKodea());
 			if (plazaLibreak >= erreserba.getPertsonaKopurua()) {
-				erreserba.baieztatu(aDB.getLastBaieztapenZenb() + 1);
+				unekoBaieztapenZenbakia++;
+				erreserba.baieztatu(unekoBaieztapenZenbakia + 1);
 			} else
 				erreserba.ukatu("Ez daude plaza librerik");
 		} catch (SQLException e) {
