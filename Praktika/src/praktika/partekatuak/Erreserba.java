@@ -17,6 +17,7 @@ public class Erreserba implements Serializable {
 	private int irteeraKodea;
 	private String ukapenArrazoiak;
 	private boolean baieztatua;
+	private boolean sartuta;
 
 	public Erreserba() {
 		super();
@@ -31,6 +32,8 @@ public class Erreserba implements Serializable {
 		this.baieztapenZenbakia = baieztapenZenbakia;
 		this.irteeraKodea = irteeraKodea;
 		this.ukapenArrazoiak = "";
+		this.baieztatua = false;
+		this.sartuta = false;
 	}
 
 	public int getErreserbaZenbakia() {
@@ -87,5 +90,13 @@ public class Erreserba implements Serializable {
 
 	public final boolean isBaieztatua() {
 		return baieztatua;
+	}
+
+	public final boolean isSartuta() {
+		return sartuta;
+	}
+
+	public final void sartu() {
+		this.sartuta = true;
 	}
 }

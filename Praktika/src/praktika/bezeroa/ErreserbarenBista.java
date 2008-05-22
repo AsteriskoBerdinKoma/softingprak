@@ -99,15 +99,18 @@ public class ErreserbarenBista extends JPanel {
 			itenak.clear();
 			if (objektua.getClass() == Erreserba.class) {
 				Erreserba e = (Erreserba) objektua;
-				int baiZenb = e.getBaieztapenZenbakia();
-				if (e.isBaieztatua())
-					itenak.addElement("Erreserba baieztatua " + baiZenb
-							+ " baieztapen zenbakiarekin.");
-				else {
-					itenak.addElement("Erreserba ezeztatua izan da:");
-					itenak.addElement(((Erreserba) objektua)
-							.getUkapenArrazoiak());
-				}
+				if (AplikazioNagusia.getUnekoErreserba() == e)
+					if (!e.isSartuta()) {
+						int baiZenb = e.getBaieztapenZenbakia();
+						if (e.isBaieztatua())
+							itenak.addElement("Erreserba baieztatua " + baiZenb
+									+ " baieztapen zenbakiarekin.");
+						else {
+							itenak.addElement("Erreserba ezeztatua izan da:");
+							itenak.addElement(((Erreserba) objektua)
+									.getUkapenArrazoiak());
+						}
+					}
 			}
 			//
 			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
