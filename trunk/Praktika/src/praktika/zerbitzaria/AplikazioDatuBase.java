@@ -299,13 +299,13 @@ class AplikazioDatuBase {
 
 	public int getErreserbatutakoPertsonaKop(int irteeraKodea)
 			throws SQLException {
-		String query = "SELECT SUM(Pertsona_Kopurua) FROM Erreserba WHERE Irteera_Kodea = ?";
+		String query = "SELECT SUM(Pertsona_Kopurua) AS KopGuztira FROM Erreserba WHERE Irteera_Kodea = ?";
 		PreparedStatement ps = konexioa.prepareStatement(query);
 		ps.setInt(1, irteeraKodea);
 		ResultSet rs = ps.executeQuery();
 		int kop = 0;
 		if (rs.next())
-			kop = rs.getInt("Pertsona_Kopurua");
+			kop = rs.getInt("KopGuztira");
 		rs.close();
 		ps.close();
 		return kop;
