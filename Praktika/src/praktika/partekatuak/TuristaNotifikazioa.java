@@ -1,6 +1,13 @@
 package praktika.partekatuak;
 
-public class TuristaNotifikazioa {
+import java.io.Serializable;
+
+public class TuristaNotifikazioa implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Turista turista;
 	private int zenbatgarrena;
