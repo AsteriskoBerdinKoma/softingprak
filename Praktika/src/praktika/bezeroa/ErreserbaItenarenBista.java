@@ -1,6 +1,5 @@
 package praktika.bezeroa;
 
-import java.awt.Font;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -55,7 +54,6 @@ public class ErreserbaItenarenBista extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setFont(new Font("Arial", Font.PLAIN, 12));
 		// testu eremuak irakurtzeko bakarrik aldatu
 		testuEremuaKopurua.setEditable(false);
 		textFieldDeskribapena.setEditable(false);
@@ -71,47 +69,43 @@ public class ErreserbaItenarenBista extends JPanel {
 				.addGroup(
 						groupLayout.createSequentialGroup().addContainerGap()
 								.addComponent(testuEremuaKopurua,
-										GroupLayout.DEFAULT_SIZE, 110,
+										GroupLayout.DEFAULT_SIZE, 124,
 										Short.MAX_VALUE).addPreferredGap(
 										LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(getLabel()).addPreferredGap(
 										LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(testuEremuaPrezioa,
-										GroupLayout.DEFAULT_SIZE, 109,
+										GroupLayout.DEFAULT_SIZE, 118,
 										Short.MAX_VALUE).addPreferredGap(
 										LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(textFieldDeskribapena,
-										GroupLayout.DEFAULT_SIZE, 116,
+										GroupLayout.DEFAULT_SIZE, 117,
 										Short.MAX_VALUE).addPreferredGap(
 										LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(testuEremuaLuzapena,
-										GroupLayout.DEFAULT_SIZE, 105,
+										GroupLayout.DEFAULT_SIZE, 121,
 										Short.MAX_VALUE).addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
 				GroupLayout.Alignment.LEADING).addGroup(
 				groupLayout.createSequentialGroup().addContainerGap().addGroup(
 						groupLayout.createParallelGroup(
 								GroupLayout.Alignment.BASELINE).addComponent(
-								getLabel()).addComponent(testuEremuaKopurua,
+								testuEremuaLuzapena,
 								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE).addComponent(
-								testuEremuaPrezioa, GroupLayout.PREFERRED_SIZE,
 								GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE).addComponent(
 								textFieldDeskribapena,
 								GroupLayout.PREFERRED_SIZE,
 								GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE).addComponent(
-								testuEremuaLuzapena,
+								testuEremuaPrezioa, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE).addComponent(
+								getLabel()).addComponent(testuEremuaKopurua,
 								GroupLayout.PREFERRED_SIZE,
 								GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE)).addGap(317, 317,
 						317)));
-		groupLayout.linkSize(javax.swing.SwingConstants.VERTICAL,
-				new java.awt.Component[] { testuEremuaKopurua,
-						testuEremuaLuzapena, testuEremuaPrezioa,
-						textFieldDeskribapena });
 		setLayout(groupLayout);
 	}
 

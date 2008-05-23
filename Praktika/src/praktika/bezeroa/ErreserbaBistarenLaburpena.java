@@ -1,18 +1,18 @@
 package praktika.bezeroa;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 
-import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle;
+import javax.swing.border.TitledBorder;
 
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
@@ -32,7 +32,7 @@ public class ErreserbaBistarenLaburpena extends JPanel {
 	private JLabel etiketaErreserbaZenbakia = new JLabel(
 			"Erreserbaren Zenbakia");
 
-	private JLabel etiketaGuztira = new JLabel("Guztira         ");
+	private JLabel etiketaGuztira = new JLabel("Guztira");
 
 	private JTextField testuEremuaData = new JTextField();
 
@@ -50,49 +50,170 @@ public class ErreserbaBistarenLaburpena extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setLayout(new GridLayout(2, 4, 25, 25));
-		setFont(new Font("Arial", Font.PLAIN, 12));
-		setBackground(Color.lightGray);
-		setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
-		// row 1
-		add(etiketaData);
-		add(testuEremuaData);
-		add(etiketaAgentearenIzena);
-		add(testuEremuaAgentearenIzena);
-		// row 2
-		add(etiketaErreserbaZenbakia);
-		add(testuEremuaErreserbarenZenbakia);
-		add(etiketaGuztira);
-		add(testuEremuaGuztira);
+
+		etiketaData.hashCode();
 		// testu eremuak irakurtzeko bakarrik aldatu
 		testuEremuaData.setEditable(false);
+
+		etiketaAgentearenIzena.hashCode();
 		testuEremuaAgentearenIzena.setEditable(false);
+
+		etiketaErreserbaZenbakia.hashCode();
 		testuEremuaErreserbarenZenbakia.setEditable(false);
+
+		etiketaGuztira.hashCode();
 		testuEremuaGuztira.setEditable(false);
+		setBorder(new TitledBorder(null, "Erreserbaren Laburpena",
+				TitledBorder.DEFAULT_JUSTIFICATION,
+				TitledBorder.DEFAULT_POSITION, null, null));
+		// row 1
+		// row 2
+		final GroupLayout groupLayout = new GroupLayout((JComponent) this);
+		groupLayout
+				.setHorizontalGroup(groupLayout
+						.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.LEADING)
+														.addComponent(
+																etiketaErreserbaZenbakia,
+																GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																etiketaData,
+																GroupLayout.Alignment.TRAILING))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.LEADING)
+														.addComponent(
+																testuEremuaData,
+																GroupLayout.DEFAULT_SIZE,
+																95,
+																Short.MAX_VALUE)
+														.addComponent(
+																testuEremuaErreserbarenZenbakia,
+																GroupLayout.Alignment.TRAILING,
+																GroupLayout.DEFAULT_SIZE,
+																95,
+																Short.MAX_VALUE))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																etiketaAgentearenIzena)
+														.addComponent(
+																etiketaGuztira))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.LEADING)
+														.addComponent(
+																testuEremuaAgentearenIzena,
+																GroupLayout.DEFAULT_SIZE,
+																96,
+																Short.MAX_VALUE)
+														.addComponent(
+																testuEremuaGuztira,
+																GroupLayout.DEFAULT_SIZE,
+																96,
+																Short.MAX_VALUE))
+										.addGap(14, 14, 14)));
+		groupLayout
+				.setVerticalGroup(groupLayout
+						.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																etiketaData)
+														.addComponent(
+																testuEremuaData,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																etiketaAgentearenIzena)
+														.addComponent(
+																testuEremuaAgentearenIzena,
+																GroupLayout.PREFERRED_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(
+												LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.LEADING)
+														.addGroup(
+																groupLayout
+																		.createParallelGroup(
+																				GroupLayout.Alignment.BASELINE)
+																		.addComponent(
+																				etiketaErreserbaZenbakia)
+																		.addComponent(
+																				testuEremuaErreserbarenZenbakia,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																groupLayout
+																		.createParallelGroup(
+																				GroupLayout.Alignment.BASELINE)
+																		.addComponent(
+																				etiketaGuztira)
+																		.addComponent(
+																				testuEremuaGuztira,
+																				GroupLayout.PREFERRED_SIZE,
+																				GroupLayout.DEFAULT_SIZE,
+																				GroupLayout.PREFERRED_SIZE)))
+										.addGap(307, 307, 307)));
+		setLayout(groupLayout);
 	}
-	
-	private class UrrunekoBegiralea extends UnicastRemoteObject implements RemoteObserver, Serializable{
+
+	private class UrrunekoBegiralea extends UnicastRemoteObject implements
+			RemoteObserver, Serializable {
 
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		public UrrunekoBegiralea() throws RemoteException{
+
+		public UrrunekoBegiralea() throws RemoteException {
 			super();
 		}
+
 		@Override
-		public void update(RemoteObservable o, Object arg) throws RemoteException {
+		public void update(RemoteObservable o, Object arg)
+				throws RemoteException {
 			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 			DateFormat dataFormat = DateFormat.getDateInstance();
-			//ErreserbaInterface erreserbaSistema = (ErreserbaInterface) observable;
+			// ErreserbaInterface erreserbaSistema = (ErreserbaInterface)
+			// observable;
 			//
-			//	if (erreserbaSistema.getLoturaErreserba() != null) {
-			//	} else {
-					testuEremuaData.setText("");
-					testuEremuaGuztira.setText("");
-					testuEremuaAgentearenIzena.setText("");
-					testuEremuaErreserbarenZenbakia.setText("");
-			//	}
+			// if (erreserbaSistema.getLoturaErreserba() != null) {
+			// } else {
+			testuEremuaData.setText("");
+			testuEremuaGuztira.setText("");
+			testuEremuaAgentearenIzena.setText("");
+			testuEremuaErreserbarenZenbakia.setText("");
+			// }
 		}
 	}
 }
