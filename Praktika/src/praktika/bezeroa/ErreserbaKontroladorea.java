@@ -658,6 +658,9 @@ public class ErreserbaKontroladorea extends JPanel implements ActionListener,
 				if (tn.getErreserbaZenbakia() == AplikazioNagusia
 						.getUnekoErreserbaZenbakia()) {
 					botoiaBukatu.setEnabled(true);
+					testuEremuaHelbidea.setText("");
+					testuEremuaIzena.setText("");
+					testuEremuaTelefonoa.setText("");
 					if (tn.getLibreKop() == 0) {
 						botoiaSartuTurista.setEnabled(false);
 						System.out
