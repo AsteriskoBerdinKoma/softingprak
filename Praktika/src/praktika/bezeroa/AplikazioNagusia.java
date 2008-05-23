@@ -106,37 +106,68 @@ public class AplikazioNagusia extends JFrame {
 				.createTitledBorder("Azken irteeraren laburpena"));
 		erreserbarenBista.setBorder(BorderFactory
 				.createTitledBorder("Erreserba"));
-		final GroupLayout groupLayout = new GroupLayout(
-				(JComponent) getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
-				GroupLayout.Alignment.TRAILING).addGroup(
-				groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(erreserbaKontroladorea,
-								GroupLayout.PREFERRED_SIZE, 468,
-								GroupLayout.PREFERRED_SIZE).addPreferredGap(
-								LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(erreserbarenBista,
-								GroupLayout.PREFERRED_SIZE, 251,
-								Short.MAX_VALUE).addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				GroupLayout.Alignment.LEADING).addGroup(
-				groupLayout.createSequentialGroup().addContainerGap().addGroup(
-						groupLayout.createParallelGroup(
-								GroupLayout.Alignment.LEADING).addComponent(
-								erreserbaKontroladorea,
-								GroupLayout.Alignment.TRAILING,
-								GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
-								.addComponent(erreserbarenBista,
-										GroupLayout.Alignment.TRAILING,
-										GroupLayout.DEFAULT_SIZE, 353,
-										Short.MAX_VALUE)).addContainerGap()));
-		getContentPane().setLayout(groupLayout);
 		//
 		// Eraiki bista
 		// getContentPane().add(erreserbarenBistaSummary, BorderLayout.NORTH);
 		// getContentPane().add(erreserbaItenarenBista, BorderLayout.SOUTH);
 
 		this.setVisible(true);
+
+		ErreserbaBistarenLaburpena erreserbaBistarenLaburpena;
+		erreserbaBistarenLaburpena = new ErreserbaBistarenLaburpena(
+				urrunekoErreserba);
+		final GroupLayout groupLayout = new GroupLayout(
+				(JComponent) getContentPane());
+		groupLayout
+				.setHorizontalGroup(groupLayout
+						.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(
+								groupLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												groupLayout
+														.createParallelGroup(
+																GroupLayout.Alignment.LEADING)
+														.addComponent(
+																erreserbaBistarenLaburpena,
+																GroupLayout.DEFAULT_SIZE,
+																725,
+																Short.MAX_VALUE)
+														.addGroup(
+																groupLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				erreserbaKontroladorea,
+																				GroupLayout.PREFERRED_SIZE,
+																				468,
+																				GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				erreserbarenBista,
+																				GroupLayout.PREFERRED_SIZE,
+																				251,
+																				Short.MAX_VALUE)))
+										.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
+				GroupLayout.Alignment.TRAILING).addGroup(
+				groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(erreserbaBistarenLaburpena,
+								GroupLayout.PREFERRED_SIZE, 91,
+								GroupLayout.PREFERRED_SIZE).addPreferredGap(
+								LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(
+								groupLayout.createParallelGroup(
+										GroupLayout.Alignment.LEADING)
+										.addComponent(erreserbarenBista,
+												GroupLayout.DEFAULT_SIZE, 295,
+												Short.MAX_VALUE).addComponent(
+												erreserbaKontroladorea,
+												GroupLayout.DEFAULT_SIZE, 295,
+												Short.MAX_VALUE))
+						.addContainerGap()));
+		getContentPane().setLayout(groupLayout);
 		pack();
 	}
 
