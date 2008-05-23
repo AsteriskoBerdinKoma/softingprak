@@ -357,4 +357,30 @@ class AplikazioDatuBase {
 		ps.close();
 		return kont;
 	}
+
+	public String getAgenteIzena(int irteeraKodea) throws SQLException {
+		String query = "SELECT A.Izena FROM Agentea A INNER JOIN Irteera I ON A.Agente_Kodea=I.Agente_Kodea WHERE I.Irteera_Kodea=?";
+		PreparedStatement ps = konexioa.prepareStatement(query);
+		ps.setInt(1, irteeraKodea);
+		ResultSet rs = ps.executeQuery();
+		String izena = "";
+		if (rs.next())
+			izena = rs.getString(1);
+		rs.close();
+		ps.close();
+		return izena;
+	}
+
+	public double getPrezioa(int irteeraKodea) throws SQLException {
+		String query = "SELECT I.Prezioa FROM Irteera I WHERE I.Irteera_Kodea=?";
+		PreparedStatement ps = konexioa.prepareStatement(query);
+		ps.setInt(1, irteeraKodea);
+		ResultSet rs = ps.executeQuery();
+		double prezioa = 0;
+		if (rs.next())
+			prezioa = rs.getDouble(1);
+		rs.close();
+		ps.close();
+		return prezioa;
+	}
 }

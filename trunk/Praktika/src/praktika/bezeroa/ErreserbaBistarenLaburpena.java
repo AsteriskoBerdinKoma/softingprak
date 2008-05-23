@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.border.TitledBorder;
 
+import praktika.partekatuak.Erreserba;
 import praktika.partekatuak.ErreserbaInterface;
 import praktika.partekatuak.remoteObservable.RemoteObservable;
 import praktika.partekatuak.remoteObservable.RemoteObserver;
@@ -200,7 +201,7 @@ public class ErreserbaBistarenLaburpena extends JPanel {
 		}
 
 		@Override
-		public void update(RemoteObservable o, Object arg)
+		public void update(RemoteObservable observable, Object objektua)
 				throws RemoteException {
 			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 			DateFormat dataFormat = DateFormat.getDateInstance();
@@ -209,10 +210,41 @@ public class ErreserbaBistarenLaburpena extends JPanel {
 			//
 			// if (erreserbaSistema.getLoturaErreserba() != null) {
 			// } else {
-			testuEremuaData.setText("");
-			testuEremuaGuztira.setText("");
-			testuEremuaAgentearenIzena.setText("");
-			testuEremuaErreserbarenZenbakia.setText("");
+			if (objektua instanceof Erreserba) {
+				Erreserba e = (Erreserba) objektua;
+				if (AplikazioNagusia.getUnekoErreserbaZenbakia() == e
+						.getErreserbaZenbakia()) {
+					switch (e.getEgoera()) {
+					case Erreserba.BAIEZTATUA:
+						testuEremuaData.setText(dataFormat.format(e.getData()
+								.getTime()));
+						testuEremuaGuztira.setText(numberFormat.format(e
+								.getPrezioa()));
+						testuEremuaAgentearenIzena.setText(e.getAgenteIzena());
+						testuEremuaErreserbarenZenbakia.setText(String
+								.valueOf(e.getErreserbaZenbakia()));
+						break;
+					case Erreserba.BUKATUA:
+						testuEremuaData.setText("");
+						testuEremuaGuztira.setText("");
+						testuEremuaAgentearenIzena.setText("");
+						testuEremuaErreserbarenZenbakia.setText("");
+						break;
+					case Erreserba.EZEZTATUA:
+						testuEremuaData.setText("");
+						testuEremuaGuztira.setText("");
+						testuEremuaAgentearenIzena.setText("");
+						testuEremuaErreserbarenZenbakia.setText("");
+						break;
+					default:
+						break;
+					}
+				}
+			}
+			// testuEremuaData.setText("");
+			// testuEremuaGuztira.setText("");
+			// testuEremuaAgentearenIzena.setText("");
+			// testuEremuaErreserbarenZenbakia.setText("");
 			// }
 		}
 	}
