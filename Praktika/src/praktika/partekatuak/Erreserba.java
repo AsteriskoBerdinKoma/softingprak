@@ -23,6 +23,8 @@ public class Erreserba implements Serializable {
 	private int baieztapenZenbakia;
 	private int irteeraKodea;
 	private String ukapenArrazoiak;
+	private String agenteIzena;
+	private double prezioa;
 	private int egoera;
 	private boolean baieztatua;
 	private boolean sartuta;
@@ -42,6 +44,8 @@ public class Erreserba implements Serializable {
 		this.baieztapenZenbakia = baieztapenZenbakia;
 		this.irteeraKodea = irteeraKodea;
 		this.ukapenArrazoiak = "";
+		this.agenteIzena = "";
+		this.prezioa = 0;
 		this.egoera = Erreserba.BERRIA;
 		this.baieztatua = false;
 		this.sartuta = false;
@@ -137,5 +141,21 @@ public class Erreserba implements Serializable {
 
 	public int getEgoera() {
 		return egoera;
+	}
+
+	public String getAgenteIzena() {
+		return agenteIzena;
+	}
+
+	public void setAgenteIzena(String agenteIzena) {
+		this.agenteIzena = agenteIzena;
+	}
+
+	public double getPrezioa() {
+		return prezioa;
+	}
+
+	public void setPrezioa(double prezioa) {
+		this.prezioa = prezioa;
 	}
 }

@@ -251,11 +251,14 @@ class ErreserbaSistema extends RemoteObservableImpl implements
 			if (plazaLibreak >= erreserba.getPertsonaKopurua()) {
 				unekoBaieztapenZenbakia++;
 				erreserba.baieztatu(unekoBaieztapenZenbakia);
+				erreserba.setAgenteIzena(aDB.getAgenteIzena(erreserba
+						.getIrteeraKodea()));
+				erreserba.setPrezioa(aDB
+						.getPrezioa(erreserba.getIrteeraKodea()));
 			} else
 				erreserba.ukatu("Ez daude plaza librerik, bakarrik "
 						+ plazaLibreak + " plaza daude libre.");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			erreserba.ukatu("Arazo bat egon da datu basea atzitzean");
 		}

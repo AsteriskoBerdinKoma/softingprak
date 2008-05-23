@@ -61,15 +61,17 @@ public class ZerbitzariaFrame extends JFrame {
 								scrollPane, GroupLayout.PREFERRED_SIZE, 184,
 								GroupLayout.PREFERRED_SIZE).addComponent(
 								konektatutakoBezeroakLabel)).addPreferredGap(
-						LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(
-								groupLayout.createParallelGroup(
-										GroupLayout.Alignment.LEADING)
-										.addComponent(ekintzakLabel)
+						LayoutStyle.ComponentPlacement.RELATED).addGroup(
+						groupLayout.createParallelGroup(
+								GroupLayout.Alignment.LEADING).addGroup(
+								groupLayout.createSequentialGroup()
+										.addComponent(ekintzakLabel).addGap(
+												335, 335, 335)).addGroup(
+								groupLayout.createSequentialGroup()
 										.addComponent(textArea,
-												GroupLayout.DEFAULT_SIZE, 272,
-												Short.MAX_VALUE))
-						.addContainerGap()));
+												GroupLayout.DEFAULT_SIZE, 374,
+												Short.MAX_VALUE)
+										.addContainerGap()))));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
 				GroupLayout.Alignment.LEADING).addGroup(
 				groupLayout.createSequentialGroup().addContainerGap().addGroup(
@@ -82,10 +84,10 @@ public class ZerbitzariaFrame extends JFrame {
 								groupLayout.createParallelGroup(
 										GroupLayout.Alignment.LEADING)
 										.addComponent(textArea,
-												GroupLayout.DEFAULT_SIZE, 295,
+												GroupLayout.DEFAULT_SIZE, 310,
 												Short.MAX_VALUE).addComponent(
 												scrollPane,
-												GroupLayout.DEFAULT_SIZE, 295,
+												GroupLayout.DEFAULT_SIZE, 310,
 												Short.MAX_VALUE))
 						.addContainerGap()));
 		getContentPane().setLayout(groupLayout);
