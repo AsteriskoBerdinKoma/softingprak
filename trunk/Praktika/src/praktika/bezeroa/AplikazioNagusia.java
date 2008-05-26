@@ -1,7 +1,9 @@
 package praktika.bezeroa;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.rmi.ConnectException;
 import java.rmi.Naming;
 import java.rmi.RMISecurityManager;
@@ -11,9 +13,12 @@ import java.rmi.server.ServerNotActiveException;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 
 import praktika.partekatuak.ErreserbaInterface;
@@ -42,17 +47,7 @@ public class AplikazioNagusia extends JFrame {
 		super();
 		setTitle(izenburuBat);
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowActivated(WindowEvent e) {
-			}
-
-			@Override
-			public void windowClosed(WindowEvent e) {
-			}
-
-			@Override
+		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				try {
 					urrunekoErreserba.notifyDesconnection();
@@ -64,22 +59,6 @@ public class AplikazioNagusia extends JFrame {
 					e1.printStackTrace();
 				}
 				System.exit(0);
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-			}
-
-			@Override
-			public void windowOpened(WindowEvent e) {
 			}
 		});
 		System.setProperty("java.security.policy", "client.policy");
@@ -172,6 +151,16 @@ public class AplikazioNagusia extends JFrame {
 	}
 
 	public void setRemoteServer() {
+		SelectHost frame = new SelectHost();
+		frame.setLocationRelativeTo(null);
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		frame.setVisible(true);
+		while (frame.isVisible())
+			;
 		try {
 			// Assingn security manager
 			if (System.getSecurityManager() == null)
@@ -209,5 +198,82 @@ public class AplikazioNagusia extends JFrame {
 
 	protected static void setUnekoErreserbaZenbakia(int unekoErreserbaZenbakia) {
 		AplikazioNagusia.unekoErreserbaZenbakia = unekoErreserbaZenbakia;
+	}
+
+	public class SelectHost extends JFrame {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		private JTextField hostTextField;
+
+		/**
+		 * Create the dialog
+		 */
+		public SelectHost() {
+			super();
+			setTitle("Zerbitzaria aukeratu");
+
+			JLabel zerbitzariarenHelbideaLabel;
+			zerbitzariarenHelbideaLabel = new JLabel();
+			zerbitzariarenHelbideaLabel.setText("Zerbitzariaren helbidea:");
+
+			hostTextField = new JTextField();
+			hostTextField.setText("localhost");
+
+			JButton adosButton;
+			adosButton = new JButton();
+			adosButton.addActionListener(new ActionListener() {
+				public void actionPerformed(final ActionEvent e) {
+					String s = hostTextField.getText();
+					if (s != null) {
+						host = s;
+						setVisible(false);
+					}
+				}
+			});
+			adosButton.setText("Ados");
+			final GroupLayout groupLayout = new GroupLayout(
+					(JComponent) getContentPane());
+			groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(
+					GroupLayout.Alignment.LEADING).addGroup(
+					groupLayout.createSequentialGroup().addContainerGap()
+							.addComponent(zerbitzariarenHelbideaLabel)
+							.addPreferredGap(
+									LayoutStyle.ComponentPlacement.RELATED)
+							.addComponent(hostTextField,
+									GroupLayout.DEFAULT_SIZE, 116,
+									Short.MAX_VALUE).addPreferredGap(
+									LayoutStyle.ComponentPlacement.RELATED)
+							.addComponent(adosButton).addContainerGap()));
+			groupLayout
+					.setVerticalGroup(groupLayout
+							.createParallelGroup(GroupLayout.Alignment.LEADING)
+							.addGroup(
+									groupLayout
+											.createSequentialGroup()
+											.addContainerGap()
+											.addGroup(
+													groupLayout
+															.createParallelGroup(
+																	GroupLayout.Alignment.BASELINE)
+															.addComponent(
+																	zerbitzariarenHelbideaLabel)
+															.addComponent(
+																	adosButton)
+															.addComponent(
+																	hostTextField,
+																	GroupLayout.PREFERRED_SIZE,
+																	GroupLayout.DEFAULT_SIZE,
+																	GroupLayout.PREFERRED_SIZE))
+											.addContainerGap(
+													GroupLayout.DEFAULT_SIZE,
+													Short.MAX_VALUE)));
+			getContentPane().setLayout(groupLayout);
+			pack();
+			//
+		}
 	}
 }
